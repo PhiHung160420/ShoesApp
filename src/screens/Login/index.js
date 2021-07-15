@@ -17,7 +17,7 @@ import {LoginButton, AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import {useSignIn} from '../../apis/authAPI';
+import {useSignIn} from '../../services/authAPI';
 import {useDispatch} from 'react-redux';
 import {handlerSignIn} from '../../redux/actions/authAction';
 import {SetAccessToken} from '../../utils/storage';
