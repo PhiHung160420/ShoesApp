@@ -13,6 +13,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {LoginButton, AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -60,6 +61,28 @@ const SignInScreen = ({navigation}) => {
 
   const handlerEntryPassword = () => {
     setEntryPwd(!isEntryPwd);
+  };
+
+  const loginWithFacebook = () => {
+    LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+      function (result) {
+        if (result.isCancelled) {
+          console.log('Login cancelled');
+        } else {
+          console.log(
+            'Login success with permissions: ' +
+              result.grantedPermissions.toString(),
+          );
+          AccessToken.getCurrentAccessToken().then(data => {
+            console.log(data.accessToken.toString());
+            console.log('result-->', result);
+          });
+        }
+      },
+      function (error) {
+        console.log('Login fail with error: ' + error);
+      },
+    );
   };
 
   return (
@@ -208,7 +231,9 @@ const SignInScreen = ({navigation}) => {
 
                 <View style={styles.signInOther}>
                   {/* FACEBOOK */}
-                  <TouchableOpacity style={styles.signInFB}>
+                  <TouchableOpacity
+                    style={styles.signInFB}
+                    onPress={() => loginWithFacebook()}>
                     <View style={styles.borderIconFB}>
                       <FontAwesome name="facebook" color={'#fff'} size={25} />
                     </View>
