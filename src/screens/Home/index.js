@@ -1,33 +1,60 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useDispatch} from 'react-redux';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {RemoveAccessToken} from '../../utils/storage';
 import {handlerSignOut} from '../../redux/actions/authAction';
+import {COLORS, icons, SIZES} from '../../constants/index';
+import HeaderBar from '../../components/HeaderBar';
+import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 
 const HomeScreen = () => {
+  //dispatch
   const dispatch = useDispatch();
 
+  const appTheme = useSelector(getAppThemeSelector);
+
+  // xử lý đăng xuất
   const handlerLogOut = async () => {
     await RemoveAccessToken();
     dispatch(handlerSignOut(null));
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home Screen</Text>
-      <TouchableOpacity
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 10,
-          backgroundColor: 'green',
-          borderRadius: 10,
-        }}
-        onPress={handlerLogOut}>
-        <Text style={{fontSize: 15, color: '#fff'}}>Log out</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      {/* HEADER */}
+      <HeaderBar />
+      {/* HEADER */}
+
+      <ScrollView
+        style={[
+          styles.mainContainer,
+          {
+            backgroundColor:
+              appTheme.name == 'dark' ? COLORS.secondary : COLORS.gainsboro,
+          },
+        ]}></ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  mainContainer: {
+    flex: 1,
+    marginTop: -20,
+    borderTopLeftRadius: SIZES.radius * 2,
+    borderTopRightRadius: SIZES.radius * 2,
+  },
+});
 
 export default HomeScreen;

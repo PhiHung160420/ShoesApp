@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   createBottomTabNavigator,
   BottomTabBar,
@@ -22,21 +22,37 @@ import {
 import Svg, {Path} from 'react-native-svg';
 import {COLORS, SIZES, icons} from '../constants/index';
 import Feather from 'react-native-vector-icons/Feather';
+import {useSelector} from 'react-redux';
+import {getAppThemeSelector} from '../redux/selectors/themeSelector';
 
 const Tab = createBottomTabNavigator();
 
 // custom tabbar
-const CustomTabbar = ({props}) => {
+const CustomTabbar = ({props, appTheme}) => {
   return (
     <View>
-      <View style={styles.customTabBar} />
+      <View
+        style={[
+          styles.customTabBar,
+          {
+            backgroundColor:
+              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.white,
+          },
+        ]}
+      />
       <BottomTabBar {...props} />
     </View>
   );
 };
 
 //custom tabbar options
-const CustomTabbarBottom = ({onPress, containerStyle, isFloat, children}) => {
+const CustomTabbarBottom = ({
+  onPress,
+  containerStyle,
+  isFloat,
+  children,
+  appTheme,
+}) => {
   if (isFloat) {
     return (
       <View style={styles.customBtnContainer}>
@@ -47,7 +63,7 @@ const CustomTabbarBottom = ({onPress, containerStyle, isFloat, children}) => {
           viewBox="0 0 90 61">
           <Path
             d="M0 0a38.742 38.742 0 0113 7c5.313 4.4 6.7 8.593 12 13 5.993 4.98 12.987 8 20 8s14.007-3.02 20-8c5.3-4.408 6.687-8.6 12-13a38.742 38.742 0 0113-7v61H0V0z"
-            fill="#4D4D4D"
+            fill={appTheme.name == 'dark' ? COLORS.gray3 : COLORS.white}
             fillRule="evenodd"
           />
         </Svg>
@@ -66,7 +82,8 @@ const CustomTabbarBottom = ({onPress, containerStyle, isFloat, children}) => {
           style={{
             flex: 1,
             height: 60,
-            backgroundColor: COLORS.gray3,
+            backgroundColor:
+              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.white,
             ...containerStyle,
           }}>
           {children}
@@ -91,10 +108,21 @@ const tabbarOptions = {
 };
 
 const RootTab = () => {
+  const appTheme = useSelector(getAppThemeSelector);
+  const [colorIcon, setColorIcon] = useState(COLORS.primary);
+
+  useEffect(() => {
+    if (appTheme.name === 'dark') {
+      setColorIcon(COLORS.white);
+    } else {
+      setColorIcon(COLORS.black);
+    }
+  }, [appTheme]);
+
   return (
     <Tab.Navigator
       tabBarOptions={tabbarOptions}
-      tabBar={props => <CustomTabbar props={props} />}>
+      tabBar={props => <CustomTabbar props={props} appTheme={appTheme} />}>
       {/* SCREEN HOME */}
       <Tab.Screen
         component={HomeScreen}
@@ -106,7 +134,7 @@ const RootTab = () => {
               resizeMode="contain"
               style={[
                 styles.iconStyle,
-                {tintColor: focused ? COLORS.primary : COLORS.white},
+                {tintColor: focused ? COLORS.primary : colorIcon},
               ]}
             />
           ),
@@ -116,6 +144,7 @@ const RootTab = () => {
               containerStyle={{
                 borderTopLeftRadius: SIZES.radius * 2,
               }}
+              appTheme={appTheme}
             />
           ),
         }}
@@ -133,7 +162,7 @@ const RootTab = () => {
               resizeMode="contain"
               style={[
                 styles.iconStyle,
-                {tintColor: focused ? COLORS.primary : COLORS.white},
+                {tintColor: focused ? COLORS.primary : colorIcon},
               ]}
             />
           ),
@@ -143,6 +172,7 @@ const RootTab = () => {
               containerStyle={{
                 marginRight: 6,
               }}
+              appTheme={appTheme}
             />
           ),
         }}
@@ -162,7 +192,7 @@ const RootTab = () => {
             />
           ),
           tabBarButton: props => (
-            <CustomTabbarBottom {...props} isFloat={true} />
+            <CustomTabbarBottom {...props} isFloat={true} appTheme={appTheme} />
           ),
         }}
       />
@@ -179,7 +209,7 @@ const RootTab = () => {
               resizeMode="contain"
               style={[
                 styles.iconStyle,
-                {tintColor: focused ? COLORS.primary : COLORS.white},
+                {tintColor: focused ? COLORS.primary : colorIcon},
               ]}
             />
           ),
@@ -189,6 +219,7 @@ const RootTab = () => {
               containerStyle={{
                 marginLeft: 6,
               }}
+              appTheme={appTheme}
             />
           ),
         }}
@@ -206,7 +237,7 @@ const RootTab = () => {
               resizeMode="contain"
               style={[
                 styles.iconStyle,
-                {tintColor: focused ? COLORS.primary : COLORS.white},
+                {tintColor: focused ? COLORS.primary : colorIcon},
               ]}
             />
           ),
@@ -216,6 +247,7 @@ const RootTab = () => {
               containerStyle={{
                 borderTopRightRadius: SIZES.radius * 2,
               }}
+              appTheme={appTheme}
             />
           ),
         }}

@@ -5,8 +5,8 @@ export const COLORS = {
   primary: '#37A372', // Green
   secondary: '#2C2C2C', // Gray
 
-  lightPurple: '#7B789F',
-  purple: '#595683',
+  lightGreen: '#98fb98',
+  green: '#3cb371',
   yellow: '#F1CD7C',
   lightYellow: '#FFD88A',
   white: '#fff',
@@ -23,10 +23,11 @@ export const COLORS = {
   lightGray: '#3B3B3B',
   lightGray2: '#707070',
   lightGray3: '#f0f0f0',
-
+  gainsboro: '#dcdcdc',
+  gold: '#ffd700',
   pink: '#D993B4',
   lightPink: '#F3DEE8',
-
+  silver: '#c0c0c0',
   transparentWhite: 'rgba(255, 255, 255, 0.2)',
   transparentBlack: 'rgba(0, 0, 0, 0.4)',
   transparent: 'transparent',
