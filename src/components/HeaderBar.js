@@ -10,18 +10,24 @@ import {
 } from 'react-native';
 import {COLORS, SIZES, icons} from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
 import {toggleTheme} from '../redux/actions/themeAction';
 import appTheme from '../constants/theme';
 
-const HeaderBar = () => {
+const HeaderBar = ({children, nameIcon, customStyle}) => {
+  // dispatch
   const dispatch = useDispatch();
 
+  // theme get from store
   const appTheme = useSelector(getAppThemeSelector);
 
+  // navigation
+  const navigation = useNavigation();
+
+  // handler when click theme button
   const toogleThemeHandler = () => {
     if (appTheme.name === 'dark') {
       dispatch(toggleTheme('light'));
@@ -30,8 +36,15 @@ const HeaderBar = () => {
     }
   };
 
+  // handler when click left button on headerbar
+  const handlerClickIcon = () => {
+    if (nameIcon) {
+      navigation.goBack();
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.headerStyle}>
+    <SafeAreaView style={[styles.headerStyle, customStyle]}>
       <View style={styles.headerTopStyle}>
         {/* left icon */}
         <View>
@@ -42,8 +55,13 @@ const HeaderBar = () => {
                 backgroundColor:
                   appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
               },
-            ]}>
-            <Ionicons name="menu-outline" color={COLORS.black} size={30} />
+            ]}
+            onPress={handlerClickIcon}>
+            <Ionicons
+              name={nameIcon ? nameIcon : 'menu-outline'}
+              color={COLORS.black}
+              size={30}
+            />
           </TouchableOpacity>
         </View>
         {/* left icon */}
@@ -77,31 +95,9 @@ const HeaderBar = () => {
         {/* Theme Button */}
       </View>
 
-      <View style={styles.searchContainer}>
-        <View
-          style={[
-            styles.searchStyle,
-            {
-              borderColor:
-                appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
-              backgroundColor:
-                appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
-            },
-          ]}>
-          <TextInput
-            style={[styles.searchInput]}
-            placeholder="Find shoes"
-            placeholderTextColor={COLORS.gray}
-          />
-          <TouchableOpacity style={styles.searchButton}>
-            <Feather
-              name="search"
-              size={25}
-              color={appTheme.name == 'dark' ? 'black' : 'white'}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      {/* SEARCH FORM */}
+      {children}
+      {/* SEARCH FORM */}
     </SafeAreaView>
   );
 };
@@ -158,37 +154,6 @@ const styles = StyleSheet.create({
   selectedLightModeStyle: {
     borderRadius: 20,
     backgroundColor: COLORS.yellow,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  searchStyle: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: SIZES.width / 2 + 50,
-    borderRadius: 20,
-    height: 40,
-    borderWidth: 1,
-  },
-  searchInput: {
-    fontSize: 15,
-    width: SIZES.width / 2,
-    height: 40,
-    paddingLeft: 15,
-    color: COLORS.black,
-  },
-  searchButton: {
-    width: 35,
-    height: 35,
-    borderRadius: 20,
-    backgroundColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 5,
   },
 });
 

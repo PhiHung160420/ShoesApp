@@ -6,6 +6,8 @@ import SearchScreen from './Search/index';
 import CartScreen from './Cart/index';
 import FavoriteScreen from './Favorite/index';
 import ProfileScreen from './Profile/index';
+import CategoryScreen from './Category/index';
+import ProducDetailScreen from './Product/index';
 
 export {
   SignInScreen,
@@ -16,4 +18,6 @@ export {
   CartScreen,
   FavoriteScreen,
   ProfileScreen,
+  CategoryScreen,
+  ProducDetailScreen,
 };

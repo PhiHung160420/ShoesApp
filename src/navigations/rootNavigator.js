@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {SplashScreen, SignInScreen, SignUpScreen} from '../screens/index';
+import {
+  SplashScreen,
+  SignInScreen,
+  SignUpScreen,
+  CategoryScreen,
+  ProducDetailScreen,
+} from '../screens/index';
 import RootTab from './rootTab';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -43,6 +49,11 @@ const RootNavigator = () => {
         {authSuccess ? (
           <>
             <Stack.Screen component={RootTab} name="HomeScreen" />
+            <Stack.Screen component={CategoryScreen} name="CategoryScreen" />
+            <Stack.Screen
+              component={ProducDetailScreen}
+              name="ProducDetailScreen"
+            />
           </>
         ) : (
           <>
