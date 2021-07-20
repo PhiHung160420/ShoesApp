@@ -15,7 +15,7 @@ import {getAllProduct} from '../../services/productAPI';
 import ProductPrice from '../../components/ProductPrice';
 import ProductItem from './ProductItem';
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
@@ -105,7 +105,9 @@ const CartScreen = () => {
             <ProductPrice>500</ProductPrice>
           </View>
           <View style={styles.checkoutButton}>
-            <TouchableOpacity style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => navigation.navigate('PaymentScreen')}>
               <Text style={[styles.buttonText, {color: appTheme.textColor}]}>
                 Checkout
               </Text>

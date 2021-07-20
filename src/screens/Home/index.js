@@ -13,7 +13,6 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
 import {RemoveAccessToken} from '../../utils/storage';
-import {handlerSignOut} from '../../redux/actions/authAction';
 import {COLORS, icons, SIZES} from '../../constants/index';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
@@ -44,12 +43,6 @@ const HomeScreen = ({navigation}) => {
       .then(res => setListProducts(res.data.content))
       .catch(err => console.log(err));
   }, []);
-
-  // handler logout
-  const handlerLogOut = async () => {
-    await RemoveAccessToken();
-    dispatch(handlerSignOut(null));
-  };
 
   // render items
   const renderListProduct = ({item}) => {

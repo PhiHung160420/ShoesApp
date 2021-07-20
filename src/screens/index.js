@@ -8,6 +8,7 @@ import FavoriteScreen from './Favorite/index';
 import ProfileScreen from './Profile/index';
 import CategoryScreen from './Category/index';
 import ProducDetailScreen from './Product/index';
+import PaymentScreen from './Payment/index';
 
 export {
   SignInScreen,
@@ -20,4 +21,5 @@ export {
   ProfileScreen,
   CategoryScreen,
   ProducDetailScreen,
+  PaymentScreen,
 };

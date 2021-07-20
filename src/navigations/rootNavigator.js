@@ -5,6 +5,7 @@ import {
   SignUpScreen,
   CategoryScreen,
   ProducDetailScreen,
+  PaymentScreen,
 } from '../screens/index';
 import RootTab from './rootTab';
 import {NavigationContainer} from '@react-navigation/native';
@@ -54,6 +55,7 @@ const RootNavigator = () => {
               component={ProducDetailScreen}
               name="ProducDetailScreen"
             />
+            <Stack.Screen component={PaymentScreen} name="PaymentScreen" />
           </>
         ) : (
           <>

@@ -7,5 +7,15 @@ import theme, {
 } from './theme';
 
 import icons from './icons';
+import tools from './tools';
 
-export {theme, icons, COLORS, SIZES, darkTheme, lightTheme, selectedTheme};
+export {
+  theme,
+  icons,
+  tools,
+  COLORS,
+  SIZES,
+  darkTheme,
+  lightTheme,
+  selectedTheme,
+};
