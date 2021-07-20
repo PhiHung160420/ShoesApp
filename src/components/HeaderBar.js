@@ -105,7 +105,7 @@ const HeaderBar = ({children, nameIcon, customStyle}) => {
 const styles = StyleSheet.create({
   headerStyle: {
     height: 180,
-    backgroundColor: COLORS.green,
+    backgroundColor: COLORS.primary,
   },
   headerTopStyle: {
     justifyContent: 'space-between',

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -29,7 +29,7 @@ const ProducDetailScreen = ({route}) => {
   const [showDescript, setShowDescript] = useState(false);
 
   // state size selected
-  const [sizeSelected, setSizeSelected] = useState(false);
+  const [sizeSelected, setSizeSelected] = useState('');
 
   // get appTheme from store
   const appTheme = useSelector(getAppThemeSelector);
@@ -47,8 +47,8 @@ const ProducDetailScreen = ({route}) => {
   };
 
   // handler selected size
-  const handlerSelectedSize = () => {
-    setSizeSelected(!sizeSelected);
+  const handlerSelectedSize = size => {
+    setSizeSelected(size);
   };
 
   // render list sizes
@@ -59,25 +59,25 @@ const ProducDetailScreen = ({route}) => {
           styles.sizeItemStyle,
           {
             backgroundColor:
-              appTheme.name == 'dark' ? COLORS.lightGray : COLORS.gainsboro,
+              sizeSelected == item ? COLORS.primary : COLORS.silver,
             shadowColor:
               appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
           },
         ]}
-        onPress={handlerSelectedSize}>
+        onPress={() => handlerSelectedSize(`${item}`)}>
         <Text style={[styles.sizeItemText]}>{item}</Text>
       </TouchableOpacity>
     );
   };
 
+  //render list related
   const renderRelatedList = ({item}) => {
     return (
       <TouchableOpacity
         style={[
           styles.relatedItem,
           {
-            shadowColor:
-              appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
+            shadowColor: appTheme.shadowColor,
             backgroundColor:
               appTheme.name == 'dark' ? COLORS.lightGray : COLORS.gainsboro,
           },
@@ -95,10 +95,8 @@ const ProducDetailScreen = ({route}) => {
           style={[
             styles.imageContainer,
             {
-              shadowColor:
-                appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
-              backgroundColor:
-                appTheme.name == 'dark' ? COLORS.darkgray : COLORS.gainsboro,
+              shadowColor: appTheme.shadowColor,
+              backgroundColor: appTheme.flatlistbackgroundItem,
             },
           ]}>
           <Image source={{uri: product.image}} style={styles.imageStyle} />
@@ -107,8 +105,7 @@ const ProducDetailScreen = ({route}) => {
           style={[
             styles.productContent,
             {
-              backgroundColor:
-                appTheme.name == 'dark' ? COLORS.darkgray : COLORS.gainsboro,
+              backgroundColor: appTheme.flatlistbackgroundItem,
             },
           ]}>
           {/* PRICE - NAME */}
@@ -137,7 +134,7 @@ const ProducDetailScreen = ({route}) => {
             </Text>
             <FlatList
               data={product.size}
-              keyExtractor={item => item}
+              keyExtractor={index => index.toString()}
               renderItem={renderListSize}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -239,6 +236,7 @@ const styles = StyleSheet.create({
     height: '90%',
   },
   productContent: {
+    paddingTop: 15,
     marginTop: 20,
     width: SIZES.width,
     borderTopLeftRadius: SIZES.radius * 3,
@@ -309,7 +307,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   relatedContainer: {
-    marginTop: 20,
+    marginTop: 15,
   },
   relatedTitle: {
     fontSize: 20,
@@ -338,7 +336,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -355,7 +353,7 @@ const styles = StyleSheet.create({
   },
   buyProductBtn: {
     backgroundColor: COLORS.primary,
-    paddingHorizontal: 30,
+    paddingHorizontal: 35,
     paddingVertical: 20,
     borderRadius: 10,
     justifyContent: 'center',
