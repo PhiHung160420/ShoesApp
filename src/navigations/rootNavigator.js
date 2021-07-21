@@ -3,8 +3,11 @@ import {
   SplashScreen,
   SignInScreen,
   SignUpScreen,
-  HomeScreen,
+  CategoryScreen,
+  ProducDetailScreen,
+  PaymentScreen,
 } from '../screens/index';
+import RootTab from './rootTab';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
@@ -46,7 +49,13 @@ const RootNavigator = () => {
       <Stack.Navigator headerMode="none">
         {authSuccess ? (
           <>
-            <Stack.Screen component={HomeScreen} name="HomeScreen" />
+            <Stack.Screen component={RootTab} name="HomeScreen" />
+            <Stack.Screen component={CategoryScreen} name="CategoryScreen" />
+            <Stack.Screen
+              component={ProducDetailScreen}
+              name="ProducDetailScreen"
+            />
+            <Stack.Screen component={PaymentScreen} name="PaymentScreen" />
           </>
         ) : (
           <>
