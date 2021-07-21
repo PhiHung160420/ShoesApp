@@ -13,6 +13,7 @@ import {COLORS, SIZES, tools} from '../../constants';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getProfile} from '../../services/authAPI';
+import {GetAccessToken} from '../../utils/storage';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ToolProfle from './ToolProfle';
@@ -23,17 +24,21 @@ const ProfileScreen = () => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
-  // get accessToken
-  const accessToken = useSelector(getAccessTokenSelector);
-
   // state my profile
   const [profile, setProfile] = useState({});
 
   // get profile info from api
   useEffect(() => {
-    getProfile(accessToken)
-      .then(res => setProfile(res.data.content))
-      .catch(err => console.log(err));
+    const setAccessTokenToRedux = async () => {
+      const accessStorage = await GetAccessToken();
+      if (accessStorage) {
+        getProfile(accessStorage)
+          .then(res => setProfile(res.data.content))
+          .catch(err => console.log(err));
+      }
+    };
+
+    setAccessTokenToRedux();
   }, []);
 
   // render list tools

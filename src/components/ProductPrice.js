@@ -4,13 +4,21 @@ import {View, Text, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
 
-const ProductPrice = ({children}) => {
+const ProductPrice = ({children, colorText}) => {
   const appTheme = useSelector(getAppThemeSelector);
 
   return (
     <View style={styles.totalPrice}>
-      <MatIcon name="attach-money" size={25} color={appTheme.textColor} />
-      <Text style={[styles.productPriceText, {color: appTheme.textColor}]}>
+      <MatIcon
+        name="attach-money"
+        size={25}
+        color={colorText ? colorText : appTheme.textColor}
+      />
+      <Text
+        style={[
+          styles.productPriceText,
+          {color: colorText ? colorText : appTheme.textColor},
+        ]}>
         {children}
       </Text>
     </View>
