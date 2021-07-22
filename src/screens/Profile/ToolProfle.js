@@ -9,12 +9,6 @@ import {COLORS, SIZES} from '../../constants';
 import {useNavigation} from '@react-navigation/native';
 import UpdateModal from '../../components/UpdateModal';
 
-/* const ShowModal = (isModalVisible, toggleModal) => {
-  return (
-    <UpdateModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
-  );
-}; */
-
 const ToolProfle = ({item, profile}) => {
   // use dispatch
   const dispatch = useDispatch();

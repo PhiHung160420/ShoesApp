@@ -8,14 +8,21 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES} from '../../constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 const iconName = 'arrow-back-outline';
+
+const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+
+const regexEmail =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 const UpdateProfile = ({route}) => {
   const {profile} = route.params;
@@ -23,10 +30,94 @@ const UpdateProfile = ({route}) => {
   // get theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
-  // state lưu giới tính được chọn
-  const [gender, setGender] = useState(true);
+  // state data object
+  const [data, setData] = useState({
+    name: profile.name,
+    email: profile.email,
+    phone: profile.phone,
+    gender: profile.gender,
+    password: profile.password,
+  });
 
-  console.log(profile);
+  // state entry password
+  const [secureTextEntry, setsecureTextEntry] = useState(false);
+
+  const [validate, setValidate] = useState({
+    name: {
+      isValid: true,
+      msgError: 'User name must have 4 character long !',
+    },
+    email: {
+      isValid: true,
+      msgError: 'Email invalid !',
+    },
+    phone: {
+      isValid: true,
+      msgError: 'Phone number invalid !',
+    },
+    password: {
+      isValid: true,
+      msgError: 'Password at least 6 characters !',
+    },
+  });
+
+  // state gender selected
+  const [gender, setGender] = useState(data.gender);
+
+  // handler click entry password
+  const handlerEntryPassword = () => {
+    setsecureTextEntry(!secureTextEntry);
+  };
+
+  // handler validate username
+  const handlerValidUsername = value => {
+    if (value.trim().length >= 4) {
+      setData({...data, name: value});
+      setValidate({...validate, name: {...validate.name, isValid: true}});
+    } else {
+      setData({...data, name: value});
+      setValidate({...validate, name: {...validate.name, isValid: false}});
+    }
+  };
+
+  // handler validate email
+  const handlerValidEmail = value => {
+    if (value.match(regexEmail)) {
+      setData({...data, email: value});
+      setValidate({...validate, email: {...validate.email, isValid: true}});
+    } else {
+      setData({...data, email: value});
+      setValidate({...validate, email: {...validate.email, isValid: false}});
+    }
+  };
+
+  // handler validate phone
+  const handlerValidPhone = value => {
+    if (value.match(regexPhone)) {
+      setData({...data, phone: value});
+      setValidate({...validate, phone: {...validate.phone, isValid: true}});
+    } else {
+      setData({...data, phone: value});
+      setValidate({...validate, phone: {...validate.phone, isValid: false}});
+    }
+  };
+
+  // handler validate password
+  const handlerValidPassword = value => {
+    if (value.trim().length >= 6) {
+      setData({...data, password: value});
+      setValidate({
+        ...validate,
+        password: {...validate.password, isValid: true},
+      });
+    } else {
+      setData({...data, password: value});
+      setValidate({
+        ...validate,
+        password: {...validate.password, isValid: false},
+      });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -71,15 +162,37 @@ const UpdateProfile = ({route}) => {
             <View
               style={[
                 styles.fieldStyle,
-                {borderBottomColor: appTheme.borderBottomColor},
+                {
+                  borderBottomColor: validate.name.isValid
+                    ? appTheme.borderBottomColor
+                    : COLORS.red,
+                },
               ]}>
               <FontAwesome name="user-o" color={appTheme.textColor} size={25} />
               <TextInput
                 name="name"
                 style={styles.textInput}
                 autoCapitalize="none"
+                keyboardType="default"
+                value={data.name}
+                onChangeText={val => handlerValidUsername(val)}
               />
+
+              {/* CHECK USERNAME */}
+              {validate.name.isValid && (
+                <Animatable.View animation="bounceIn">
+                  <Feather name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              )}
+              {/* CHECK USERNAME */}
             </View>
+
+            {/* ERROR MESSAGE USERNAME */}
+            {validate.name.isValid == false && (
+              <Text style={styles.textError}>{validate.name.msgError}</Text>
+            )}
+            {/* ERROR MESSAGE USERNAME */}
+
             {/* USERNAME */}
 
             {/* EMAIL */}
@@ -93,7 +206,11 @@ const UpdateProfile = ({route}) => {
             <View
               style={[
                 styles.fieldStyle,
-                {borderBottomColor: appTheme.borderBottomColor},
+                {
+                  borderBottomColor: validate.email.isValid
+                    ? appTheme.borderBottomColor
+                    : COLORS.red,
+                },
               ]}>
               <FontAwesome
                 name="envelope-open"
@@ -105,8 +222,25 @@ const UpdateProfile = ({route}) => {
                 style={styles.textInput}
                 autoCapitalize="none"
                 keyboardType="email-address"
+                onChangeText={val => handlerValidEmail(val)}
+                value={data.email}
               />
+
+              {/* CHECK EMAIL */}
+              {validate.email.isValid && (
+                <Animatable.View animation="bounceIn">
+                  <Feather name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              )}
+              {/* CHECK EMAIL */}
             </View>
+
+            {/* ERROR MESSAGE EMAIL */}
+            {validate.email.isValid == false && (
+              <Text style={styles.textError}>{validate.email.msgError}</Text>
+            )}
+            {/* ERROR MESSAGE EMAIL */}
+
             {/* EMAIL */}
 
             {/* PHONE */}
@@ -120,7 +254,11 @@ const UpdateProfile = ({route}) => {
             <View
               style={[
                 styles.fieldStyle,
-                {borderBottomColor: appTheme.borderBottomColor},
+                {
+                  borderBottomColor: validate.phone.isValid
+                    ? appTheme.borderBottomColor
+                    : COLORS.red,
+                },
               ]}>
               <FontAwesome name="phone" color={appTheme.textColor} size={25} />
               <TextInput
@@ -128,8 +266,24 @@ const UpdateProfile = ({route}) => {
                 style={styles.textInput}
                 autoCapitalize="none"
                 keyboardType="phone-pad"
+                value={data.phone}
+                onChangeText={val => handlerValidPhone(val)}
               />
+
+              {/* CHECK PHONE */}
+              {validate.phone.isValid && (
+                <Animatable.View animation="bounceIn">
+                  <Feather name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              )}
+              {/* CHECK PHONE */}
             </View>
+
+            {/* ERROR MESSAGE PHONE */}
+            {validate.phone.isValid == false && (
+              <Text style={styles.textError}>{validate.phone.msgError}</Text>
+            )}
+            {/* ERROR MESSAGE PHONE */}
             {/* PHONE */}
 
             {/* GENDER */}
@@ -172,6 +326,52 @@ const UpdateProfile = ({route}) => {
               </TouchableOpacity>
             </View>
             {/* GENDER */}
+
+            {/* PASSWORD */}
+            <Text
+              style={[
+                styles.textField,
+                {color: appTheme.textColor, marginTop: 15},
+              ]}>
+              Password
+            </Text>
+            <View
+              style={[
+                styles.fieldStyle,
+                {
+                  borderBottomColor: validate.password.isValid
+                    ? appTheme.borderBottomColor
+                    : COLORS.red,
+                },
+              ]}>
+              <Feather name="lock" color={appTheme.textColor} size={25} />
+              <TextInput
+                name="password"
+                style={styles.textInput}
+                autoCapitalize="none"
+                secureTextEntry={secureTextEntry}
+                keyboardType="default"
+                value={data.password}
+                onChangeText={val => handlerValidPassword(val)}
+              />
+
+              {/* SECURE ENTRY TEXT */}
+              <TouchableOpacity onPress={handlerEntryPassword}>
+                {secureTextEntry ? (
+                  <Feather name="eye" color={COLORS.black} size={20} />
+                ) : (
+                  <Feather name="eye-off" color={COLORS.black} size={20} />
+                )}
+              </TouchableOpacity>
+              {/* SECURE ENTRY TEXT */}
+            </View>
+
+            {/* ERROR MESSAGE PASSWORD */}
+            {validate.password.isValid == false && (
+              <Text style={styles.textError}>{validate.phone.msgError}</Text>
+            )}
+            {/* ERROR MESSAGE PASSWORD */}
+            {/* PASSWORD */}
           </ScrollView>
 
           {/* BUTTON UPDATE */}
@@ -212,7 +412,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -70,
+    marginTop: -50,
   },
   avatarContainer: {
     justifyContent: 'center',
@@ -235,9 +435,8 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius * 5,
   },
   infoProfileContainer: {
-    flex: 3,
+    flex: 4,
     paddingHorizontal: 20,
-    paddingVertical: 30,
   },
   fieldStyle: {
     flexDirection: 'row',
@@ -290,13 +489,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   buttonContainer: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginTop: -20,
   },
   buttonStyle: {
     paddingHorizontal: 50,
-    paddingVertical: 10,
+    paddingVertical: 15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primary,
@@ -305,6 +505,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: '500',
+  },
+  textError: {
+    color: COLORS.red,
+    marginTop: 5,
   },
 });
 
