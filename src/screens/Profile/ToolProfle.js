@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
@@ -6,13 +6,32 @@ import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {RemoveAccessToken} from '../../utils/storage';
 import {handlerSignOut} from '../../redux/actions/authAction';
 import {COLORS, SIZES} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
+import UpdateModal from '../../components/UpdateModal';
 
-const ToolProfle = ({item}) => {
+/* const ShowModal = (isModalVisible, toggleModal) => {
+  return (
+    <UpdateModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
+  );
+}; */
+
+const ToolProfle = ({item, profile}) => {
   // use dispatch
   const dispatch = useDispatch();
 
+  // use navigation
+  const navigation = useNavigation();
+
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
+
+  // state show modal
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  // handler show modal
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   // handler on click logout
   const handlerLogOut = async () => {
@@ -25,10 +44,24 @@ const ToolProfle = ({item}) => {
     if (item.icon == 'logout') {
       await handlerLogOut();
     }
+    if (item.icon == 'profile') {
+      navigation.navigate('UpdateProfile', {profile: profile});
+    }
+    if (item.icon == 'lock') {
+      toggleModal();
+    }
   };
 
   return (
     <>
+      {/* MODAL */}
+      {isModalVisible && (
+        <UpdateModal
+          isModalVisible={isModalVisible}
+          toggleModal={toggleModal}
+        />
+      )}
+      {/* MODAL */}
       <TouchableOpacity
         style={[
           styles.toolsContainer,

@@ -43,7 +43,7 @@ const ProfileScreen = () => {
 
   // render list tools
   const renderListTools = ({item}) => {
-    return <ToolProfle item={item} />;
+    return <ToolProfle item={item} profile={profile} />;
   };
 
   return (
