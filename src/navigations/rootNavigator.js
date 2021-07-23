@@ -15,6 +15,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
 import {GetAccessToken} from '../utils/storage';
 import {handlerSignIn} from '../redux/actions/authAction';
+import {getProfile} from '../services/profileAPI';
+import {handlerSetProfile} from '../redux/actions/profileAction';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +42,11 @@ const RootNavigator = () => {
   useEffect(() => {
     if (accessToken) {
       setAuthSuccess(true);
+
+      // set profile
+      getProfile(accessToken)
+        .then(res => dispatch(handlerSetProfile(res.data.content)))
+        .catch(err => console.log(err));
     } else {
       setAuthSuccess(false);
     }

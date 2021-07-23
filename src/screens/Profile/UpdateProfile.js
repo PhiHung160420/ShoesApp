@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,14 +8,19 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES} from '../../constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
+import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import {handlerSetProfile} from '../../redux/actions/profileAction';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import {updateProfile} from '../../services/profileAPI';
+import CustomModal from '../../components/CustomModal';
 
 const iconName = 'arrow-back-outline';
 
@@ -25,7 +30,13 @@ const regexEmail =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 const UpdateProfile = ({route}) => {
+  // get my profile
   const {profile} = route.params;
+
+  const dispatch = useDispatch();
+
+  // get access token
+  const accessToken = useSelector(getAccessTokenSelector);
 
   // get theme from store
   const appTheme = useSelector(getAppThemeSelector);
@@ -42,6 +53,20 @@ const UpdateProfile = ({route}) => {
   // state entry password
   const [secureTextEntry, setsecureTextEntry] = useState(false);
 
+  // state update success
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  // state message show modal
+  const [modalContent, setModalContent] = useState({});
+
+  // state show modal
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  // state gender selected
+  // true = male, false = female
+  const [gender, setGender] = useState(data.gender);
+
+  // state validate
   const [validate, setValidate] = useState({
     name: {
       isValid: true,
@@ -60,9 +85,6 @@ const UpdateProfile = ({route}) => {
       msgError: 'Password at least 6 characters !',
     },
   });
-
-  // state gender selected
-  const [gender, setGender] = useState(data.gender);
 
   // handler click entry password
   const handlerEntryPassword = () => {
@@ -119,6 +141,56 @@ const UpdateProfile = ({route}) => {
     }
   };
 
+  // handler show hide modal
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  // update gender when change gender
+  useEffect(() => {
+    console.log('gender3: ' + gender);
+    setData({...data, gender: gender});
+  }, [gender]);
+
+  //handler update profile
+  const handlerUpdateProfile = () => {
+    if (!data.password) {
+      setValidate({
+        ...validate,
+        password: {...validate.password, isValid: false},
+      });
+      return;
+    }
+    if (
+      validate.name.isValid !== false &&
+      validate.phone.isValid !== false &&
+      validate.password.isValid !== false
+    ) {
+      updateProfile(data, accessToken)
+        .then(res => {
+          if (res.data.statusCode === 200) {
+            dispatch(handlerSetProfile(data));
+            if (!updateSuccess) {
+              setUpdateSuccess(true);
+            }
+            setModalVisible(!isModalVisible);
+            setModalContent({
+              title: 'Successfully',
+              message: 'Update profile successfully !',
+            });
+          }
+        })
+        .catch(err => {
+          setUpdateSuccess(false);
+          setModalVisible(!isModalVisible);
+          setModalContent({
+            title: 'Failed',
+            message: 'Update profile fail! Please check input again',
+          });
+        });
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* HEADER BAR */}
@@ -130,6 +202,17 @@ const UpdateProfile = ({route}) => {
         </View>
       </HeaderBar>
       {/* HEADER BAR */}
+
+      {/* MODAL */}
+      {isModalVisible && (
+        <CustomModal
+          isModalVisible={isModalVisible}
+          toggleModal={toggleModal}
+          modalContent={modalContent}
+          isSuccess={updateSuccess}
+        />
+      )}
+      {/* MODAL */}
 
       <View
         style={[
@@ -199,7 +282,7 @@ const UpdateProfile = ({route}) => {
             <Text
               style={[
                 styles.textField,
-                {color: appTheme.textColor, marginTop: 25},
+                {color: appTheme.textColor, marginTop: 15},
               ]}>
               Email
             </Text>
@@ -247,7 +330,7 @@ const UpdateProfile = ({route}) => {
             <Text
               style={[
                 styles.textField,
-                {color: appTheme.textColor, marginTop: 25},
+                {color: appTheme.textColor, marginTop: 15},
               ]}>
               Phone
             </Text>
@@ -290,7 +373,7 @@ const UpdateProfile = ({route}) => {
             <Text
               style={[
                 styles.textField,
-                {color: appTheme.textColor, marginTop: 25},
+                {color: appTheme.textColor, marginTop: 15},
               ]}>
               Gender
             </Text>
@@ -368,7 +451,7 @@ const UpdateProfile = ({route}) => {
 
             {/* ERROR MESSAGE PASSWORD */}
             {validate.password.isValid == false && (
-              <Text style={styles.textError}>{validate.phone.msgError}</Text>
+              <Text style={styles.textError}>{validate.password.msgError}</Text>
             )}
             {/* ERROR MESSAGE PASSWORD */}
             {/* PASSWORD */}
@@ -376,7 +459,9 @@ const UpdateProfile = ({route}) => {
 
           {/* BUTTON UPDATE */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.buttonStyle}>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={handlerUpdateProfile}>
               <Text style={[styles.buttonText, {color: appTheme.textColor}]}>
                 UPDATE
               </Text>

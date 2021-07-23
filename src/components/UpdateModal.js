@@ -16,11 +16,11 @@ const UpdateModal = ({isModalVisible, toggleModal}) => {
         isVisible={isModalVisible}
         animationIn="zoomIn"
         animationOut="zoomOut">
+        {/* TITLE */}
         <Text style={styles.title}>CHANGE PASSWORD</Text>
-        <View style={styles.modalContainer}>
-          {/* TITLE */}
+        {/* TITLE */}
 
-          {/* TITLE */}
+        <View style={styles.modalContainer}>
           {/* CURRENT PASSWORD */}
           <View style={styles.oldPasswordContainer}>
             <Text style={styles.oldPassText}>Current Password</Text>
