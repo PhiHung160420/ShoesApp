@@ -33,6 +33,7 @@ const CustomModal = ({
       toggleModal();
     }
   };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -76,7 +77,7 @@ const CustomModal = ({
 const styles = StyleSheet.create({
   modalContainer: {
     height: SIZES.height / 3 - 30,
-    backgroundColor: '#ff6347',
+    backgroundColor: COLORS.orange,
     borderRadius: SIZES.radius,
   },
   modalContent: {

@@ -25,6 +25,7 @@ export const COLORS = {
   lightGray2: '#707070',
   lightGray3: '#f0f0f0',
   gainsboro: '#dcdcdc',
+  orange: '#ff6347',
   gold: '#ffd700',
   pink: '#D993B4',
   lightPink: '#F3DEE8',

@@ -33,6 +33,7 @@ const UpdateProfile = ({route}) => {
   // get my profile
   const {profile} = route.params;
 
+  // use dispatch
   const dispatch = useDispatch();
 
   // get access token
@@ -148,7 +149,6 @@ const UpdateProfile = ({route}) => {
 
   // update gender when change gender
   useEffect(() => {
-    console.log('gender3: ' + gender);
     setData({...data, gender: gender});
   }, [gender]);
 

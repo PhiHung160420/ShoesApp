@@ -56,6 +56,7 @@ const ToolProfle = ({item, profile}) => {
         />
       )}
       {/* MODAL */}
+
       <TouchableOpacity
         style={[
           styles.toolsContainer,

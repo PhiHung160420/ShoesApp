@@ -17,3 +17,12 @@ export const updateProfile = (data, token) => {
     data,
   });
 };
+
+export const changePassword = (data, token) => {
+  return axios({
+    method: 'POST',
+    url: 'http://svcy3.myclass.vn/api/Users/changePassword',
+    headers: {Authorization: `Bearer ${token}`},
+    data,
+  });
+};

@@ -1,4 +1,5 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/core';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,9 +8,102 @@ import {
   TextInput,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useSelector} from 'react-redux';
 import {COLORS, SIZES} from '../constants';
+import {getAccessTokenSelector} from '../redux/selectors/authSelector';
+import {changePassword} from '../services/profileAPI';
+
+const iconSuccess = 'smile-o';
+const iconFailed = 'frown-o';
 
 const UpdateModal = ({isModalVisible, toggleModal}) => {
+  // get access token
+  const token = useSelector(getAccessTokenSelector);
+
+  // use navigation
+  const navigation = useNavigation();
+
+  // state entry new password
+  const [secureNewPwd, setsecureNewPwd] = useState(false);
+
+  // state validate new password
+  const [validPassword, setValidPassword] = useState({
+    isValid: true,
+    msgError: '',
+  });
+
+  // state new Password
+  const [password, setPassword] = useState({
+    newPassword: '',
+  });
+
+  // state change password success
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // state message show modal
+  const [modalContent, setModalContent] = useState({
+    title: '',
+    message: '',
+  });
+
+  // state show hide modal
+  const [showModalSuccess, setShowModalSuccess] = useState(false);
+
+  // handler click entry password
+  const handlerEntryNewPwd = () => {
+    setsecureNewPwd(!secureNewPwd);
+  };
+
+  // handler change password
+  const handlerChangePassword = val => {
+    if (val.trim().length >= 6) {
+      setValidPassword({...validPassword, isValid: true});
+      setPassword({
+        newPassword: val,
+      });
+    } else {
+      setValidPassword({
+        isValid: false,
+        msgError: 'Password at least 6 character length !',
+      });
+    }
+  };
+
+  // handler click change password
+  const handlerClickChangePassword = () => {
+    if (!validPassword.isValid) {
+      setValidPassword({
+        isValid: false,
+        msgError: 'Password at least 6 character length !',
+      });
+    } else if (isSuccess) {
+      navigation.navigate('ProfileScreen');
+      toggleModal();
+    } else {
+      changePassword(password, token)
+        .then(res => {
+          if (res.data.statusCode === 200) {
+            setIsSuccess(true);
+            setShowModalSuccess(!showModalSuccess);
+            setModalContent({
+              title: 'Successfully',
+              message: 'Change password successfully !',
+            });
+          }
+        })
+        .catch(err => {
+          setIsSuccess(false);
+          setShowModalSuccess(!showModalSuccess);
+          setModalContent({
+            title: 'Failed',
+            message: 'Change password failed! Please try again.',
+          });
+        });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -17,41 +111,96 @@ const UpdateModal = ({isModalVisible, toggleModal}) => {
         animationIn="zoomIn"
         animationOut="zoomOut">
         {/* TITLE */}
-        <Text style={styles.title}>CHANGE PASSWORD</Text>
+        <Text style={styles.title}>{isSuccess ? '' : 'CHANGE PASSWORD'}</Text>
         {/* TITLE */}
 
-        <View style={styles.modalContainer}>
-          {/* CURRENT PASSWORD */}
-          <View style={styles.oldPasswordContainer}>
-            <Text style={styles.oldPassText}>Current Password</Text>
-            <TextInput
-              style={styles.oldPassInputStyle}
-              placeholder="current password"
-              secureTextEntry={true}
-            />
-          </View>
-          {/* CURRENT PASSWORD */}
+        <View
+          style={[
+            styles.modalContainer,
+            {
+              backgroundColor: showModalSuccess
+                ? COLORS.orange
+                : COLORS.gainsboro,
+              height: showModalSuccess
+                ? SIZES.height / 4 + 50
+                : SIZES.height / 4 + 20,
+            },
+          ]}>
+          {showModalSuccess ? (
+            <>
+              <View style={styles.modalContent}>
+                <FontAwesome
+                  name={isSuccess ? iconSuccess : iconFailed}
+                  size={100}
+                  color={COLORS.white}
+                />
+                <Text style={styles.titleStyle}>{modalContent.title}</Text>
+                <Text style={styles.msgModalStyle}>{modalContent.message}</Text>
+              </View>
+            </>
+          ) : (
+            <View style={styles.newPasswordContainer}>
+              <Text style={styles.newPassText}>New Password</Text>
+              <View style={styles.fieldStyle}>
+                <TextInput
+                  style={[
+                    styles.newPassInputStyle,
+                    {
+                      borderBottomColor: validPassword.isValid
+                        ? COLORS.black
+                        : COLORS.red,
+                    },
+                  ]}
+                  placeholder="new password"
+                  secureTextEntry={true}
+                  secureTextEntry={secureNewPwd}
+                  onChangeText={val => handlerChangePassword(val)}
+                />
 
-          {/* NEW PASSWORD */}
-          <View style={styles.newPasswordContainer}>
-            <Text style={styles.newPassText}>New Password</Text>
-            <TextInput
-              style={styles.newPassInputStyle}
-              placeholder="new password"
-              secureTextEntry={true}
-            />
-          </View>
-          {/* NEW PASSWORD */}
+                {/* SECURE ENTRY TEXT */}
+                <TouchableOpacity onPress={handlerEntryNewPwd}>
+                  {secureNewPwd ? (
+                    <Feather name="eye" color={COLORS.black} size={20} />
+                  ) : (
+                    <Feather name="eye-off" color={COLORS.black} size={20} />
+                  )}
+                </TouchableOpacity>
+                {/* SECURE ENTRY TEXT */}
+              </View>
+              {/* ERROR MESSAGE USERNAME */}
+              {validPassword.isValid == false && (
+                <Text style={styles.textError}>{validPassword.msgError}</Text>
+              )}
+              {/* ERROR MESSAGE USERNAME */}
+            </View>
+          )}
 
-          <View style={styles.buttonContainer}>
+          <View
+            style={[
+              styles.buttonContainer,
+              {
+                justifyContent: isSuccess ? 'center' : 'space-between',
+              },
+            ]}>
+            {/* BUTTON CANCEL */}
+            {isSuccess ? null : (
+              <TouchableOpacity
+                style={styles.btnCancelStyle}
+                onPress={toggleModal}>
+                <Text style={styles.btnCancelText}>CANCEL</Text>
+              </TouchableOpacity>
+            )}
+            {/* BUTTON CANCEL */}
+
+            {/* BUTTON UPDATE */}
             <TouchableOpacity
-              style={styles.btnCancelStyle}
-              onPress={toggleModal}>
-              <Text style={styles.btnCancelText}>CANCEL</Text>
+              style={styles.btnUpdateStyle}
+              onPress={handlerClickChangePassword}>
+              <Text style={styles.btnUpdateText}>
+                {showModalSuccess ? 'OK' : 'CHANGE'}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnUpdateStyle}>
-              <Text style={styles.btnUpdateText}>UPDATE</Text>
-            </TouchableOpacity>
+            {/* BUTTON UPDATE */}
           </View>
         </View>
       </Modal>
@@ -73,34 +222,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   modalContainer: {
-    height: SIZES.height / 3,
-    backgroundColor: COLORS.gainsboro,
     borderRadius: SIZES.radius,
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
-  oldPasswordContainer: {
-    flexDirection: 'column',
+  fieldStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
   },
   newPasswordContainer: {
     flexDirection: 'column',
     marginTop: 20,
   },
-  oldPassInputStyle: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.black,
-    height: 30,
-    fontSize: 18,
-  },
   newPassInputStyle: {
     borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.black,
     height: 30,
     fontSize: 18,
-  },
-  oldPassText: {
-    fontSize: 20,
-    fontWeight: '500',
+    width: '95%',
   },
   newPassText: {
     fontSize: 20,
@@ -109,12 +249,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: 20,
   },
   btnUpdateStyle: {
-    paddingHorizontal: 35,
-    paddingVertical: 15,
+    width: 130,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primary,
@@ -137,6 +277,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.white,
     fontWeight: 'bold',
+  },
+  modalContent: {
+    flex: 3,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  textError: {
+    color: COLORS.red,
+    marginTop: 5,
+  },
+  titleStyle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: COLORS.white,
+  },
+  msgModalStyle: {
+    fontSize: 18,
+    color: COLORS.white,
+    textAlign: 'center',
   },
 });
 
