@@ -228,11 +228,11 @@ const SignUpScreen = ({navigation}) => {
                   {/* CHECK PHONE */}
                 </View>
 
-                {/* ERROR EMAIL */}
+                {/* ERROR PHONE */}
                 {errors.phone && (
                   <Text style={styles.textError}>{errors.phone}</Text>
                 )}
-                {/* ERROR EMAIL */}
+                {/* ERROR PHONE */}
 
                 {/* PHONE */}
 
@@ -312,32 +312,6 @@ const SignUpScreen = ({navigation}) => {
                 {/* ERROR PASSWORD */}
 
                 {/* PASSWORD */}
-
-                {/* CONFIRM PASSWORD */}
-                {/* <Text
-                  style={[
-                    styles.text_footer,
-                    {
-                      marginTop: 30,
-                    },
-                  ]}>
-                  Confirm Password
-                </Text>
-                <View style={styles.action}>
-                  <Feather name="lock" color="#05375a" size={20} />
-                  <TextInput
-                    placeholder="Confirm Your Password"
-                    secureTextEntry={isEntryPwd ? true : false}
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    onChangeText={handleChange('')}
-                  />
-                  <TouchableOpacity>
-                    <Feather name="eye-off" color="grey" size={20} />
-                    <Feather name="eye" color="grey" size={20} />
-                  </TouchableOpacity>
-                </View> */}
-                {/* CONFIRM PASSWORD */}
 
                 <View style={styles.button}>
                   {/* SIGN UP */}

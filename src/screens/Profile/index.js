@@ -11,8 +11,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES, tools} from '../../constants';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {getProfile} from '../../services/authAPI';
+import {getProfile} from '../../services/profileAPI';
 import {GetAccessToken} from '../../utils/storage';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -24,26 +25,27 @@ const ProfileScreen = () => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
+  // get profile
+  const myProfile = useSelector(getProfileSelector);
+
   // state my profile
   const [profile, setProfile] = useState({});
 
+  // get access token
+  const token = useSelector(getAccessTokenSelector);
+
   // get profile info from api
   useEffect(() => {
-    const setAccessTokenToRedux = async () => {
-      const accessStorage = await GetAccessToken();
-      if (accessStorage) {
-        getProfile(accessStorage)
-          .then(res => setProfile(res.data.content))
-          .catch(err => console.log(err));
-      }
-    };
-
-    setAccessTokenToRedux();
-  }, []);
+    if (token) {
+      getProfile(token)
+        .then(res => setProfile(res.data.content))
+        .catch(err => console.log(err));
+    }
+  }, [myProfile]);
 
   // render list tools
   const renderListTools = ({item}) => {
-    return <ToolProfle item={item} />;
+    return <ToolProfle item={item} profile={profile} />;
   };
 
   return (

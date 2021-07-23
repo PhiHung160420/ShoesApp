@@ -25,6 +25,7 @@ export const COLORS = {
   lightGray2: '#707070',
   lightGray3: '#f0f0f0',
   gainsboro: '#dcdcdc',
+  orange: '#ff6347',
   gold: '#ffd700',
   pink: '#D993B4',
   lightPink: '#F3DEE8',
@@ -73,6 +74,7 @@ export const SIZES = {
 export const darkTheme = {
   name: 'dark',
   backgroundColor: COLORS.secondary,
+  subBackgroundColor: COLORS.lightGray,
   textColor: COLORS.white,
   tabBackgroundColor: COLORS.lightGray,
   flatlistbackgroundItem: COLORS.darkgray,
@@ -82,11 +84,13 @@ export const darkTheme = {
   bottomTabBarBackgroundColor: COLORS.gray3,
   headerColor: COLORS.yellow,
   viewBackground: COLORS.gainsboro,
+  borderBottomColor: COLORS.white,
 };
 
 export const lightTheme = {
   name: 'light',
   backgroundColor: COLORS.lightGray3,
+  subBackgroundColor: COLORS.gainsboro,
   textColor: COLORS.black,
   tabBackgroundColor: COLORS.yellow,
   flatlistbackgroundItem: COLORS.gainsboro,
@@ -96,6 +100,7 @@ export const lightTheme = {
   bottomTabBarBackgroundColor: COLORS.lightYellow,
   headerColor: COLORS.red,
   viewBackground: COLORS.silver,
+  borderBottomColor: COLORS.black,
 };
 
 export const selectedTheme = darkTheme;

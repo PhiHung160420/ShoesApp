@@ -17,12 +17,3 @@ export const useSignUp = data => {
     data,
   });
 };
-
-// api get profile info
-export const getProfile = token => {
-  return axios({
-    method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/getProfile',
-    headers: {Authorization: `Bearer ${token}`},
-  });
-};
