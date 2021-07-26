@@ -81,7 +81,8 @@
 		<string>fb553199295837652</string>
 	</array>
 	</dict>
-	</array>
+	</array>	
+
 	<key>FacebookAppID</key>
 	<string>553199295837652</string>
 
@@ -103,5 +104,12 @@
 	<string>fbauth2</string>
 	<string>fbshareextension</string>
 	</array>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>My description about why I need this capability</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app does not require access to the microphone.</string>
 </dict>
 </plist>
