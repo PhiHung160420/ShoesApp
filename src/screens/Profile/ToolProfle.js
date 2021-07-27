@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {RemoveAccessToken} from '../../utils/storage';
+import {removeAccessTokenInStorage} from '../../utils/storage';
 import {handlerSignOut} from '../../redux/actions/authAction';
 import {COLORS, SIZES} from '../../constants';
 import {useNavigation} from '@react-navigation/native';
@@ -29,7 +29,7 @@ const ToolProfle = ({item, profile}) => {
 
   // handler on click logout
   const handlerLogOut = async () => {
-    await RemoveAccessToken();
+    await removeAccessTokenInStorage();
     dispatch(handlerSignOut(null));
   };
 

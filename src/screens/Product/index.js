@@ -11,17 +11,25 @@ import {
 import HeaderBar from '../../components/HeaderBar';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
+import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
 import {COLORS, SIZES} from '../../constants';
-import {getProductById} from '../../services/productAPI';
+import {getProductById, likeProduct} from '../../services/productAPI';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const nameIcon = 'arrow-back-outline';
 
 const ProducDetailScreen = ({route}) => {
   // get product id
   const {productId} = route.params;
+
+  // get access token
+  const token = useSelector(getAccessTokenSelector);
+
+  // get productsFavorite
+  const productsFavorite = useSelector(getProductsFavoriteSelector);
 
   // state product
   const [product, setProduct] = useState({});
@@ -35,8 +43,8 @@ const ProducDetailScreen = ({route}) => {
   // get appTheme from store
   const appTheme = useSelector(getAppThemeSelector);
 
-  // get product by id
   useEffect(() => {
+    // get product by id
     getProductById(productId)
       .then(res => setProduct(res.data.content))
       .catch(err => console.log(err));
@@ -50,6 +58,13 @@ const ProducDetailScreen = ({route}) => {
   // handler selected size
   const handlerSelectedSize = size => {
     setSizeSelected(size);
+  };
+
+  // handler when click like button
+  const handlerLikeProduct = () => {
+    likeProduct(productId, token)
+      .then(res => console.log(res.data.content))
+      .catch(err => console.log(err));
   };
 
   // render list sizes
@@ -101,12 +116,10 @@ const ProducDetailScreen = ({route}) => {
             },
           ]}>
           <Image source={{uri: product.image}} style={styles.imageStyle} />
-          <TouchableOpacity style={styles.likeButton}>
-            <Feather
-              name="heart"
-              size={35}
-              color={appTheme.name == 'dark' ? 'white' : 'black'}
-            />
+          <TouchableOpacity
+            style={styles.likeButton}
+            onPress={handlerLikeProduct}>
+            <FontAwesome name="heart" size={30} color={COLORS.red} />
           </TouchableOpacity>
         </View>
         <ScrollView

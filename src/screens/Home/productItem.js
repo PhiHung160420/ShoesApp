@@ -8,13 +8,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, SIZES} from '../../constants';
+import {useSelector} from 'react-redux';
+import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
 
 const ProductItem = ({product, appTheme}) => {
   // use navigation
   const navigation = useNavigation();
+
+  //const productsFavorite = useSelector(getProductsFavoriteSelector);
 
   return (
     <TouchableOpacity
@@ -38,11 +42,7 @@ const ProductItem = ({product, appTheme}) => {
           </Text>
         </View>
         <TouchableOpacity>
-          <Feather
-            name="heart"
-            color={appTheme.name == 'dark' ? 'white' : 'black'}
-            size={25}
-          />
+          <FontAwesome name={'heart'} color={COLORS.red} size={25} />
         </TouchableOpacity>
       </View>
       <Image

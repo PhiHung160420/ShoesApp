@@ -14,7 +14,7 @@ import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getProfile} from '../../services/profileAPI';
-import {GetAccessToken} from '../../utils/storage';
+import {getAccessTokenFromStorage} from '../../utils/storage';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ToolProfle from './ToolProfle';

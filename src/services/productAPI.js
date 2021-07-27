@@ -22,7 +22,7 @@ export const likeProduct = (productId, token) => {
   });
 };
 
-export const getProductFavorite = token => {
+export const getProductsFavoriteFromAPI = token => {
   return axios({
     method: 'GET',
     url: 'http://svcy3.myclass.vn/api/Users/getproductfavorite',
