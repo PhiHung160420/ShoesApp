@@ -11,10 +11,14 @@ import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {SIZES, COLORS} from '../../constants';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/native';
 
 const ProductItem = ({item}) => {
   // get appTheme from store
   const appTheme = useSelector(getAppThemeSelector);
+
+  // use navigation
+  const navigation = useNavigation();
 
   return (
     <View
@@ -37,7 +41,11 @@ const ProductItem = ({item}) => {
             {item.price}
           </Text>
         </View>
-        <TouchableOpacity style={styles.viewBtnContainer}>
+        <TouchableOpacity
+          style={styles.viewBtnContainer}
+          onPress={() =>
+            navigation.navigate('ProducDetailScreen', {productId: item.id})
+          }>
           <Text style={[styles.viewBtnContent, {color: appTheme.textColor}]}>
             View
           </Text>
@@ -112,8 +120,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   viewBtnContent: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '500',
   },
   rightContent: {
     flex: 1,

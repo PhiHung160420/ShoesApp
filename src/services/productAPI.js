@@ -13,3 +13,19 @@ export const getProductById = id => {
     url: `http://svcy3.myclass.vn/api/Product/getbyid?id=${id}`,
   });
 };
+
+export const likeProduct = (productId, token) => {
+  return axios({
+    method: 'GET',
+    url: `http://svcy3.myclass.vn/api/Users/like?productId=${productId}`,
+    headers: {Authorization: `Bearer ${token}`},
+  });
+};
+
+export const getProductFavorite = token => {
+  return axios({
+    method: 'GET',
+    url: 'http://svcy3.myclass.vn/api/Users/getproductfavorite',
+    headers: {Authorization: `Bearer ${token}`},
+  });
+};

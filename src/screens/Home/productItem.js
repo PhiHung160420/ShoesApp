@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, SIZES} from '../../constants';
 
@@ -37,7 +37,13 @@ const ProductItem = ({product, appTheme}) => {
             {product.price}
           </Text>
         </View>
-        <AntIcon name="heart" color="red" size={20} />
+        <TouchableOpacity>
+          <Feather
+            name="heart"
+            color={appTheme.name == 'dark' ? 'white' : 'black'}
+            size={25}
+          />
+        </TouchableOpacity>
       </View>
       <Image
         source={{uri: product.image}}

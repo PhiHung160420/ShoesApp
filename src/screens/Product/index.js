@@ -15,6 +15,7 @@ import {COLORS, SIZES} from '../../constants';
 import {getProductById} from '../../services/productAPI';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -100,6 +101,13 @@ const ProducDetailScreen = ({route}) => {
             },
           ]}>
           <Image source={{uri: product.image}} style={styles.imageStyle} />
+          <TouchableOpacity style={styles.likeButton}>
+            <Feather
+              name="heart"
+              size={35}
+              color={appTheme.name == 'dark' ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
         </View>
         <ScrollView
           style={[
@@ -230,6 +238,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 5,
+    position: 'relative',
   },
   imageStyle: {
     width: '90%',
@@ -363,6 +372,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLORS.white,
     fontWeight: 'bold',
+  },
+  likeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 10,
   },
 });
 
