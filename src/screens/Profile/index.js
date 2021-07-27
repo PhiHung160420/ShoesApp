@@ -68,9 +68,9 @@ const ProfileScreen = () => {
             {/* IMAGES */}
 
             {/* ICON ADD PHOTO */}
-            <TouchableOpacity style={styles.iconContainer}>
+            {/* <TouchableOpacity style={styles.iconContainer}>
               <Materia name="add-a-photo" size={30} color="white" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {/* ICON ADD PHOTO */}
 
             {/* NAME */}

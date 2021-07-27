@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
@@ -19,8 +20,10 @@ import {handlerSetProfile} from '../../redux/actions/profileAction';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import {updateProfile} from '../../services/profileAPI';
+import {updateProfile, uploadAvatar} from '../../services/profileAPI';
 import CustomModal from '../../components/CustomModal';
+import UploadPhoto from './UploadPhoto';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const iconName = 'arrow-back-outline';
 
@@ -28,6 +31,21 @@ const regexPhone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 
 const regexEmail =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+const createFormData = photo => {
+  const data = new FormData();
+
+  data.append('photo', {
+    name: photo.filename,
+    type: photo.mime,
+    uri:
+      Platform.OS === 'ios'
+        ? photo.sourceURL.replace('file://', '')
+        : photo.sourceURL,
+  });
+
+  return data;
+};
 
 const UpdateProfile = ({route}) => {
   // get my profile
@@ -62,6 +80,15 @@ const UpdateProfile = ({route}) => {
 
   // state show modal
   const [isModalVisible, setModalVisible] = useState(false);
+
+  // state photo
+  const [photo, setPhoto] = useState(null);
+
+  // state upload success
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  // state show hide panel
+  const [showPanel, setShowPanel] = useState(false);
 
   // state gender selected
   // true = male, false = female
@@ -147,6 +174,11 @@ const UpdateProfile = ({route}) => {
     setModalVisible(!isModalVisible);
   };
 
+  // handler show hide panel
+  const handlerShowHidePanel = () => {
+    setShowPanel(!showPanel);
+  };
+
   // update gender when change gender
   useEffect(() => {
     setData({...data, gender: gender});
@@ -191,6 +223,39 @@ const UpdateProfile = ({route}) => {
     }
   };
 
+  //handler when click button take a photo
+  const takePhotoFromCammara = () => {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log('image: ' + image);
+      setShowPanel(false);
+    });
+  };
+
+  // handler choose photo from library
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      setPhoto(image);
+      setShowPanel(false);
+    });
+  };
+
+  // handler upload avatar
+  const handlerClickUploadAvatar = () => {
+    uploadAvatar(createFormData(photo), accessToken)
+      .then(res => {
+        setUploadSuccess(true);
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <View style={styles.container}>
       {/* HEADER BAR */}
@@ -220,23 +285,42 @@ const UpdateProfile = ({route}) => {
           {backgroundColor: appTheme.subBackgroundColor},
         ]}>
         {/* AVATAR */}
-        <View style={styles.avatarProfileContainer}>
+        <View
+          style={[
+            styles.avatarProfileContainer,
+            {marginTop: photo ? (uploadSuccess ? -60 : -40) : -60},
+          ]}>
           <View style={styles.avatarContainer}>
             {/* IMAGES */}
-            <Image source={{uri: profile.avatar}} style={styles.avatarStyle} />
+            <Image
+              source={{
+                uri: photo ? photo.path : profile.avatar,
+              }}
+              style={styles.avatarStyle}
+            />
             {/* IMAGES */}
 
-            {/* ICON ADD PHOTO */}
-            <TouchableOpacity style={styles.iconStyle}>
-              <Materia name="add-a-photo" size={30} color="white" />
-            </TouchableOpacity>
-            {/* ICON ADD PHOTO */}
+            {uploadSuccess == false ? (
+              photo ? (
+                <TouchableOpacity
+                  style={styles.uploadBtnStyle}
+                  onPress={handlerClickUploadAvatar}>
+                  <Text style={styles.uploadBtnText}>Upload</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.iconStyle}
+                  onPress={handlerShowHidePanel}>
+                  <Materia name="add-a-photo" size={30} color="white" />
+                </TouchableOpacity>
+              )
+            ) : null}
           </View>
         </View>
         {/* AVATAR */}
 
         {/* INFO PROFILE */}
-        <View style={styles.infoProfileContainer}>
+        <View style={[styles.infoProfileContainer]}>
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* USERNAME */}
             <Text style={[styles.textField, {color: appTheme.textColor}]}>
@@ -470,6 +554,15 @@ const UpdateProfile = ({route}) => {
           {/* BUTTON UPDATE */}
         </View>
         {/* INFO PROFILE */}
+        {/* PANEL */}
+        {showPanel ? (
+          <UploadPhoto
+            handlerShowHidePanel={handlerShowHidePanel}
+            takePhotoFromCammara={takePhotoFromCammara}
+            choosePhotoFromLibrary={choosePhotoFromLibrary}
+          />
+        ) : null}
+        {/* PANEL */}
       </View>
     </View>
   );
@@ -497,7 +590,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -50,
   },
   avatarContainer: {
     justifyContent: 'center',
@@ -594,6 +686,19 @@ const styles = StyleSheet.create({
   textError: {
     color: COLORS.red,
     marginTop: 5,
+  },
+  uploadBtnStyle: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.green,
+    marginTop: 5,
+    borderRadius: SIZES.radius,
+  },
+  uploadBtnText: {
+    fontSize: 15,
+    fontWeight: '500',
   },
 });
 
