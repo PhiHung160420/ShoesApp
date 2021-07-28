@@ -45,7 +45,7 @@ const HomeScreen = ({navigation}) => {
   const productsFavorite = useSelector(getProductsFavoriteSelector);
 
   // state list product favorite
-  const [listFavorite, setListFavorite] = useState([]);
+  //const [listFavorite, setListFavorite] = useState([]);
 
   // state list products
   const [listProducts, setListProducts] = useState([]);
@@ -62,19 +62,27 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   // get new products favorite then click like or unlike
-  useEffect(() => {
+  /* useEffect(() => {
     getProductsFavoriteFromAPI(accessToken)
       .then(res => {
         setListFavorite(res.data.content.productsFavorite);
       })
       .catch(err => console.log(err));
-  }, [productsFavorite]);
+  }, [productsFavorite]); */
 
   // render items
   const renderListProduct = ({item}) => {
-    var isLiked = null;
-    if (listFavorite.length !== 0) {
+    var isLiked = false;
+    /* if (listFavorite.length !== 0) {
       listFavorite.forEach(product => {
+        if (product.id == item.id) {
+          isLiked = true;
+        }
+      });
+    } */
+
+    if (typeof productsFavorite == 'object') {
+      productsFavorite.forEach(product => {
         if (product.id == item.id) {
           isLiked = true;
         }

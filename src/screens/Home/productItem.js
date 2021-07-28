@@ -42,7 +42,7 @@ const ProductItem = ({product, appTheme, isLiked}) => {
     getProductsFavoriteFromAPI(token)
       .then(res => {
         dispatch(hanlderSetProductFavorite(res.data.content.productsFavorite));
-        setProductsFavoriteToStorage(
+        saveProductsFavoriteToStorage(
           JSON.stringify(res.data.content.productsFavorite),
         );
       })

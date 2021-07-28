@@ -48,7 +48,7 @@ const ProducDetailScreen = ({route}) => {
   const [product, setProduct] = useState({});
 
   // state for product was liked
-  const [isLiked, setIsLiked] = useState(false);
+  const [productFavorite, setProductFavorite] = useState(false);
 
   // state show description
   const [showDescript, setShowDescript] = useState(false);
@@ -65,19 +65,25 @@ const ProducDetailScreen = ({route}) => {
 
   // set product is like again when click like or unlike
   useEffect(() => {
-    getProductsFavoriteFromAPI(accessToken)
+    /* getProductsFavoriteFromAPI(accessToken)
       .then(res => {
         const listFavorite = res.data.content.productsFavorite;
 
         listFavorite.forEach(e => {
           if (e.id == productId) {
-            setIsLiked(true);
-          } else {
-            setIsLiked(false);
+            setProductFavorite(true);
           }
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); */
+
+    if (typeof productsFavorite == 'object') {
+      productsFavorite.forEach(e => {
+        if (e.id == productId) {
+          setProductFavorite(true);
+        }
+      });
+    }
   }, [productsFavorite]);
 
   // handler show description
@@ -109,13 +115,15 @@ const ProducDetailScreen = ({route}) => {
 
   // handler when click like button
   const handlerLikeOrUnLikeProduct = () => {
-    if (isLiked) {
+    if (productFavorite) {
+      setProductFavorite(false);
       unLikeProductAPI(productId, accessToken)
         .then(res => {
           saveProductToReduxAndStorage(accessToken);
         })
         .catch(err => console.log(err));
     } else {
+      setProductFavorite(true);
       likeProductAPI(productId, accessToken)
         .then(res => {
           saveProductToReduxAndStorage(accessToken);
@@ -151,8 +159,6 @@ const ProducDetailScreen = ({route}) => {
           styles.relatedItem,
           {
             shadowColor: appTheme.shadowColor,
-            backgroundColor:
-              appTheme.name == 'dark' ? COLORS.lightGray : COLORS.gainsboro,
           },
         ]}>
         <Image source={{uri: item.image}} style={styles.imageRelated} />
@@ -177,9 +183,9 @@ const ProducDetailScreen = ({route}) => {
             style={styles.likeButton}
             onPress={handlerLikeOrUnLikeProduct}>
             <FontAwesome
-              name={isLiked ? 'heart' : 'heart-o'}
+              name={productFavorite ? 'heart' : 'heart-o'}
               size={30}
-              color={isLiked ? COLORS.red : appTheme.textColor}
+              color={productFavorite ? COLORS.red : appTheme.textColor}
             />
           </TouchableOpacity>
         </View>
@@ -266,14 +272,7 @@ const ProducDetailScreen = ({route}) => {
 
           {/* ADD - BUY */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[
-                styles.addCardBtn,
-                {
-                  backgroundColor:
-                    appTheme.name == 'dark' ? COLORS.lightGray : COLORS.silver,
-                },
-              ]}>
+            <TouchableOpacity style={[styles.addCardBtn]}>
               <Text style={[styles.addCardStyle]}>Add To Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buyProductBtn}>
@@ -401,7 +400,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    backgroundColor: COLORS.gainsboro,
+    backgroundColor: COLORS.darkgray,
     shadowOffset: {
       height: 2,
       width: 2,
@@ -429,6 +428,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.darkgray,
   },
   addCardStyle: {
     fontSize: 20,

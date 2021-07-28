@@ -18,8 +18,8 @@ import {
   getProductsFavoriteFromAPI,
   unLikeProductAPI,
 } from '../../services/productAPI';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {setProductsFavoriteToStorage} from '../../utils/storage';
+import ProductFavorite from './ProductFavorite';
 
 const FavoriteScreen = ({navigation}) => {
   // get app theme
@@ -58,6 +58,7 @@ const FavoriteScreen = ({navigation}) => {
       .catch(err => console.log(err));
   };
 
+  // handler when click remove product in list favorite
   const handlerRemoveProduct = productId => {
     unLikeProductAPI(productId, accessToken)
       .then(res => {
@@ -66,29 +67,9 @@ const FavoriteScreen = ({navigation}) => {
       .catch(err => console.log(err));
   };
 
+  // render list product favorite
   const renderListFavorite = ({item}) => (
-    <TouchableOpacity
-      style={[
-        styles.productContainer,
-        {backgroundColor: appTheme.flatlistbackgroundItem},
-      ]}
-      onPress={() =>
-        navigation.navigate('ProducDetailScreen', {productId: item.id})
-      }>
-      <View style={styles.leftContainer}>
-        <Image source={{uri: item.image}} style={styles.productImage} />
-        <View style={styles.productNameContainer}>
-          <Text style={[styles.productname, {color: appTheme.textColor}]}>
-            {item.name}
-          </Text>
-        </View>
-      </View>
-      <View style={styles.rightContainer}>
-        <TouchableOpacity onPress={() => handlerRemoveProduct(item.id)}>
-          <Ionicons name="heart-dislike-circle" size={50} color={COLORS.red} />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+    <ProductFavorite handlerRemoveProduct={handlerRemoveProduct} item={item} />
   );
 
   return (
@@ -107,15 +88,28 @@ const FavoriteScreen = ({navigation}) => {
             backgroundColor: appTheme.backgroundColor,
           },
         ]}>
-        <FlatList
-          data={listFavorite}
-          keyExtractor={item => item.id}
-          renderItem={renderListFavorite}
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-          contentContainerStyle={styles.contentContainerStyle}
-        />
+        {listFavorite.length !== 0 ? (
+          <FlatList
+            data={listFavorite}
+            keyExtractor={item => item.id}
+            renderItem={renderListFavorite}
+            horizontal={false}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            contentContainerStyle={styles.contentContainerStyle}
+            snapToInterval={110}
+          />
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Image
+              source={require('../../assets/images/empty-folder.png')}
+              style={styles.emptyIcon}
+            />
+            <Text style={[styles.emptyText, {color: appTheme.textColor}]}>
+              Opps... You have no favorite product
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -141,42 +135,21 @@ const styles = StyleSheet.create({
     marginTop: -20,
   },
   contentContainerStyle: {
-    paddingTop: 20,
-    paddingBottom: 100,
+    paddingTop: 10,
+    paddingBottom: 150,
   },
-  productContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 120,
-    borderRadius: SIZES.radius * 2,
-    marginHorizontal: 10,
-  },
-  leftContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    marginLeft: 5,
-  },
-  rightContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    marginRight: 10,
-  },
-  productImage: {
-    height: 140,
-    width: 140,
-  },
-  productNameContainer: {
+  emptyContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150,
-    marginLeft: 5,
+    marginTop: 50,
   },
-  productname: {
-    fontSize: 18,
-    fontWeight: '700',
+  emptyIcon: {
+    width: 300,
+    height: 300,
+  },
+  emptyText: {
+    fontSize: 30,
+    fontWeight: '500',
     textAlign: 'center',
   },
 });
