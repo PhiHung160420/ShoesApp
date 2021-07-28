@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {apiUrl} from '../utils/urlConst';
 
 // api get profile info
 export const getProfile = token => {
   return axios({
     method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/getProfile',
+    url: `${apiUrl}/Users/getProfile`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };
@@ -12,7 +13,7 @@ export const getProfile = token => {
 export const updateProfile = (data, token) => {
   return axios({
     method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/updateProfile',
+    url: `${apiUrl}/Users/updateProfile`,
     headers: {Authorization: `Bearer ${token}`},
     data,
   });
@@ -21,7 +22,7 @@ export const updateProfile = (data, token) => {
 export const changePassword = (data, token) => {
   return axios({
     method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/changePassword',
+    url: `${apiUrl}/Users/changePassword`,
     headers: {Authorization: `Bearer ${token}`},
     data,
   });
@@ -30,7 +31,7 @@ export const changePassword = (data, token) => {
 export const uploadAvatar = (formData, token) => {
   return axios({
     method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/uploadavatar',
+    url: `${apiUrl}/Users/uploadavatar`,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',

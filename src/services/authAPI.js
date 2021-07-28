@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {apiUrl} from '../utils/urlConst';
 
 // api sign in
 export const useSignIn = data => {
   return axios({
     method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/signin',
+    url: `${apiUrl}/Users/signin`,
     data,
   });
 };
@@ -13,7 +14,7 @@ export const useSignIn = data => {
 export const useSignUp = data => {
   return axios({
     method: 'POST',
-    url: 'http://svcy3.myclass.vn/api/Users/signup',
+    url: `${apiUrl}/Users/signup`,
     data,
   });
 };

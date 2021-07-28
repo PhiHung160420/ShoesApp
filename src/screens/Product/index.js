@@ -9,15 +9,22 @@ import {
   FlatList,
 } from 'react-native';
 import HeaderBar from '../../components/HeaderBar';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
 import {COLORS, SIZES} from '../../constants';
-import {getProductById, likeProduct} from '../../services/productAPI';
+import {
+  getProductById,
+  getProductsFavoriteFromAPI,
+  likeProductAPI,
+  unLikeProductAPI,
+} from '../../services/productAPI';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
+import {setProductsFavoriteToStorage} from '../../utils/storage';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -25,8 +32,14 @@ const ProducDetailScreen = ({route}) => {
   // get product id
   const {productId} = route.params;
 
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // get appTheme from store
+  const appTheme = useSelector(getAppThemeSelector);
+
   // get access token
-  const token = useSelector(getAccessTokenSelector);
+  const accessToken = useSelector(getAccessTokenSelector);
 
   // get productsFavorite
   const productsFavorite = useSelector(getProductsFavoriteSelector);
@@ -34,6 +47,7 @@ const ProducDetailScreen = ({route}) => {
   // state product
   const [product, setProduct] = useState({});
 
+  // state for product was liked
   const [isLiked, setIsLiked] = useState(false);
 
   // state show description
@@ -42,22 +56,29 @@ const ProducDetailScreen = ({route}) => {
   // state size selected
   const [sizeSelected, setSizeSelected] = useState('');
 
-  // get appTheme from store
-  const appTheme = useSelector(getAppThemeSelector);
-
   useEffect(() => {
     // get product by id
     getProductById(productId)
       .then(res => setProduct(res.data.content))
       .catch(err => console.log(err));
-    if (typeof productsFavorite == 'object') {
-      productsFavorite.map(e => {
-        if (e.id == productId) {
-          setIsLiked(true);
-        }
-      });
-    }
   }, []);
+
+  // set product is like again when click like or unlike
+  useEffect(() => {
+    getProductsFavoriteFromAPI(accessToken)
+      .then(res => {
+        const listFavorite = res.data.content.productsFavorite;
+
+        listFavorite.forEach(e => {
+          if (e.id == productId) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
+        });
+      })
+      .catch(err => console.log(err));
+  }, [productsFavorite]);
 
   // handler show description
   const handlerShowDescript = () => {
@@ -69,11 +90,38 @@ const ProducDetailScreen = ({route}) => {
     setSizeSelected(size);
   };
 
-  // handler when click like button
-  const handlerLikeProduct = () => {
-    likeProduct(productId, token)
-      .then(res => console.log(res.data.content))
+  // save products favorite to storage
+  const saveProductsFavoriteToStorage = async data => {
+    return await setProductsFavoriteToStorage(data);
+  };
+
+  // save product to redux and storage
+  const saveProductToReduxAndStorage = token => {
+    getProductsFavoriteFromAPI(token)
+      .then(res => {
+        dispatch(hanlderSetProductFavorite(res.data.content.productsFavorite));
+        saveProductsFavoriteToStorage(
+          JSON.stringify(res.data.content.productsFavorite),
+        );
+      })
       .catch(err => console.log(err));
+  };
+
+  // handler when click like button
+  const handlerLikeOrUnLikeProduct = () => {
+    if (isLiked) {
+      unLikeProductAPI(productId, accessToken)
+        .then(res => {
+          saveProductToReduxAndStorage(accessToken);
+        })
+        .catch(err => console.log(err));
+    } else {
+      likeProductAPI(productId, accessToken)
+        .then(res => {
+          saveProductToReduxAndStorage(accessToken);
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // render list sizes
@@ -127,7 +175,7 @@ const ProducDetailScreen = ({route}) => {
           <Image source={{uri: product.image}} style={styles.imageStyle} />
           <TouchableOpacity
             style={styles.likeButton}
-            onPress={handlerLikeProduct}>
+            onPress={handlerLikeOrUnLikeProduct}>
             <FontAwesome
               name={isLiked ? 'heart' : 'heart-o'}
               size={30}
