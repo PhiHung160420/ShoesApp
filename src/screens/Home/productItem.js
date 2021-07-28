@@ -14,11 +14,9 @@ import {COLORS, SIZES} from '../../constants';
 import {useSelector} from 'react-redux';
 import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
 
-const ProductItem = ({product, appTheme}) => {
+const ProductItem = ({product, appTheme, isLiked}) => {
   // use navigation
   const navigation = useNavigation();
-
-  //const productsFavorite = useSelector(getProductsFavoriteSelector);
 
   return (
     <TouchableOpacity
@@ -42,7 +40,11 @@ const ProductItem = ({product, appTheme}) => {
           </Text>
         </View>
         <TouchableOpacity>
-          <FontAwesome name={'heart'} color={COLORS.red} size={25} />
+          <FontAwesome
+            name={isLiked == true ? 'heart' : 'heart-o'}
+            color={isLiked ? COLORS.red : appTheme.textColor}
+            size={25}
+          />
         </TouchableOpacity>
       </View>
       <Image

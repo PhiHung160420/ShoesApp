@@ -34,6 +34,8 @@ const ProducDetailScreen = ({route}) => {
   // state product
   const [product, setProduct] = useState({});
 
+  const [isLiked, setIsLiked] = useState(false);
+
   // state show description
   const [showDescript, setShowDescript] = useState(false);
 
@@ -48,6 +50,13 @@ const ProducDetailScreen = ({route}) => {
     getProductById(productId)
       .then(res => setProduct(res.data.content))
       .catch(err => console.log(err));
+    if (typeof productsFavorite == 'object') {
+      productsFavorite.map(e => {
+        if (e.id == productId) {
+          setIsLiked(true);
+        }
+      });
+    }
   }, []);
 
   // handler show description
@@ -119,7 +128,11 @@ const ProducDetailScreen = ({route}) => {
           <TouchableOpacity
             style={styles.likeButton}
             onPress={handlerLikeProduct}>
-            <FontAwesome name="heart" size={30} color={COLORS.red} />
+            <FontAwesome
+              name={isLiked ? 'heart' : 'heart-o'}
+              size={30}
+              color={isLiked ? COLORS.red : appTheme.textColor}
+            />
           </TouchableOpacity>
         </View>
         <ScrollView

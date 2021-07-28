@@ -49,7 +49,19 @@ const HomeScreen = ({navigation}) => {
 
   // render items
   const renderListProduct = ({item}) => {
-    return <ProductItem product={item} appTheme={appTheme} />;
+    var isLiked = null;
+    if (typeof productsFavorite == 'object') {
+      productsFavorite.map(e => {
+        if (e.id == item.id) {
+          isLiked = true;
+        }
+      });
+      return (
+        <ProductItem product={item} appTheme={appTheme} isLiked={isLiked} />
+      );
+    } else {
+      <ProductItem product={item} appTheme={appTheme} isLiked={isLiked} />;
+    }
   };
 
   const renderListCategories = ({item}) => {
