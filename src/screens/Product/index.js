@@ -9,13 +9,22 @@ import {
   FlatList,
 } from 'react-native';
 import HeaderBar from '../../components/HeaderBar';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
+import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
 import {COLORS, SIZES} from '../../constants';
-import {getProductById} from '../../services/productAPI';
+import {
+  getProductById,
+  getProductsFavoriteFromAPI,
+  likeProductAPI,
+  unLikeProductAPI,
+} from '../../services/productAPI';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
+import {setProductsFavoriteToStorage} from '../../utils/storage';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -23,8 +32,23 @@ const ProducDetailScreen = ({route}) => {
   // get product id
   const {productId} = route.params;
 
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // get appTheme from store
+  const appTheme = useSelector(getAppThemeSelector);
+
+  // get access token
+  const accessToken = useSelector(getAccessTokenSelector);
+
+  // get productsFavorite
+  const productsFavorite = useSelector(getProductsFavoriteSelector);
+
   // state product
   const [product, setProduct] = useState({});
+
+  // state for product was liked
+  const [productFavorite, setProductFavorite] = useState(false);
 
   // state show description
   const [showDescript, setShowDescript] = useState(false);
@@ -32,15 +56,35 @@ const ProducDetailScreen = ({route}) => {
   // state size selected
   const [sizeSelected, setSizeSelected] = useState('');
 
-  // get appTheme from store
-  const appTheme = useSelector(getAppThemeSelector);
-
-  // get product by id
   useEffect(() => {
+    // get product by id
     getProductById(productId)
       .then(res => setProduct(res.data.content))
       .catch(err => console.log(err));
   }, []);
+
+  // set product is like again when click like or unlike
+  useEffect(() => {
+    /* getProductsFavoriteFromAPI(accessToken)
+      .then(res => {
+        const listFavorite = res.data.content.productsFavorite;
+
+        listFavorite.forEach(e => {
+          if (e.id == productId) {
+            setProductFavorite(true);
+          }
+        });
+      })
+      .catch(err => console.log(err)); */
+
+    if (typeof productsFavorite == 'object') {
+      productsFavorite.forEach(e => {
+        if (e.id == productId) {
+          setProductFavorite(true);
+        }
+      });
+    }
+  }, [productsFavorite]);
 
   // handler show description
   const handlerShowDescript = () => {
@@ -50,6 +94,42 @@ const ProducDetailScreen = ({route}) => {
   // handler selected size
   const handlerSelectedSize = size => {
     setSizeSelected(size);
+  };
+
+  // save products favorite to storage
+  const saveProductsFavoriteToStorage = async data => {
+    return await setProductsFavoriteToStorage(data);
+  };
+
+  // save product to redux and storage
+  const saveProductToReduxAndStorage = token => {
+    getProductsFavoriteFromAPI(token)
+      .then(res => {
+        dispatch(hanlderSetProductFavorite(res.data.content.productsFavorite));
+        saveProductsFavoriteToStorage(
+          JSON.stringify(res.data.content.productsFavorite),
+        );
+      })
+      .catch(err => console.log(err));
+  };
+
+  // handler when click like button
+  const handlerLikeOrUnLikeProduct = () => {
+    if (productFavorite) {
+      setProductFavorite(false);
+      unLikeProductAPI(productId, accessToken)
+        .then(res => {
+          saveProductToReduxAndStorage(accessToken);
+        })
+        .catch(err => console.log(err));
+    } else {
+      setProductFavorite(true);
+      likeProductAPI(productId, accessToken)
+        .then(res => {
+          saveProductToReduxAndStorage(accessToken);
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // render list sizes
@@ -79,8 +159,6 @@ const ProducDetailScreen = ({route}) => {
           styles.relatedItem,
           {
             shadowColor: appTheme.shadowColor,
-            backgroundColor:
-              appTheme.name == 'dark' ? COLORS.lightGray : COLORS.gainsboro,
           },
         ]}>
         <Image source={{uri: item.image}} style={styles.imageRelated} />
@@ -101,11 +179,13 @@ const ProducDetailScreen = ({route}) => {
             },
           ]}>
           <Image source={{uri: product.image}} style={styles.imageStyle} />
-          <TouchableOpacity style={styles.likeButton}>
-            <Feather
-              name="heart"
-              size={35}
-              color={appTheme.name == 'dark' ? 'white' : 'black'}
+          <TouchableOpacity
+            style={styles.likeButton}
+            onPress={handlerLikeOrUnLikeProduct}>
+            <FontAwesome
+              name={productFavorite ? 'heart' : 'heart-o'}
+              size={30}
+              color={productFavorite ? COLORS.red : appTheme.textColor}
             />
           </TouchableOpacity>
         </View>
@@ -192,14 +272,7 @@ const ProducDetailScreen = ({route}) => {
 
           {/* ADD - BUY */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[
-                styles.addCardBtn,
-                {
-                  backgroundColor:
-                    appTheme.name == 'dark' ? COLORS.lightGray : COLORS.silver,
-                },
-              ]}>
+            <TouchableOpacity style={[styles.addCardBtn]}>
               <Text style={[styles.addCardStyle]}>Add To Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buyProductBtn}>
@@ -327,7 +400,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    backgroundColor: COLORS.gainsboro,
+    backgroundColor: COLORS.darkgray,
     shadowOffset: {
       height: 2,
       width: 2,
@@ -355,6 +428,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.darkgray,
   },
   addCardStyle: {
     fontSize: 20,

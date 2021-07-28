@@ -1,31 +1,40 @@
 import axios from 'axios';
+import {apiUrl} from '../utils/urlConst';
 
 export const getAllProduct = () => {
   return axios({
     method: 'GET',
-    url: 'http://svcy3.myclass.vn/api/Product',
+    url: `${apiUrl}/Product`,
   });
 };
 
 export const getProductById = id => {
   return axios({
     method: 'GET',
-    url: `http://svcy3.myclass.vn/api/Product/getbyid?id=${id}`,
+    url: `${apiUrl}/Product/getbyid?id=${id}`,
   });
 };
 
-export const likeProduct = (productId, token) => {
+export const likeProductAPI = (productId, token) => {
   return axios({
     method: 'GET',
-    url: `http://svcy3.myclass.vn/api/Users/like?productId=${productId}`,
+    url: `${apiUrl}/Users/like?productId=${productId}`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };
 
-export const getProductFavorite = token => {
+export const unLikeProductAPI = (productId, token) => {
   return axios({
     method: 'GET',
-    url: 'http://svcy3.myclass.vn/api/Users/getproductfavorite',
+    url: `${apiUrl}/Users/unlike?productId=${productId}`,
+    headers: {Authorization: `Bearer ${token}`},
+  });
+};
+
+export const getProductsFavoriteFromAPI = token => {
+  return axios({
+    method: 'GET',
+    url: `${apiUrl}/Users/getproductfavorite`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };

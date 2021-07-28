@@ -8,13 +8,59 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, SIZES} from '../../constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
+import {
+  getProductsFavoriteFromAPI,
+  likeProductAPI,
+  unLikeProductAPI,
+} from '../../services/productAPI';
+import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
+import {setProductsFavoriteToStorage} from '../../utils/storage';
 
-const ProductItem = ({product, appTheme}) => {
+const ProductItem = ({product, appTheme, isLiked}) => {
   // use navigation
   const navigation = useNavigation();
+
+  // get access token from store
+  const accessToken = useSelector(getAccessTokenSelector);
+
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // save products favorite to storage
+  const saveProductsFavoriteToStorage = async data => {
+    return await setProductsFavoriteToStorage(data);
+  };
+
+  // save products favorite to redux and store
+  const saveFavoriteToReduxAndStorage = token => {
+    getProductsFavoriteFromAPI(token)
+      .then(res => {
+        dispatch(hanlderSetProductFavorite(res.data.content.productsFavorite));
+        saveProductsFavoriteToStorage(
+          JSON.stringify(res.data.content.productsFavorite),
+        );
+      })
+      .catch(err => console.log(err));
+  };
+
+  // handler when click like or unlike product
+  const handlerClickLikeProduct = () => {
+    if (isLiked) {
+      unLikeProductAPI(product.id, accessToken)
+        .then(res => saveFavoriteToReduxAndStorage(accessToken))
+        .catch(err => console.log(err));
+    } else {
+      likeProductAPI(product.id, accessToken)
+        .then(res => saveFavoriteToReduxAndStorage(accessToken))
+        .catch(err => console.log(err));
+    }
+  };
 
   return (
     <TouchableOpacity
@@ -37,10 +83,10 @@ const ProductItem = ({product, appTheme}) => {
             {product.price}
           </Text>
         </View>
-        <TouchableOpacity>
-          <Feather
-            name="heart"
-            color={appTheme.name == 'dark' ? 'white' : 'black'}
+        <TouchableOpacity onPress={handlerClickLikeProduct}>
+          <FontAwesome
+            name={isLiked == true ? 'heart' : 'heart-o'}
+            color={isLiked ? COLORS.red : appTheme.textColor}
             size={25}
           />
         </TouchableOpacity>

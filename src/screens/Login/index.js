@@ -20,7 +20,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useSignIn} from '../../services/authAPI';
 import {useDispatch} from 'react-redux';
 import {handlerSignIn} from '../../redux/actions/authAction';
-import {SetAccessToken} from '../../utils/storage';
+import {SetAccessTokenToStorage} from '../../utils/storage';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -45,7 +45,7 @@ const SignInScreen = ({navigation}) => {
     useSignIn(values)
       .then(res => {
         if (res.data.statusCode === 200) {
-          SetAccessToken(res.data.content.accessToken);
+          SetAccessTokenToStorage(res.data.content.accessToken);
 
           dispatch(handlerSignIn(res.data.content.accessToken));
         }

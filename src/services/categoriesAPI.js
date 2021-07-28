@@ -1,15 +1,16 @@
 import axios from 'axios';
+import {apiUrl} from '../utils/urlConst';
 
 export const getAllCategoriesAPI = () => {
   return axios({
     method: 'GET',
-    url: 'http://svcy3.myclass.vn/api/Product/getAllCategory',
+    url: `${apiUrl}/Product/getAllCategory`,
   });
 };
 
 export const getProductByCategory = categoryId => {
   return axios({
     method: 'GET',
-    url: `http://svcy3.myclass.vn/api/Product/getProductByCategory?categoryId=${categoryId}`,
+    url: `${apiUrl}/Product/getProductByCategory?categoryId=${categoryId}`,
   });
 };
