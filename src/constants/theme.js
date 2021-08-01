@@ -83,7 +83,7 @@ export const darkTheme = {
   cardBackgroundColor: COLORS.gray3,
   bottomTabBarBackgroundColor: COLORS.gray3,
   headerColor: COLORS.yellow,
-  viewBackground: COLORS.gainsboro,
+  viewBackground: COLORS.darkgray,
   borderBottomColor: COLORS.white,
 };
 
@@ -99,7 +99,7 @@ export const lightTheme = {
   cardBackgroundColor: COLORS.silver,
   bottomTabBarBackgroundColor: COLORS.lightYellow,
   headerColor: COLORS.red,
-  viewBackground: COLORS.silver,
+  viewBackground: COLORS.gainsboro,
   borderBottomColor: COLORS.black,
 };
 

@@ -25,6 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
 import {setProductsFavoriteToStorage} from '../../utils/storage';
+import {addProductToCart} from '../../redux/actions/cartAction';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -130,6 +131,11 @@ const ProducDetailScreen = ({route}) => {
         })
         .catch(err => console.log(err));
     }
+  };
+
+  // handler add produc to cart
+  const handlerAddProductToCart = product => {
+    dispatch(addProductToCart(product));
   };
 
   // render list sizes
@@ -272,7 +278,9 @@ const ProducDetailScreen = ({route}) => {
 
           {/* ADD - BUY */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.addCardBtn]}>
+            <TouchableOpacity
+              style={[styles.addCardBtn]}
+              onPress={product => handlerAddProductToCart(product)}>
               <Text style={[styles.addCardStyle]}>Add To Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buyProductBtn}>

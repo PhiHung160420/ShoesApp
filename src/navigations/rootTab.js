@@ -24,6 +24,7 @@ import {COLORS, SIZES, icons} from '../constants/index';
 import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
+import {getNumberCartSelector} from '../redux/selectors/cartSelector';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,6 +53,7 @@ const CustomTabbarBottom = ({
   isFloat,
   children,
   appTheme,
+  numberCart,
 }) => {
   if (isFloat) {
     return (
@@ -69,7 +71,7 @@ const CustomTabbarBottom = ({
         </Svg>
         <TouchableOpacity style={styles.customBtnCenter} onPress={onPress}>
           <View style={styles.cartStyle}>
-            <Text style={styles.cartNumber}>1</Text>
+            <Text style={styles.cartNumber}>{numberCart}</Text>
           </View>
           {children}
         </TouchableOpacity>
@@ -108,8 +110,13 @@ const tabbarOptions = {
 };
 
 const RootTab = () => {
+  // get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
+
   const [colorIcon, setColorIcon] = useState(COLORS.primary);
+
+  // get numberCart from redux
+  const numberCart = useSelector(getNumberCartSelector);
 
   useEffect(() => {
     if (appTheme.name === 'dark') {
@@ -192,7 +199,12 @@ const RootTab = () => {
             />
           ),
           tabBarButton: props => (
-            <CustomTabbarBottom {...props} isFloat={true} appTheme={appTheme} />
+            <CustomTabbarBottom
+              {...props}
+              isFloat={true}
+              appTheme={appTheme}
+              numberCart={numberCart}
+            />
           ),
         }}
       />

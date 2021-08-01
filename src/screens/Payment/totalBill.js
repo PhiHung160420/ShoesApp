@@ -19,27 +19,33 @@ const TotalBill = ({appTheme}) => {
       ]}>
       {/* SUBTOTAL */}
       <View style={styles.subTotalContainer}>
-        <Text style={styles.subText}>Subtotal</Text>
+        <Text style={[styles.subText, {color: appTheme.textColor}]}>
+          Subtotal
+        </Text>
         <ProductPrice colorText={styles.colorText}>1000</ProductPrice>
       </View>
       {/* SUBTOTAL */}
 
       {/* DELIVERY COST */}
       <View style={styles.deliveryCostContainer}>
-        <Text style={styles.costText}>Delivery Cost</Text>
+        <Text style={[styles.costText, {color: appTheme.textColor}]}>
+          Delivery Cost
+        </Text>
         <ProductPrice colorText={styles.colorText}>100</ProductPrice>
       </View>
       {/* DELIVERY COST */}
 
       {/* SEPARATE */}
       <View style={styles.separateContainer}>
-        <View style={styles.separate} />
+        <View style={[styles.separate, {borderColor: appTheme.textColor}]} />
       </View>
       {/* SEPARATE */}
 
       {/* TOTAL */}
       <View style={styles.TotalContainer}>
-        <Text style={styles.totalText}>Total</Text>
+        <Text style={[styles.totalText, {color: appTheme.textColor}]}>
+          Total
+        </Text>
         <ProductPrice colorText={styles.colorText}>900</ProductPrice>
       </View>
       {/* TOTAL */}
@@ -71,7 +77,6 @@ const styles = StyleSheet.create({
   },
   separate: {
     borderWidth: 0.3,
-    borderColor: COLORS.gray3,
     marginVertical: 10,
   },
   TotalContainer: {

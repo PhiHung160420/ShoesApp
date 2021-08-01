@@ -17,7 +17,7 @@ import {COLORS, SIZES} from '../../constants';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
-const ProductItem = ({item, listSize}) => {
+const ProductItem = ({item}) => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
@@ -109,7 +109,7 @@ const ProductItem = ({item, listSize}) => {
 
               {/* QUANTITY */}
               <Text style={[styles.quantityText, {color: appTheme.textColor}]}>
-                1
+                {item.quantity}
               </Text>
               {/* QUANTITY */}
 
@@ -140,7 +140,7 @@ const ProductItem = ({item, listSize}) => {
                 <Text style={styles.sizeText}>42</Text>
               </View>
               <ModalDropdown
-                options={listSize}
+                options={item.size}
                 defaultValue={'42'}
                 style={styles.sizeStyle}
                 dropdownStyle={styles.sizeDropdown}
@@ -174,18 +174,20 @@ const ProductItem = ({item, listSize}) => {
 
 const styles = StyleSheet.create({
   productItemContainer: {
-    borderRadius: SIZES.radius * 3,
-    width: SIZES.width - 15,
-    height: 130,
+    borderRadius: SIZES.radius * 2,
+    width: SIZES.width - 20,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    height: 120,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     shadowOffset: {
-      height: 2,
+      height: 4,
       width: 2,
     },
     shadowOpacity: 0.5,
-    shadowRadius: 3,
+    shadowRadius: 1,
   },
   leftItemContainer: {
     flex: 1,
