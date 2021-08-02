@@ -29,6 +29,8 @@ import {
   setProductsFavoriteToStorage,
 } from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
+import {getProfileSelector} from '../../redux/selectors/profileSelector';
+import PopupAddToCart from '../../components/popupAddToCart';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -59,6 +61,8 @@ const ProducDetailScreen = ({route}) => {
 
   // state size selected
   const [sizeSelected, setSizeSelected] = useState('');
+
+  const [showHidePopup, setShowHidePopup] = useState(false);
 
   useEffect(() => {
     // get product by id
@@ -124,10 +128,17 @@ const ProducDetailScreen = ({route}) => {
     }
   };
 
+  //handler show hide popup
+  const handlerShowHidePopup = () => {
+    setShowHidePopup(!showHidePopup);
+  };
+
   // handler add product to cart
   const handlerAddProductToCart = product => {
     // save to redux
     dispatch(addProductToCart(product));
+    // show popup
+    setShowHidePopup(true);
   };
 
   // render list sizes
@@ -165,7 +176,15 @@ const ProducDetailScreen = ({route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {opacity: showHidePopup ? 0.5 : 1}]}>
+      {/* POPUP */}
+      {showHidePopup && (
+        <PopupAddToCart
+          showHidePopup={showHidePopup}
+          handlerShowHidePopup={handlerShowHidePopup}
+        />
+      )}
+      {/* POPUP */}
       <HeaderBar nameIcon={nameIcon} customStyle={styles.customStyle} />
       <View style={[styles.contentContainer]}>
         <View

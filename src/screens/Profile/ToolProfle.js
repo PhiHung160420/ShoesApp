@@ -3,11 +3,15 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {removeAccessTokenInStorage} from '../../utils/storage';
+import {
+  removeAccessTokenInStorage,
+  removeCartsInStorage,
+} from '../../utils/storage';
 import {handlerSignOut} from '../../redux/actions/authAction';
 import {COLORS, SIZES} from '../../constants';
 import {useNavigation} from '@react-navigation/native';
 import UpdateModal from '../../components/UpdateModal';
+import {removeAllCarts} from '../../redux/actions/cartAction';
 
 const ToolProfle = ({item, profile}) => {
   // use dispatch
@@ -29,7 +33,9 @@ const ToolProfle = ({item, profile}) => {
 
   // handler on click logout
   const handlerLogOut = async () => {
+    await removeCartsInStorage();
     await removeAccessTokenInStorage();
+    dispatch(removeAllCarts([]));
     dispatch(handlerSignOut(null));
   };
 

@@ -5,11 +5,19 @@ import {
   REMOVE_FROM_CART,
   GET_NUMBER_CART,
   SET_CARTS,
+  REMOVE_ALL_CARTS,
 } from './actionType';
 
 export const setCarts = payload => {
   return {
     type: SET_CARTS,
+    payload,
+  };
+};
+
+export const removeAllCarts = payload => {
+  return {
+    type: REMOVE_ALL_CARTS,
     payload,
   };
 };

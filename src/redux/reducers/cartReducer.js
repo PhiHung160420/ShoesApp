@@ -5,6 +5,7 @@ import {
   REMOVE_FROM_CART,
   GET_NUMBER_CART,
   SET_CARTS,
+  REMOVE_ALL_CARTS,
 } from '../actions/actionType';
 
 const initialState = {
@@ -23,6 +24,12 @@ const CartReducer = (state = initialState, action) => {
     case GET_NUMBER_CART:
       return {
         ...state,
+      };
+    case REMOVE_ALL_CARTS:
+      return {
+        ...state,
+        carts: action.payload,
+        numberCart: 0,
       };
     case ADD_TO_CART:
       const product = action.payload;

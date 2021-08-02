@@ -26,6 +26,7 @@ import {handlerSetProfile} from '../redux/actions/profileAction';
 import {getProductsFavoriteFromAPI} from '../services/productAPI';
 import {hanlderSetProductFavorite} from '../redux/actions/productAction';
 import {addProductToCart, setCarts} from '../redux/actions/cartAction';
+import {getProfileSelector} from '../redux/selectors/profileSelector';
 
 const Stack = createStackNavigator();
 
@@ -61,23 +62,11 @@ const RootNavigator = () => {
       }
     };
 
-    // carts
-    const setCartsToRedux = async () => {
-      const carts = await getCartsFromStorage();
-
-      if (carts) {
-        dispatch(setCarts(JSON.parse(carts)));
-      }
-    };
-
     // save access token
     setAccessTokenToRedux();
 
     // save product favorite
     setProductsFavoriteToRedux();
-
-    // save carts
-    setCartsToRedux();
   }, []);
 
   useEffect(() => {
@@ -85,11 +74,21 @@ const RootNavigator = () => {
       return await setProductsFavoriteToStorage(data);
     };
 
+    // carts
+    const setCartsToRedux = async () => {
+      const carts = await getCartsFromStorage();
+      const cartsObj = JSON.parse(carts);
+
+      if (cartsObj?.carts.length) {
+        dispatch(setCarts(cartsObj));
+      }
+    };
+
     if (accessToken) {
       // xác thực đăng nhập thành công
       setAuthSuccess(true);
 
-      // gọi api để lây profile
+      // gọi api để lấy profile
       // + Lưu vào redux
       getProfile(accessToken)
         .then(res => dispatch(handlerSetProfile(res.data.content)))
@@ -108,6 +107,8 @@ const RootNavigator = () => {
           );
         })
         .catch(err => console.log(err));
+
+      setCartsToRedux();
     } else {
       setAuthSuccess(false);
     }

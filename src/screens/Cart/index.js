@@ -16,6 +16,7 @@ import {getAllProduct} from '../../services/productAPI';
 import ProductPrice from '../../components/ProductPrice';
 import ProductItem from './ProductItem';
 import {setCartsToStorage} from '../../utils/storage';
+import {getProfileSelector} from '../../redux/selectors/profileSelector';
 
 const CartScreen = ({navigation}) => {
   // get app theme from store
@@ -23,6 +24,9 @@ const CartScreen = ({navigation}) => {
 
   // use dispatch
   const dispatch = useDispatch();
+
+  // get profile from redux
+  //const profile = useSelector(getProfileSelector);
 
   // get cart info from redux
   const cartsInfo = useSelector(getCartsSelector);
