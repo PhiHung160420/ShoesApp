@@ -10,25 +10,33 @@ import Modal from 'react-native-modal';
 import {COLORS, SIZES} from '../constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
 import {getProfile} from '../services/profileAPI';
+import {removeCartsInStorage} from '../utils/storage';
+import {removeAllCarts} from '../redux/actions/cartAction';
 
 const iconSuccess = 'smile-o';
 const iconFailed = 'frown-o';
 
-const CustomModal = ({
+const OrderSuccess = ({
   isModalVisible,
   toggleModal,
   modalContent,
-  isSuccess,
+  orderSuccess,
 }) => {
   // use navigation
   const navigation = useNavigation();
 
-  const handlerClickButton = () => {
-    if (isSuccess) {
-      navigation.navigate('ProfileScreen');
+  const dispatch = useDispatch();
+
+  const handlerClickButton = async () => {
+    if (orderSuccess) {
+      toggleModal();
+      navigation.push('HomeScreen');
+      // remove all product in cart in redux and storage
+      await removeCartsInStorage();
+      dispatch(removeAllCarts([]));
     } else {
       toggleModal();
     }
@@ -43,7 +51,7 @@ const CustomModal = ({
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <FontAwesome
-              name={isSuccess ? iconSuccess : iconFailed}
+              name={orderSuccess ? iconSuccess : iconFailed}
               size={100}
               color={COLORS.white}
             />
@@ -56,15 +64,10 @@ const CustomModal = ({
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.btnCancelStyle}
-              onPress={toggleModal}>
-              <Text style={styles.btnCancelText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btnOkStyle}
+              style={styles.btnContinue}
               onPress={handlerClickButton}>
-              <Text style={styles.btnOkText}>
-                {isSuccess ? 'Ok' : 'Try again'}
+              <Text style={styles.btnContinueText}>
+                {orderSuccess ? 'CONTINUE SHOPPING' : 'TRY AGAIN'}
               </Text>
             </TouchableOpacity>
           </View>
@@ -77,7 +80,7 @@ const CustomModal = ({
 const styles = StyleSheet.create({
   modalContainer: {
     height: SIZES.height / 3 - 30,
-    backgroundColor: COLORS.orange,
+    backgroundColor: COLORS.primary,
     borderRadius: SIZES.radius,
   },
   modalContent: {
@@ -99,35 +102,23 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: COLORS.gainsboro,
     borderBottomLeftRadius: SIZES.radius,
     borderBottomRightRadius: SIZES.radius,
   },
-  btnCancelStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-  },
-  btnCancelText: {
-    fontSize: 20,
-    fontWeight: '500',
-  },
-  btnOkStyle: {
+  btnContinue: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.silver,
     height: '100%',
+    borderBottomLeftRadius: SIZES.radius,
     borderBottomRightRadius: SIZES.radius,
   },
-  btnOkText: {
+  btnContinueText: {
     fontSize: 20,
     fontWeight: '500',
   },
 });
 
-export default CustomModal;
+export default OrderSuccess;

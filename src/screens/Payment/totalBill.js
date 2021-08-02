@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,7 +10,16 @@ import {
 import {COLORS, SIZES} from '../../constants';
 import ProductPrice from '../../components/ProductPrice';
 
-const TotalBill = ({appTheme}) => {
+const TotalBill = ({appTheme, totalCart}) => {
+  // delivery cost
+  const [deliveryCost, setDeliveryCost] = useState(100);
+
+  const [totalBill, setTotalBill] = useState(0);
+
+  useEffect(() => {
+    setTotalBill(totalCart - deliveryCost);
+  }, []);
+
   return (
     <View
       style={[
@@ -22,7 +31,7 @@ const TotalBill = ({appTheme}) => {
         <Text style={[styles.subText, {color: appTheme.textColor}]}>
           Subtotal
         </Text>
-        <ProductPrice colorText={styles.colorText}>1000</ProductPrice>
+        <ProductPrice colorText={styles.colorText}>{totalCart}</ProductPrice>
       </View>
       {/* SUBTOTAL */}
 
@@ -31,7 +40,7 @@ const TotalBill = ({appTheme}) => {
         <Text style={[styles.costText, {color: appTheme.textColor}]}>
           Delivery Cost
         </Text>
-        <ProductPrice colorText={styles.colorText}>100</ProductPrice>
+        <ProductPrice colorText={styles.colorText}>{deliveryCost}</ProductPrice>
       </View>
       {/* DELIVERY COST */}
 
@@ -46,7 +55,7 @@ const TotalBill = ({appTheme}) => {
         <Text style={[styles.totalText, {color: appTheme.textColor}]}>
           Total
         </Text>
-        <ProductPrice colorText={styles.colorText}>900</ProductPrice>
+        <ProductPrice colorText={styles.colorText}>{totalBill}</ProductPrice>
       </View>
       {/* TOTAL */}
     </View>

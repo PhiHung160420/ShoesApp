@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
@@ -9,12 +9,48 @@ import PaymentMethod from './paymentMethod';
 import TotalBill from './totalBill';
 import ButtonPayment from './buttonPayment';
 import Promotion from './promotion';
+import {getCartsSelector} from '../../redux/selectors/cartSelector';
+import OrderSuccess from '../../components/OrderSuccess';
 
 const nameIcon = 'arrow-back-outline';
 
-const PaymentScreen = () => {
+const PaymentScreen = ({route}) => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
+
+  // state show modal
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  // state message show modal
+  const [modalContent, setModalContent] = useState({});
+
+  // state order success
+  const [isOrderSuccess, setOrderSuccess] = useState(false);
+
+  // handler show hide modal
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  // get total cart from params
+  const {totalCart} = route.params;
+
+  // get carts from redux
+  const cartsInfo = useSelector(getCartsSelector);
+
+  useEffect(() => {
+    if (isOrderSuccess) {
+      setModalContent({
+        title: 'Success!',
+        message: 'Congratulation! Your payment was complete.',
+      });
+    } else {
+      setModalContent({
+        title: 'Oh Snap!',
+        message: 'Your order fail! Please check your order again.',
+      });
+    }
+  }, [isOrderSuccess]);
 
   return (
     <View style={styles.container}>
@@ -27,6 +63,17 @@ const PaymentScreen = () => {
         </View>
       </HeaderBar>
       {/* HEADER BAR */}
+
+      {/* MODAL */}
+      {isModalVisible && (
+        <OrderSuccess
+          isModalVisible={isModalVisible}
+          toggleModal={toggleModal}
+          modalContent={modalContent}
+          orderSuccess={isOrderSuccess}
+        />
+      )}
+      {/* MODAL */}
 
       {/* PAYMENT CONTAINER */}
       <View style={styles.contentContainer}>
@@ -48,11 +95,18 @@ const PaymentScreen = () => {
           {/* PROMOTION */}
 
           {/* TOTAL BILL */}
-          <TotalBill appTheme={appTheme} />
+          <TotalBill appTheme={appTheme} totalCart={totalCart} />
           {/* TOTAL BILL */}
 
           {/* BUTTON PAYMENT */}
-          <ButtonPayment appTheme={appTheme} />
+          <ButtonPayment
+            appTheme={appTheme}
+            cartsInfo={cartsInfo}
+            setOrderSuccess={setOrderSuccess}
+            isOrderSuccess={isOrderSuccess}
+            setModalVisible={setModalVisible}
+            isModalVisible={isModalVisible}
+          />
           {/* BUTTON PAYMENT */}
         </View>
         {/* PAYMENT CONTAINER */}
