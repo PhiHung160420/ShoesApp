@@ -7,46 +7,51 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES} from '../../constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
+import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import {getAllProduct} from '../../services/productAPI';
 import ProductPrice from '../../components/ProductPrice';
 import ProductItem from './ProductItem';
+import {setCartsToStorage} from '../../utils/storage';
+import {getProfileSelector} from '../../redux/selectors/profileSelector';
 
 const CartScreen = ({navigation}) => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
-  // state list product
-  const [listProduct, setListProduct] = useState([]);
+  // use dispatch
+  const dispatch = useDispatch();
 
-  // handler get list product from api
+  // get profile from redux
+  //const profile = useSelector(getProfileSelector);
+
+  // get cart info from redux
+  const cartsInfo = useSelector(getCartsSelector);
+
+  // total price
+  const [totalCart, setTotalCart] = useState(0);
+
   useEffect(() => {
-    getAllProduct()
-      .then(res => setListProduct(res.data.content))
-      .catch(err => console.log(err));
-  }, []);
-
-  // convert string to object
-  const convertStringToArray = values => {
-    // convert to list number
-    const JSONString = values;
-    let object = JSON.parse(JSONString);
-    let array = Object.keys(object).map(k => {
-      return object[k];
+    let totalPrice = 0;
+    cartsInfo.carts.forEach(item => {
+      totalPrice += item.quantity * item.price;
+      setTotalCart(totalPrice);
     });
-    // convert list number to list string
-    let listString = [];
-    array.forEach(e => listString.push(e.toString()));
-    return listString;
-  };
+
+    // save carts to storage
+    const handlerSaveCartToStorage = async data => {
+      return await setCartsToStorage(data);
+    };
+
+    handlerSaveCartToStorage(JSON.stringify(cartsInfo));
+  }, [cartsInfo]);
 
   // render list product in cart
   const renderListProduct = ({item}) => {
-    const listSize = convertStringToArray(item.size);
-    return <ProductItem listSize={listSize} item={item} />;
+    return <ProductItem item={item} />;
   };
 
   return (
@@ -70,51 +75,71 @@ const CartScreen = ({navigation}) => {
           styles.cartContent,
           {backgroundColor: appTheme.backgroundColor},
         ]}>
-        {/* LIST PRODUCT */}
-        <View
-          style={[
-            styles.cartList,
-            {backgroundColor: appTheme.cardBackgroundColor},
-          ]}>
-          <FlatList
-            data={listProduct}
-            keyExtractor={item => item.id}
-            renderItem={renderListProduct}
-            horizontal={false}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.cartListContainer}
-            ItemSeparatorComponent={() => <View style={{height: 15}} />}
-            snapToInterval={145}
-          />
-        </View>
-        {/* LIST PRODUCT */}
+        {cartsInfo.carts.length !== 0 ? (
+          <>
+            <View
+              style={[
+                styles.cartList,
+                {backgroundColor: appTheme.backgroundColor},
+              ]}>
+              <FlatList
+                data={cartsInfo.carts}
+                keyExtractor={item => item.id}
+                renderItem={renderListProduct}
+                horizontal={false}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.cartListContainer}
+                ItemSeparatorComponent={() => <View style={{height: 10}} />}
+                snapToInterval={140}
+              />
+            </View>
 
-        {/* TOTAL - BUTTON CHECKOUT */}
-        <View
-          style={[
-            styles.cartSubContent,
-            {
-              backgroundColor:
-                appTheme.name == 'dark' ? COLORS.gray : COLORS.gainsboro,
-            },
-          ]}>
-          <View style={styles.cartTotal}>
-            <Text style={[styles.totalItem, {color: appTheme.textColor}]}>
-              5 item
+            <View
+              style={[
+                styles.cartSubContent,
+                {
+                  backgroundColor:
+                    appTheme.name == 'dark' ? COLORS.gray : COLORS.gainsboro,
+                },
+              ]}>
+              <View style={styles.cartTotal}>
+                <Text style={[styles.totalItem, {color: appTheme.textColor}]}>
+                  {cartsInfo.numberCart} item
+                </Text>
+                <ProductPrice>{totalCart}</ProductPrice>
+              </View>
+              <View style={styles.checkoutButton}>
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={() => navigation.navigate('PaymentScreen')}>
+                  <Text
+                    style={[styles.buttonText, {color: appTheme.textColor}]}>
+                    Checkout
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        ) : (
+          <View style={styles.cartImageContainer}>
+            <Image
+              source={require('../../assets/images/empty-cart.png')}
+              style={styles.cartImage}
+            />
+            <Text style={[styles.titleCartEmpty, {color: appTheme.textColor}]}>
+              Your cart is empty
             </Text>
-            <ProductPrice>500</ProductPrice>
-          </View>
-          <View style={styles.checkoutButton}>
+            <Text
+              style={[styles.contentCartEmpty, {color: appTheme.textColor}]}>
+              Looks like you haven't made your choice yet...
+            </Text>
             <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() => navigation.navigate('PaymentScreen')}>
-              <Text style={[styles.buttonText, {color: appTheme.textColor}]}>
-                Checkout
-              </Text>
+              style={styles.backToHomeBtn}
+              onPress={() => navigation.navigate('HomeScreen')}>
+              <Text style={styles.btnBackToHomeContent}>Back To Home</Text>
             </TouchableOpacity>
           </View>
-        </View>
-        {/* TOTAL - BUTTON CHECKOUT */}
+        )}
       </View>
       {/* CART LIST */}
     </View>
@@ -139,33 +164,29 @@ const styles = StyleSheet.create({
   },
   cartContent: {
     flex: 2,
-    borderTopLeftRadius: SIZES.radius,
-    borderTopRightRadius: SIZES.radius,
+    borderTopLeftRadius: SIZES.radius * 2,
+    borderTopRightRadius: SIZES.radius * 2,
     marginTop: -20,
   },
   cartList: {
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomLeftRadius: SIZES.radius,
-    borderBottomRightRadius: SIZES.radius,
-    borderTopLeftRadius: SIZES.radius,
-    borderTopRightRadius: SIZES.radius,
+    borderTopLeftRadius: SIZES.radius * 2,
+    borderTopRightRadius: SIZES.radius * 2,
   },
   cartSubContent: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopRightRadius: SIZES.radius,
-    borderTopLeftRadius: SIZES.radius,
+    borderTopRightRadius: SIZES.radius * 2,
+    borderTopLeftRadius: SIZES.radius * 2,
     marginTop: 10,
   },
   cartListContainer: {
     paddingTop: 15,
-    paddingBottom: 30,
-    width: SIZES.width,
-    paddingHorizontal: 5,
+    paddingBottom: 40,
   },
   cartTotal: {
     flex: 1,
@@ -192,6 +213,39 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 22,
     fontWeight: '500',
+  },
+  cartImageContainer: {
+    flex: 2,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 100,
+  },
+  cartImage: {
+    width: 200,
+    height: 200,
+  },
+  titleCartEmpty: {
+    fontSize: 30,
+    marginTop: 10,
+    marginBottom: 5,
+    opacity: 0.8,
+    fontWeight: '500',
+  },
+  contentCartEmpty: {
+    fontSize: 20,
+    textAlign: 'center',
+    opacity: 0.5,
+  },
+  backToHomeBtn: {
+    marginTop: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.primary,
+  },
+  btnBackToHomeContent: {
+    fontWeight: '500',
+    fontSize: 20,
   },
 });
 

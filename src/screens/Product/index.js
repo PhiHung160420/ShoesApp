@@ -24,7 +24,13 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
-import {setProductsFavoriteToStorage} from '../../utils/storage';
+import {
+  setCartsToStorage,
+  setProductsFavoriteToStorage,
+} from '../../utils/storage';
+import {addProductToCart} from '../../redux/actions/cartAction';
+import {getProfileSelector} from '../../redux/selectors/profileSelector';
+import PopupAddToCart from '../../components/popupAddToCart';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -56,6 +62,8 @@ const ProducDetailScreen = ({route}) => {
   // state size selected
   const [sizeSelected, setSizeSelected] = useState('');
 
+  const [showHidePopup, setShowHidePopup] = useState(false);
+
   useEffect(() => {
     // get product by id
     getProductById(productId)
@@ -65,18 +73,6 @@ const ProducDetailScreen = ({route}) => {
 
   // set product is like again when click like or unlike
   useEffect(() => {
-    /* getProductsFavoriteFromAPI(accessToken)
-      .then(res => {
-        const listFavorite = res.data.content.productsFavorite;
-
-        listFavorite.forEach(e => {
-          if (e.id == productId) {
-            setProductFavorite(true);
-          }
-        });
-      })
-      .catch(err => console.log(err)); */
-
     if (typeof productsFavorite == 'object') {
       productsFavorite.forEach(e => {
         if (e.id == productId) {
@@ -132,6 +128,19 @@ const ProducDetailScreen = ({route}) => {
     }
   };
 
+  //handler show hide popup
+  const handlerShowHidePopup = () => {
+    setShowHidePopup(!showHidePopup);
+  };
+
+  // handler add product to cart
+  const handlerAddProductToCart = product => {
+    // save to redux
+    dispatch(addProductToCart(product));
+    // show popup
+    setShowHidePopup(true);
+  };
+
   // render list sizes
   const renderListSize = ({item}) => {
     return (
@@ -167,7 +176,15 @@ const ProducDetailScreen = ({route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {opacity: showHidePopup ? 0.5 : 1}]}>
+      {/* POPUP */}
+      {showHidePopup && (
+        <PopupAddToCart
+          showHidePopup={showHidePopup}
+          handlerShowHidePopup={handlerShowHidePopup}
+        />
+      )}
+      {/* POPUP */}
       <HeaderBar nameIcon={nameIcon} customStyle={styles.customStyle} />
       <View style={[styles.contentContainer]}>
         <View
@@ -272,7 +289,9 @@ const ProducDetailScreen = ({route}) => {
 
           {/* ADD - BUY */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.addCardBtn]}>
+            <TouchableOpacity
+              style={[styles.addCardBtn]}
+              onPress={() => handlerAddProductToCart(product)}>
               <Text style={[styles.addCardStyle]}>Add To Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buyProductBtn}>

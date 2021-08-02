@@ -8,6 +8,7 @@ import DeliveryAddress from './address';
 import PaymentMethod from './paymentMethod';
 import TotalBill from './totalBill';
 import ButtonPayment from './buttonPayment';
+import Promotion from './promotion';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -41,6 +42,10 @@ const PaymentScreen = () => {
           {/* PAYMENT METHOD */}
           <PaymentMethod appTheme={appTheme} />
           {/* PAYMENT METHOD */}
+
+          {/* PROMOTION */}
+          <Promotion />
+          {/* PROMOTION */}
 
           {/* TOTAL BILL */}
           <TotalBill appTheme={appTheme} />
@@ -76,9 +81,9 @@ const styles = StyleSheet.create({
   },
   paymentContainer: {
     width: SIZES.width - 30,
-    height: SIZES.height - 200,
+    height: SIZES.height - 170,
     borderRadius: SIZES.radius * 2,
-    marginTop: -100,
+    marginTop: -80,
   },
 });
 

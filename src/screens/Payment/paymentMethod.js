@@ -40,7 +40,9 @@ const PaymentMethod = ({appTheme}) => {
           {/* CARD ICON */}
 
           {/* CARD NAME */}
-          <Text style={styles.methodName}>{item.name}</Text>
+          <Text style={[styles.methodName, {color: appTheme.textColor}]}>
+            {item.name}
+          </Text>
           {/* CARD NAME */}
         </View>
         {/* INFO CARD */}
@@ -85,7 +87,7 @@ const PaymentMethod = ({appTheme}) => {
 const styles = StyleSheet.create({
   paymentMethodContainer: {
     flex: 2,
-    marginTop: 20,
+    marginTop: 30,
     paddingHorizontal: 10,
   },
   paymentMethodBar: {
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: SIZES.radius,
     width: SIZES.width - 50,
-    height: 50,
+    height: 45,
     paddingHorizontal: 15,
   },
   methodInfo: {
