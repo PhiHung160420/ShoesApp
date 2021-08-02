@@ -8,14 +8,22 @@ import {
   Image,
   Animated,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import Feather from 'react-native-vector-icons/Feather';
 import ModalDropdown from 'react-native-modal-dropdown';
 import ProductPrice from '../../components/ProductPrice';
 import {COLORS, SIZES} from '../../constants';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import AwesomeAlert from 'react-native-awesome-alerts';
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from '../../redux/actions/cartAction';
+import AlertConfirmRemove from './alertConfirmRemove';
+import {getCartsSelector} from '../../redux/selectors/cartSelector';
+import {useNavigation} from '@react-navigation/native';
+import {removeCartsInStorage} from '../../utils/storage';
 
 const ProductItem = ({item}) => {
   // get app theme from store
@@ -24,7 +32,14 @@ const ProductItem = ({item}) => {
   // state show hide alert
   const [showAlert, setShowAlert] = useState(false);
 
+  // use ref
   const swipeableRef = useRef(null);
+
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // use navigation
+  const navigation = useNavigation();
 
   // hide alert
   const handlerShowAlert = () => {
@@ -55,36 +70,46 @@ const ProductItem = ({item}) => {
     );
   };
 
+  // handler increment quantity
+  const handlerIncrementQuantity = item => {
+    dispatch(incrementQuantity(item));
+  };
+
+  // handler decrement quantity
+  const handlerDecrementQuantity = item => {
+    if (item.quantity > 1) {
+      dispatch(decrementQuantity(item));
+    } else {
+      handlerShowAlert();
+    }
+  };
+
+  const handlerRemoveProductFromCart = async item => {
+    dispatch(removeFromCart(item));
+    await removeCartsInStorage();
+  };
+
   return (
     <Swipeable ref={swipeableRef} renderLeftActions={rightSwiper}>
-      <View
+      <TouchableOpacity
         style={[
           styles.productItemContainer,
           {
             backgroundColor: appTheme.flatlistbackgroundItem,
             shadowColor: appTheme.shadowColor,
           },
-        ]}>
-        {/* ALERT */}
-        <AwesomeAlert
-          show={showAlert}
-          title="Confirm"
-          message="Are you sure want to delete this shoes ?"
-          showCancelButton={true}
-          showConfirmButton={true}
-          cancelText="No"
-          confirmText="Yes"
-          onCancelPressed={handlerHideAlert}
-          onConfirmPressed={handlerHideAlert}
-          contentContainerStyle={styles.alertContainerStyle}
-          titleStyle={styles.titleAlertStyle}
-          messageStyle={styles.messageAlertStyle}
-          cancelButtonStyle={styles.cancelButtonStyle}
-          confirmButtonStyle={styles.confirmButtonStyle}
-          cancelButtonTextStyle={styles.cancelBtnTextStyle}
-          confirmButtonTextStyle={styles.confirmBtnTextStyle}
+        ]}
+        onPress={() =>
+          navigation.navigate('ProducDetailScreen', {productId: item.id})
+        }>
+        {/* ALERT CONFIRM REMOVE PRODUCT */}
+        <AlertConfirmRemove
+          item={item}
+          showAlert={showAlert}
+          handlerHideAlert={handlerHideAlert}
+          handlerRemoveProductFromCart={handlerRemoveProductFromCart}
         />
-        {/* ALERT */}
+        {/* ALERT CONFIRM REMOVE PRODUCT */}
 
         <View style={styles.leftItemContainer}>
           {/* NAME */}
@@ -102,7 +127,9 @@ const ProductItem = ({item}) => {
             {/* QUANTITY */}
             <View style={styles.quantityContainer}>
               {/* DESC BUTTON */}
-              <TouchableOpacity style={styles.ascQuantity}>
+              <TouchableOpacity
+                style={styles.ascQuantity}
+                onPress={() => handlerDecrementQuantity(item)}>
                 <Feather name="minus" size={20} color="black" />
               </TouchableOpacity>
               {/* DESC BUTTON */}
@@ -114,7 +141,9 @@ const ProductItem = ({item}) => {
               {/* QUANTITY */}
 
               {/* ASC BUTTON */}
-              <TouchableOpacity style={styles.descQuantity}>
+              <TouchableOpacity
+                style={styles.descQuantity}
+                onPress={() => handlerIncrementQuantity(item)}>
                 <Feather name="plus" size={20} color="white" />
               </TouchableOpacity>
               {/* ASC BUTTON */}
@@ -167,7 +196,7 @@ const ProductItem = ({item}) => {
           />
         </View>
         {/* IMAGE */}
-      </View>
+      </TouchableOpacity>
     </Swipeable>
   );
 };
@@ -289,38 +318,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#dc143c',
     width: 90,
     borderRadius: SIZES.radius * 2,
-  },
-  alertContainerStyle: {
-    borderRadius: SIZES.radius * 2,
-    backgroundColor: COLORS.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  titleAlertStyle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  messageAlertStyle: {
-    fontSize: 18,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  cancelButtonStyle: {
-    paddingHorizontal: 25,
-    paddingVertical: 10,
-  },
-  confirmButtonStyle: {
-    paddingHorizontal: 22,
-    paddingVertical: 10,
-    backgroundColor: COLORS.green,
-  },
-  cancelBtnTextStyle: {
-    fontSize: 20,
-    color: COLORS.black,
-  },
-  confirmBtnTextStyle: {
-    fontSize: 20,
-    color: COLORS.black,
   },
 });
 

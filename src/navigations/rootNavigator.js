@@ -16,6 +16,7 @@ import {getAccessTokenSelector} from '../redux/selectors/authSelector';
 import {getProductsFavoriteSelector} from '../redux/selectors/productSelector';
 import {
   getAccessTokenFromStorage,
+  getCartsFromStorage,
   getProductsFavoriteFromStorage,
   setProductsFavoriteToStorage,
 } from '../utils/storage';
@@ -24,6 +25,7 @@ import {getProfile} from '../services/profileAPI';
 import {handlerSetProfile} from '../redux/actions/profileAction';
 import {getProductsFavoriteFromAPI} from '../services/productAPI';
 import {hanlderSetProductFavorite} from '../redux/actions/productAction';
+import {addProductToCart, setCarts} from '../redux/actions/cartAction';
 
 const Stack = createStackNavigator();
 
@@ -39,7 +41,9 @@ const RootNavigator = () => {
 
   // lấy access token từ asyncStorage lưu vào redux
   // lấy products favorite từ asyncStorage lưu vào redux
+  // lấy carts từ asyncStorage lưu vào redux
   useEffect(() => {
+    // access token
     const setAccessTokenToRedux = async () => {
       const accessStorage = await getAccessTokenFromStorage();
 
@@ -48,6 +52,7 @@ const RootNavigator = () => {
       }
     };
 
+    // product favorite
     const setProductsFavoriteToRedux = async () => {
       const productsFavorite = await getProductsFavoriteFromStorage();
 
@@ -56,9 +61,23 @@ const RootNavigator = () => {
       }
     };
 
+    // carts
+    const setCartsToRedux = async () => {
+      const carts = await getCartsFromStorage();
+
+      if (carts) {
+        dispatch(setCarts(JSON.parse(carts)));
+      }
+    };
+
+    // save access token
+    setAccessTokenToRedux();
+
+    // save product favorite
     setProductsFavoriteToRedux();
 
-    setAccessTokenToRedux();
+    // save carts
+    setCartsToRedux();
   }, []);
 
   useEffect(() => {

@@ -4,7 +4,15 @@ import {
   DECREMENT_QUANTITY,
   REMOVE_FROM_CART,
   GET_NUMBER_CART,
+  SET_CARTS,
 } from './actionType';
+
+export const setCarts = payload => {
+  return {
+    type: SET_CARTS,
+    payload,
+  };
+};
 
 export const getNumberCart = payload => {
   return {

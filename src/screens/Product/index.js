@@ -24,7 +24,10 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
-import {setProductsFavoriteToStorage} from '../../utils/storage';
+import {
+  setCartsToStorage,
+  setProductsFavoriteToStorage,
+} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
 
 const nameIcon = 'arrow-back-outline';
@@ -66,18 +69,6 @@ const ProducDetailScreen = ({route}) => {
 
   // set product is like again when click like or unlike
   useEffect(() => {
-    /* getProductsFavoriteFromAPI(accessToken)
-      .then(res => {
-        const listFavorite = res.data.content.productsFavorite;
-
-        listFavorite.forEach(e => {
-          if (e.id == productId) {
-            setProductFavorite(true);
-          }
-        });
-      })
-      .catch(err => console.log(err)); */
-
     if (typeof productsFavorite == 'object') {
       productsFavorite.forEach(e => {
         if (e.id == productId) {
@@ -133,8 +124,9 @@ const ProducDetailScreen = ({route}) => {
     }
   };
 
-  // handler add produc to cart
+  // handler add product to cart
   const handlerAddProductToCart = product => {
+    // save to redux
     dispatch(addProductToCart(product));
   };
 
@@ -280,7 +272,7 @@ const ProducDetailScreen = ({route}) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.addCardBtn]}
-              onPress={product => handlerAddProductToCart(product)}>
+              onPress={() => handlerAddProductToCart(product)}>
               <Text style={[styles.addCardStyle]}>Add To Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buyProductBtn}>

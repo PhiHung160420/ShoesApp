@@ -52,3 +52,29 @@ export const removeProductsFavoriteInStorage = async () => {
   }
 };
 /* products favorite */
+
+/* shopping cart */
+export const setCartsToStorage = async values => {
+  try {
+    await AsyncStorage.setItem('carts', values);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCartsFromStorage = async () => {
+  try {
+    return await AsyncStorage.getItem('carts');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeCartsInStorage = async () => {
+  try {
+    await AsyncStorage.removeItem('carts');
+  } catch (error) {
+    console.log(error);
+  }
+};
+/* shopping cart */

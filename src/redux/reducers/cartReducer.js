@@ -4,6 +4,7 @@ import {
   DECREMENT_QUANTITY,
   REMOVE_FROM_CART,
   GET_NUMBER_CART,
+  SET_CARTS,
 } from '../actions/actionType';
 
 const initialState = {
@@ -13,6 +14,12 @@ const initialState = {
 
 const CartReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CARTS:
+      return {
+        ...state,
+        carts: action.payload.carts,
+        numberCart: action.payload.numberCart,
+      };
     case GET_NUMBER_CART:
       return {
         ...state,
@@ -20,6 +27,7 @@ const CartReducer = (state = initialState, action) => {
     case ADD_TO_CART:
       const product = action.payload;
       var check = false;
+
       if (state.numberCart == 0) {
         let cart = {
           id: product.id,
@@ -50,7 +58,7 @@ const CartReducer = (state = initialState, action) => {
           state.carts.push(_cart);
         }
       }
-      console.log(JSON.stringify(state.carts));
+
       if (!check) {
         return {
           ...state,
@@ -62,23 +70,29 @@ const CartReducer = (state = initialState, action) => {
         };
       }
     case INCREMENT_QUANTITY:
-      state.carts[action.payload].quantity++;
+      const indexAsc = state.carts.findIndex(e => e.id == action.payload.id);
+      state.carts[indexAsc].quantity++;
       return {
         ...state,
       };
     case DECREMENT_QUANTITY:
-      let quantity = state.carts[action.payload].quantity;
-      if (quantity > 1) {
-        state.carts[action.payload].quantity--;
+      const indexDesc = state.carts.findIndex(e => e.id == action.payload.id);
+      let quantity = state.carts[indexDesc].quantity;
+      if (quantity >= 0) {
+        state.carts[indexDesc].quantity--;
       }
       return {
         ...state,
       };
     case REMOVE_FROM_CART:
+      const indexRemove = state.carts.findIndex(e => e.id == action.payload.id);
+      if (state.numberCart > 0) {
+        state.numberCart--;
+      }
       return {
         ...state,
         carts: state.carts.filter(item => {
-          return item.id !== state.carts[action.payload].id;
+          return item.id !== state.carts[indexRemove].id;
         }),
       };
     default:

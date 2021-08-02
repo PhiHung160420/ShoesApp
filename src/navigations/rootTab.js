@@ -24,7 +24,7 @@ import {COLORS, SIZES, icons} from '../constants/index';
 import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
-import {getNumberCartSelector} from '../redux/selectors/cartSelector';
+import {getCartsSelector} from '../redux/selectors/cartSelector';
 
 const Tab = createBottomTabNavigator();
 
@@ -116,7 +116,7 @@ const RootTab = () => {
   const [colorIcon, setColorIcon] = useState(COLORS.primary);
 
   // get numberCart from redux
-  const numberCart = useSelector(getNumberCartSelector);
+  const cartsInfo = useSelector(getCartsSelector);
 
   useEffect(() => {
     if (appTheme.name === 'dark') {
@@ -133,7 +133,7 @@ const RootTab = () => {
       {/* SCREEN HOME */}
       <Tab.Screen
         component={HomeScreen}
-        name="HomeTab"
+        name="HomeScreen"
         options={{
           tabBarIcon: ({focused}) => (
             <Image
@@ -203,7 +203,7 @@ const RootTab = () => {
               {...props}
               isFloat={true}
               appTheme={appTheme}
-              numberCart={numberCart}
+              numberCart={cartsInfo.numberCart}
             />
           ),
         }}
