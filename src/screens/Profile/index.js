@@ -67,12 +67,6 @@ const ProfileScreen = () => {
             <Image source={{uri: profile.avatar}} style={styles.avatarStyle} />
             {/* IMAGES */}
 
-            {/* ICON ADD PHOTO */}
-            {/* <TouchableOpacity style={styles.iconContainer}>
-              <Materia name="add-a-photo" size={30} color="white" />
-            </TouchableOpacity> */}
-            {/* ICON ADD PHOTO */}
-
             {/* NAME */}
             <Text style={[styles.nameStyle, {color: appTheme.textColor}]}>
               {profile.name}
@@ -108,7 +102,7 @@ const ProfileScreen = () => {
         <View style={styles.toolsProfileContainer}>
           <FlatList
             data={tools}
-            keyExtractor={item => item.icon}
+            keyExtractor={item => item.id}
             renderItem={renderListTools}
             horizontal={false}
             showsVerticalScrollIndicator={false}

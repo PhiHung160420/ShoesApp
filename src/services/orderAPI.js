@@ -9,10 +9,11 @@ export const submitOrder = data => {
   });
 };
 
-export const deleteOrder = orderId => {
+export const deleteOrder = (data, token) => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/deleteOrder`,
-    orderId,
+    headers: {Authorization: `Bearer ${token}`},
+    data,
   });
 };

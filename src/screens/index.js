@@ -10,6 +10,7 @@ import CategoryScreen from './Category/index';
 import ProducDetailScreen from './Product/index';
 import PaymentScreen from './Payment/index';
 import UpdateProfile from './Profile/UpdateProfile';
+import OrderHistoryScreen from './Order/orderHistory';
 
 export {
   SignInScreen,
@@ -24,4 +25,5 @@ export {
   ProducDetailScreen,
   PaymentScreen,
   UpdateProfile,
+  OrderHistoryScreen,
 };

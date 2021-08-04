@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {COLORS, SIZES} from '../../constants';
+import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {submitOrder} from '../../services/orderAPI';
 
@@ -31,8 +32,6 @@ const ButtonPayment = ({
 
     data.orderDetail = orderDetail;
     data.email = profile.email;
-
-    console.log(data);
 
     // call api order
     if (data.length !== 0) {
