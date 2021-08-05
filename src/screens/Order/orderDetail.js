@@ -19,6 +19,7 @@ import CustomStepIndicator from '../../components/customStepIndicator';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ProductOrder from './productOrder';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
+import {getInfoPaymentSelector} from '../../redux/selectors/paymentSelector';
 
 const iconName = 'arrow-back-outline';
 
@@ -135,7 +136,7 @@ const OrderDetailScreen = ({route}) => {
               <Text
                 style={[styles.deliveryAddress, {color: appTheme.textColor}]}>
                 <Text style={{fontWeight: 'bold'}}>Address: </Text>
-                {profile.addresss}
+                112 Lý Chính Thắng, Quận 1, TP.HCM
               </Text>
             </View>
             {/* INFO */}

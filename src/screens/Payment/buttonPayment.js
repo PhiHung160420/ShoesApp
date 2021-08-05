@@ -3,11 +3,13 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {COLORS, SIZES} from '../../constants';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
+import {handlderSaveInfoPayment} from '../../redux/actions/paymentAction';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {submitOrder} from '../../services/orderAPI';
 
 const ButtonPayment = ({
   appTheme,
+  address,
   cartsInfo,
   setOrderSuccess,
   setModalVisible,
@@ -20,16 +22,15 @@ const ButtonPayment = ({
   const dispatch = useDispatch();
 
   const handlerPayment = async () => {
+    // object to save order in server
     let data = {};
     let orderDetail = [];
-
     cartsInfo.carts.forEach(item => {
       let order = {};
       order.productId = item.id;
       order.quantity = item.quantity;
       orderDetail.push(order);
     });
-
     data.orderDetail = orderDetail;
     data.email = profile.email;
 

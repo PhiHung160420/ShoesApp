@@ -11,6 +11,7 @@ import ButtonPayment from './buttonPayment';
 import Promotion from './promotion';
 import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import OrderSuccess from '../../components/OrderSuccess';
+import ChangeAddress from '../../components/ChangeAddress';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -28,7 +29,10 @@ const PaymentScreen = ({route}) => {
   const [isOrderSuccess, setOrderSuccess] = useState(false);
 
   // state address
-  const [address, setAddress] = useState('112 Ly Chinh Thang, Quan 1, TP.HCM');
+  const [address, setAddress] = useState(null);
+
+  // state change password
+  const [isChangeAddress, setIsChangeAddress] = useState(false);
 
   // handler show hide modal
   const toggleModal = () => {
@@ -77,6 +81,14 @@ const PaymentScreen = ({route}) => {
         />
       )}
       {/* MODAL */}
+      {isChangeAddress && (
+        <ChangeAddress
+          isChangeAddress={isChangeAddress}
+          setIsChangeAddress={setIsChangeAddress}
+          address={address}
+          setAddress={setAddress}
+        />
+      )}
 
       {/* PAYMENT CONTAINER */}
       <View style={styles.contentContainer}>
@@ -86,7 +98,11 @@ const PaymentScreen = ({route}) => {
             {backgroundColor: appTheme.flatlistbackgroundItem},
           ]}>
           {/* DELIVERY ADDRESS */}
-          <DeliveryAddress appTheme={appTheme} address={address} />
+          <DeliveryAddress
+            appTheme={appTheme}
+            address={address}
+            setIsChangeAddress={setIsChangeAddress}
+          />
           {/* DELIVERY ADDRESS */}
 
           {/* PAYMENT METHOD */}
@@ -105,6 +121,7 @@ const PaymentScreen = ({route}) => {
           <ButtonPayment
             appTheme={appTheme}
             cartsInfo={cartsInfo}
+            address={address}
             setOrderSuccess={setOrderSuccess}
             isOrderSuccess={isOrderSuccess}
             setModalVisible={setModalVisible}
