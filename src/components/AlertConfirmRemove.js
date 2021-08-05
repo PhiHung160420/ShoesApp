@@ -1,25 +1,26 @@
 import React from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {StyleSheet} from 'react-native';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS, SIZES} from '../constants';
 
 const AlertConfirmRemove = ({
   item,
   showAlert,
   handlerHideAlert,
-  handlerRemoveProductFromCart,
+  handlerRemoveItem,
+  message,
 }) => {
   return (
     <AwesomeAlert
       show={showAlert}
       title="Confirm"
-      message="Are you sure want to delete this shoes ?"
+      message={message}
       showCancelButton={true}
       showConfirmButton={true}
       cancelText="No"
       confirmText="Yes"
       onCancelPressed={handlerHideAlert}
-      onConfirmPressed={() => handlerRemoveProductFromCart(item)}
+      onConfirmPressed={() => handlerRemoveItem(item)}
       contentContainerStyle={styles.alertContainerStyle}
       titleStyle={styles.titleAlertStyle}
       messageStyle={styles.messageAlertStyle}

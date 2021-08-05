@@ -87,7 +87,6 @@ const PaymentMethod = ({appTheme}) => {
 const styles = StyleSheet.create({
   paymentMethodContainer: {
     flex: 2,
-    marginTop: 30,
     paddingHorizontal: 10,
   },
   paymentMethodBar: {

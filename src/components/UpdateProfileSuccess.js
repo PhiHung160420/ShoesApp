@@ -17,17 +17,18 @@ import {getProfile} from '../services/profileAPI';
 const iconSuccess = 'smile-o';
 const iconFailed = 'frown-o';
 
-const CustomModal = ({
+const UpdateProfileSuccess = ({
   isModalVisible,
   toggleModal,
   modalContent,
-  isSuccess,
+  updateSuccess,
 }) => {
   // use navigation
   const navigation = useNavigation();
 
   const handlerClickButton = () => {
-    if (isSuccess) {
+    if (updateSuccess) {
+      toggleModal();
       navigation.navigate('ProfileScreen');
     } else {
       toggleModal();
@@ -43,7 +44,7 @@ const CustomModal = ({
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <FontAwesome
-              name={isSuccess ? iconSuccess : iconFailed}
+              name={updateSuccess ? iconSuccess : iconFailed}
               size={100}
               color={COLORS.white}
             />
@@ -56,15 +57,10 @@ const CustomModal = ({
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.btnCancelStyle}
-              onPress={toggleModal}>
-              <Text style={styles.btnCancelText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
               style={styles.btnOkStyle}
               onPress={handlerClickButton}>
               <Text style={styles.btnOkText}>
-                {isSuccess ? 'Ok' : 'Try again'}
+                {updateSuccess ? 'OK' : 'TRY AGAIN'}
               </Text>
             </TouchableOpacity>
           </View>
@@ -99,22 +95,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: COLORS.gainsboro,
     borderBottomLeftRadius: SIZES.radius,
     borderBottomRightRadius: SIZES.radius,
-  },
-  btnCancelStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-  },
-  btnCancelText: {
-    fontSize: 20,
-    fontWeight: '500',
   },
   btnOkStyle: {
     flex: 1,
@@ -122,12 +105,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.silver,
     height: '100%',
+    borderBottomLeftRadius: SIZES.radius,
     borderBottomRightRadius: SIZES.radius,
   },
   btnOkText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '500',
   },
 });
 
-export default CustomModal;
+export default UpdateProfileSuccess;

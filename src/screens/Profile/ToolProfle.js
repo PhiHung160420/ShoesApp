@@ -41,14 +41,17 @@ const ToolProfle = ({item, profile}) => {
 
   //handler on press
   const handlerOnPress = async () => {
-    if (item.icon == 'logout') {
+    if (item.id == 'logout') {
       await handlerLogOut();
     }
-    if (item.icon == 'profile') {
+    if (item.id == 'profile') {
       navigation.navigate('UpdateProfile', {profile: profile});
     }
-    if (item.icon == 'lock') {
+    if (item.id == 'lock') {
       toggleModal();
+    }
+    if (item.id == 'orderHistory') {
+      navigation.navigate('OrderHistoryScreen');
     }
   };
 

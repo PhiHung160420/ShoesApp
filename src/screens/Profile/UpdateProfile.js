@@ -21,7 +21,7 @@ import Materia from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {updateProfile, uploadAvatar} from '../../services/profileAPI';
-import CustomModal from '../../components/CustomModal';
+import UpdateProfileSuccess from '../../components/UpdateProfileSuccess';
 import UploadPhoto from './UploadPhoto';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -270,11 +270,11 @@ const UpdateProfile = ({route}) => {
 
       {/* MODAL */}
       {isModalVisible && (
-        <CustomModal
+        <UpdateProfileSuccess
           isModalVisible={isModalVisible}
           toggleModal={toggleModal}
           modalContent={modalContent}
-          isSuccess={updateSuccess}
+          updateSuccess={updateSuccess}
         />
       )}
       {/* MODAL */}

@@ -20,7 +20,7 @@ import {
   incrementQuantity,
   removeFromCart,
 } from '../../redux/actions/cartAction';
-import AlertConfirmRemove from './alertConfirmRemove';
+import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
@@ -107,7 +107,8 @@ const ProductItem = ({item}) => {
           item={item}
           showAlert={showAlert}
           handlerHideAlert={handlerHideAlert}
-          handlerRemoveProductFromCart={handlerRemoveProductFromCart}
+          handlerRemoveItem={handlerRemoveProductFromCart}
+          message={'Are you sure want to delete this shoes ?'}
         />
         {/* ALERT CONFIRM REMOVE PRODUCT */}
 

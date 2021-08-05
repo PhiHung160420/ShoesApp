@@ -25,9 +25,6 @@ const CartScreen = ({navigation}) => {
   // use dispatch
   const dispatch = useDispatch();
 
-  // get profile from redux
-  //const profile = useSelector(getProfileSelector);
-
   // get cart info from redux
   const cartsInfo = useSelector(getCartsSelector);
 
@@ -111,7 +108,9 @@ const CartScreen = ({navigation}) => {
               <View style={styles.checkoutButton}>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => navigation.navigate('PaymentScreen')}>
+                  onPress={() =>
+                    navigation.navigate('PaymentScreen', {totalCart: totalCart})
+                  }>
                   <Text
                     style={[styles.buttonText, {color: appTheme.textColor}]}>
                     Checkout
