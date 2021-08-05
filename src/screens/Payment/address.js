@@ -1,8 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import {COLORS, SIZES} from '../../constants';
 
-const DeliveryAddress = ({appTheme}) => {
+const DeliveryAddress = ({appTheme, address}) => {
   return (
     <View style={styles.addressContainer}>
       <Text style={[styles.addressTitle, {color: appTheme.textColor}]}>
@@ -17,7 +23,7 @@ const DeliveryAddress = ({appTheme}) => {
         {/* ADDRESS CONTENT */}
         <View style={styles.addressContent}>
           <Text style={styles.titleHomeAddress}>HOME ADDRESS</Text>
-          <Text style={styles.address}>12 district, HCM city</Text>
+          <Text style={styles.addressText}>{address}</Text>
         </View>
         {/* ADDRESS CONTENT */}
 
@@ -66,8 +72,10 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontWeight: 'bold',
   },
-  address: {
+  addressText: {
+    marginTop: 5,
     fontSize: 12,
+    width: 230,
   },
   btnChangeContent: {
     fontSize: 15,

@@ -11,6 +11,7 @@ import ProducDetailScreen from './Product/index';
 import PaymentScreen from './Payment/index';
 import UpdateProfile from './Profile/UpdateProfile';
 import OrderHistoryScreen from './Order/orderHistory';
+import OrderDetailScreen from './Order/orderDetail';
 
 export {
   SignInScreen,
@@ -26,4 +27,5 @@ export {
   PaymentScreen,
   UpdateProfile,
   OrderHistoryScreen,
+  OrderDetailScreen,
 };

@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
@@ -12,7 +19,7 @@ import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 
 const iconName = 'arrow-back-outline';
 
-const OrderHistoryScreen = () => {
+const OrderHistoryScreen = ({navigation}) => {
   // get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
 
@@ -30,8 +37,7 @@ const OrderHistoryScreen = () => {
     dispatch(actFetchOrderHistoryRequest(token));
   }, []);
 
-  //console.log(ordersHistory);
-
+  // render list order history
   const renderListOrder = ({item}) => {
     return <ListOrder data={item} />;
   };
@@ -51,15 +57,32 @@ const OrderHistoryScreen = () => {
           styles.contentContainer,
           {backgroundColor: appTheme.backgroundColor},
         ]}>
-        <FlatList
-          data={ordersHistory}
-          keyExtractor={item => item.id}
-          renderItem={renderListOrder}
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.orderHistoryContainer}
-          ItemSeparatorComponent={() => <View style={{height: 15}} />}
-        />
+        {ordersHistory.length !== 0 ? (
+          <FlatList
+            data={ordersHistory}
+            keyExtractor={item => item.id}
+            renderItem={renderListOrder}
+            horizontal={false}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.orderHistoryContainer}
+            ItemSeparatorComponent={() => <View style={{height: 15}} />}
+          />
+        ) : (
+          <View style={styles.emptyOrderContainer}>
+            <Image
+              source={require('../../assets/images/free-shipping.png')}
+              style={styles.emptyOrderIcon}
+            />
+            <Text style={[styles.emptyOrderText, {color: appTheme.textColor}]}>
+              No order history yet!
+            </Text>
+            <TouchableOpacity
+              style={styles.shoppingButton}
+              onPress={() => navigation.push('HomeScreen')}>
+              <Text style={styles.shoppingButtonText}>Shopping Now</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -88,6 +111,33 @@ const styles = StyleSheet.create({
     borderTopRightRadius: SIZES.radius * 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  emptyOrderContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyOrderIcon: {
+    height: 150,
+    width: 150,
+  },
+  emptyOrderText: {
+    fontSize: 20,
+    fontWeight: '500',
+    marginTop: -10,
+  },
+  shoppingButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  shoppingButtonText: {
+    fontSize: 18,
+    color: COLORS.white,
+    fontWeight: 'bold',
   },
 });
 

@@ -5,10 +5,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Image,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS, SIZES} from '../constants';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
@@ -16,8 +16,8 @@ import {getProfile} from '../services/profileAPI';
 import {removeCartsInStorage} from '../utils/storage';
 import {removeAllCarts} from '../redux/actions/cartAction';
 
-const iconSuccess = 'smile-o';
-const iconFailed = 'frown-o';
+const iconSuccess = require('../assets/images/payment-success.png');
+const iconFailed = require('../assets/images/payment-fail.png');
 
 const OrderSuccess = ({
   isModalVisible,
@@ -50,10 +50,9 @@ const OrderSuccess = ({
         animationOut="zoomOut">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <FontAwesome
-              name={orderSuccess ? iconSuccess : iconFailed}
-              size={100}
-              color={COLORS.white}
+            <Image
+              source={orderSuccess ? iconSuccess : iconFailed}
+              style={styles.iconStyle}
             />
             <Text style={styles.titleStyle}>
               {modalContent && modalContent.title}
@@ -118,6 +117,10 @@ const styles = StyleSheet.create({
   btnContinueText: {
     fontSize: 20,
     fontWeight: '500',
+  },
+  iconStyle: {
+    width: 100,
+    height: 100,
   },
 });
 

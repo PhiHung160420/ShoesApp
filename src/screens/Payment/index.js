@@ -27,6 +27,9 @@ const PaymentScreen = ({route}) => {
   // state order success
   const [isOrderSuccess, setOrderSuccess] = useState(false);
 
+  // state address
+  const [address, setAddress] = useState('112 Ly Chinh Thang, Quan 1, TP.HCM');
+
   // handler show hide modal
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -41,12 +44,12 @@ const PaymentScreen = ({route}) => {
   useEffect(() => {
     if (isOrderSuccess) {
       setModalContent({
-        title: 'Success!',
+        title: 'Success',
         message: 'Congratulation! Your payment was complete.',
       });
     } else {
       setModalContent({
-        title: 'Oh Snap!',
+        title: 'Oh Snap...',
         message: 'Your order fail! Please check your order again.',
       });
     }
@@ -83,7 +86,7 @@ const PaymentScreen = ({route}) => {
             {backgroundColor: appTheme.flatlistbackgroundItem},
           ]}>
           {/* DELIVERY ADDRESS */}
-          <DeliveryAddress appTheme={appTheme} />
+          <DeliveryAddress appTheme={appTheme} address={address} />
           {/* DELIVERY ADDRESS */}
 
           {/* PAYMENT METHOD */}

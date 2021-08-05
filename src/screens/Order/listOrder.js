@@ -18,10 +18,14 @@ import {deleteOrder} from '../../services/orderAPI';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
+import {useNavigation} from '@react-navigation/native';
 
 const ListOrder = ({data}) => {
   // get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
+
+  // use navigation
+  const navigation = useNavigation();
 
   //use dispatch
   const dispatch = useDispatch();
@@ -114,7 +118,10 @@ const ListOrder = ({data}) => {
         <Text style={[styles.totalItem, {color: appTheme.textColor}]}>
           {data.orderDetail.length} item
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('OrderDetailScreen', {orderId: data.id})
+          }>
           <AntDesign name="arrowright" size={35} color={appTheme.textColor} />
         </TouchableOpacity>
       </View>

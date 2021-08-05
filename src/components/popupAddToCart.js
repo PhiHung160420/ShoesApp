@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Image,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS, SIZES} from '../constants';
@@ -43,7 +44,10 @@ const PopupAddToCart = ({handlerShowHidePopup, showHidePopup}) => {
         animationOut="zoomOut">
         <View style={styles.popupContainer}>
           <View style={styles.popupContent}>
-            <Feather name="check" size={80} color={COLORS.white} />
+            <Image
+              source={require('../assets/images/order-success.png')}
+              style={styles.successIcon}
+            />
             <Text style={styles.titleStyle}>Awesome!</Text>
             <Text style={styles.msgPopupContent}>
               You have added this item to your shopping cart
@@ -120,6 +124,10 @@ const styles = StyleSheet.create({
   btnOkText: {
     fontSize: 20,
     fontWeight: '500',
+  },
+  successIcon: {
+    width: 100,
+    height: 100,
   },
 });
 

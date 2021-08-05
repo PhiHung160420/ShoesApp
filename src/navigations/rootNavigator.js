@@ -8,6 +8,7 @@ import {
   PaymentScreen,
   UpdateProfile,
   OrderHistoryScreen,
+  OrderDetailScreen,
 } from '../screens/index';
 import RootTab from './rootTab';
 import {NavigationContainer} from '@react-navigation/native';
@@ -133,6 +134,10 @@ const RootNavigator = () => {
             <Stack.Screen
               component={OrderHistoryScreen}
               name="OrderHistoryScreen"
+            />
+            <Stack.Screen
+              component={OrderDetailScreen}
+              name="OrderDetailScreen"
             />
           </>
         ) : (
