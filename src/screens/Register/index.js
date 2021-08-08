@@ -63,19 +63,13 @@ const SignUpScreen = ({navigation}) => {
     if (data) {
       useSignUp(data)
         .then(res => {
-          if (res.data.statusCode === 201) {
-            setIsSignUpSuccess(true);
-
-            setModalVisible(!isModalVisible);
-
-            setMsgSignUp(`${res.data.message}!`);
-          }
+          setIsSignUpSuccess(true);
+          setModalVisible(!isModalVisible);
+          setMsgSignUp(`${res.data.message}!`);
         })
         .catch(err => {
           setIsSignUpSuccess(false);
-
           setModalVisible(!isModalVisible);
-
           setMsgSignUp(`${err.response.data.message}`);
         });
     }
@@ -135,7 +129,14 @@ const SignUpScreen = ({navigation}) => {
           password: '',
         }}
         onSubmit={handleSubmitFormik}>
-        {({values, errors, handleChange, handleSubmit}) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
           <>
             <Animatable.View
               animation="fadeInUpBig"
@@ -144,19 +145,24 @@ const SignUpScreen = ({navigation}) => {
               <ScrollView showsVerticalScrollIndicator={false}>
                 {/* USERNAME */}
                 <Text style={styles.text_footer}>Username</Text>
-                <View style={[styles.action, errors.name && styles.inputError]}>
+                <View
+                  style={[
+                    styles.action,
+                    errors.name && touched.name && styles.inputError,
+                  ]}>
                   <FontAwesome name="user-o" color="#05375a" size={20} />
                   <TextInput
                     name="name"
-                    placeholder="Your Username"
+                    placeholder="usename"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
                     value={values.name}
                   />
 
                   {/* CHECK USERNAME */}
-                  {!errors.name && (
+                  {!errors.name && values.name.length !== 0 && (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={20} />
                     </Animatable.View>
@@ -165,7 +171,7 @@ const SignUpScreen = ({navigation}) => {
                 </View>
 
                 {/* ERROR USERNAME */}
-                {errors.name && (
+                {errors.name && touched.name && (
                   <Text style={styles.textError}>{errors.name}</Text>
                 )}
                 {/* ERROR USERNAME */}
@@ -175,14 +181,18 @@ const SignUpScreen = ({navigation}) => {
                 {/* EMAIL */}
                 <Text style={[styles.text_footer, {marginTop: 15}]}>Email</Text>
                 <View
-                  style={[styles.action, errors.email && styles.inputError]}>
+                  style={[
+                    styles.action,
+                    errors.email && touched.email && styles.inputError,
+                  ]}>
                   <FontAwesome name="envelope-open" color="#05375a" size={20} />
                   <TextInput
                     name="email"
-                    placeholder="Your Email"
+                    placeholder="email"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
                     value={values.email}
                     keyboardType="email-address"
                   />
@@ -197,7 +207,7 @@ const SignUpScreen = ({navigation}) => {
                 </View>
 
                 {/* ERROR EMAIL */}
-                {errors.email && (
+                {errors.email && touched.email && (
                   <Text style={styles.textError}>{errors.email}</Text>
                 )}
                 {/* ERROR EMAIL */}
@@ -207,14 +217,18 @@ const SignUpScreen = ({navigation}) => {
                 {/* PHONE */}
                 <Text style={[styles.text_footer, {marginTop: 15}]}>Phone</Text>
                 <View
-                  style={[styles.action, errors.phone && styles.inputError]}>
+                  style={[
+                    styles.action,
+                    errors.phone && touched.phone && styles.inputError,
+                  ]}>
                   <FontAwesome name="phone" color="#05375a" size={20} />
                   <TextInput
                     name="phone"
-                    placeholder="Your Phone"
+                    placeholder="phone"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={handleChange('phone')}
+                    onBlur={handleBlur('phone')}
                     value={values.phone}
                     keyboardType="phone-pad"
                   />
@@ -229,7 +243,7 @@ const SignUpScreen = ({navigation}) => {
                 </View>
 
                 {/* ERROR PHONE */}
-                {errors.phone && (
+                {errors.phone && touched.phone && (
                   <Text style={styles.textError}>{errors.phone}</Text>
                 )}
                 {/* ERROR PHONE */}
@@ -282,15 +296,19 @@ const SignUpScreen = ({navigation}) => {
                   Password
                 </Text>
                 <View
-                  style={[styles.action, errors.password && styles.inputError]}>
+                  style={[
+                    styles.action,
+                    errors.password && touched.password && styles.inputError,
+                  ]}>
                   <Feather name="lock" color="#05375a" size={20} />
                   <TextInput
                     name="password"
-                    placeholder="Your Password"
+                    placeholder="password"
                     secureTextEntry={isEntryPwd ? true : false}
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
                     value={values.password}
                   />
 
@@ -306,7 +324,7 @@ const SignUpScreen = ({navigation}) => {
                 </View>
 
                 {/* ERROR PASSWORD */}
-                {errors.password && (
+                {errors.password && touched.password && (
                   <Text style={styles.textError}>{errors.password}</Text>
                 )}
                 {/* ERROR PASSWORD */}
