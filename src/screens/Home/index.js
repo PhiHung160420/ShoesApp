@@ -12,21 +12,19 @@ import {
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  removeAccessTokenInStorage,
-  setProductsFavoriteToStorage,
-} from '../../utils/storage';
 import {COLORS, icons, SIZES} from '../../constants/index';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
-import {getAllCategoriesAPI} from '../../services/categoriesAPI';
 import {
-  getAllProduct,
-  getProductsFavoriteFromAPI,
-} from '../../services/productAPI';
+  getAllProductsSelector,
+  getProductsFavoriteSelector,
+} from '../../redux/selectors/productSelector';
+import {getAllProduct} from '../../services/productAPI';
 import ProductItem from './productItem';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import {actFetchGetAllCategoryRequest} from '../../redux/actions/categoryAction';
+import {actFetchGetAllProductRequest} from '../../redux/actions/productAction';
+import {getAllCategorySelector} from '../../redux/selectors/categorySelector';
 
 const HomeScreen = ({navigation}) => {
   // dispatch
@@ -38,48 +36,25 @@ const HomeScreen = ({navigation}) => {
   // get theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
-  // state list categories
-  const [listCate, setListCate] = useState([]);
-
   // get products favorite from redux
   const productsFavorite = useSelector(getProductsFavoriteSelector);
 
-  // state list product favorite
-  //const [listFavorite, setListFavorite] = useState([]);
+  // get list category from redux
+  const listCate = useSelector(getAllCategorySelector);
 
-  // state list products
-  const [listProducts, setListProducts] = useState([]);
+  // get list product from redux
+  const listProducts = useSelector(getAllProductsSelector);
 
   useEffect(() => {
-    // get list categories
-    getAllCategoriesAPI()
-      .then(res => setListCate(res.data.content))
-      .catch(err => console.log(err));
-    // get list products
-    getAllProduct()
-      .then(res => setListProducts(res.data.content))
-      .catch(err => console.log(err));
+    // get all category
+    dispatch(actFetchGetAllCategoryRequest());
+    // get all product
+    dispatch(actFetchGetAllProductRequest());
   }, []);
-
-  // get new products favorite then click like or unlike
-  /* useEffect(() => {
-    getProductsFavoriteFromAPI(accessToken)
-      .then(res => {
-        setListFavorite(res.data.content.productsFavorite);
-      })
-      .catch(err => console.log(err));
-  }, [productsFavorite]); */
 
   // render items
   const renderListProduct = ({item}) => {
     var isLiked = false;
-    /* if (listFavorite.length !== 0) {
-      listFavorite.forEach(product => {
-        if (product.id == item.id) {
-          isLiked = true;
-        }
-      });
-    } */
 
     if (typeof productsFavorite == 'object') {
       productsFavorite.forEach(product => {

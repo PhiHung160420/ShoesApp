@@ -60,7 +60,8 @@ const OrderDetailScreen = ({route}) => {
           styles.contentContainer,
           {backgroundColor: appTheme.backgroundColor},
         ]}
-        contentContainerStyle={styles.orderContainer}>
+        contentContainerStyle={styles.orderContainer}
+        showsVerticalScrollIndicator={false}>
         {/* ORDER INFO */}
         <View style={styles.orderInfo}>
           {/* ORDER ID */}
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   titleContainer: {
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'center',
   },
   orderDetailTitle: {
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop: -20,
+    marginTop: -40,
     borderTopLeftRadius: SIZES.radius * 2,
     borderTopRightRadius: SIZES.radius * 2,
     paddingHorizontal: 10,

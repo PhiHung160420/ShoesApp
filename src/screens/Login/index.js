@@ -238,7 +238,7 @@ const SignInScreen = ({navigation}) => {
                 {/* SIGN IN WITH */}
                 <View style={styles.signInWith}>
                   <View style={styles.borderLeft}></View>
-                  <Text style={styles.textSignOther}>Or sign in with</Text>
+                  <Text style={styles.textSignOther}>or sign in with</Text>
                   <View style={styles.borderRight}></View>
                 </View>
                 {/* SIGN IN WITH */}

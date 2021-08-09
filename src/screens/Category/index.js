@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {SIZES, COLORS} from '../../constants';
+import {actFetchGetProductByCategoryRequest} from '../../redux/actions/categoryAction';
+import {getProductsByCategorySelector} from '../../redux/selectors/categorySelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getProductByCategory} from '../../services/categoriesAPI';
 import ProductItem from './ProductItem';
@@ -20,17 +22,18 @@ const CategoryScreen = ({route, navigation}) => {
   // get category id
   const {id} = route.params;
 
-  // state list product
-  const [listProduct, setListProduct] = useState([]);
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // get list product by category
+  const listProduct = useSelector(getProductsByCategorySelector);
 
   // get appTheme from store
   const appTheme = useSelector(getAppThemeSelector);
 
   // get product by category
   useEffect(() => {
-    getProductByCategory(id)
-      .then(res => setListProduct(res.data.content))
-      .catch(err => console.log(err));
+    dispatch(actFetchGetProductByCategoryRequest(id));
   }, []);
 
   // render list product
