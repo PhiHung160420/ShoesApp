@@ -12,7 +12,10 @@ import HeaderBar from '../../components/HeaderBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
-import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
+import {
+  getProductByIdSelector,
+  getProductsFavoriteSelector,
+} from '../../redux/selectors/productSelector';
 import {COLORS, SIZES} from '../../constants';
 import {
   getProductById,
@@ -23,13 +26,12 @@ import {
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {hanlderSetProductFavorite} from '../../redux/actions/productAction';
 import {
-  setCartsToStorage,
-  setProductsFavoriteToStorage,
-} from '../../utils/storage';
+  actFetchGetProductByIdRequest,
+  hanlderSetProductFavorite,
+} from '../../redux/actions/productAction';
+import {setProductsFavoriteToStorage} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
-import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import PopupAddToCart from '../../components/popupAddToCart';
 
 const nameIcon = 'arrow-back-outline';
@@ -50,8 +52,8 @@ const ProducDetailScreen = ({route}) => {
   // get productsFavorite
   const productsFavorite = useSelector(getProductsFavoriteSelector);
 
-  // state product
-  const [product, setProduct] = useState({});
+  // get product by id from redux
+  const product = useSelector(getProductByIdSelector);
 
   // state for product was liked
   const [productFavorite, setProductFavorite] = useState(false);
@@ -62,17 +64,14 @@ const ProducDetailScreen = ({route}) => {
   // state size selected
   const [sizeSelected, setSizeSelected] = useState('');
 
+  // state show hide popup
   const [showHidePopup, setShowHidePopup] = useState(false);
 
   useEffect(() => {
     // get product by id
-    getProductById(productId)
-      .then(res => setProduct(res.data.content))
-      .catch(err => console.log(err));
-  }, []);
+    dispatch(actFetchGetProductByIdRequest(productId));
 
-  // set product is like again when click like or unlike
-  useEffect(() => {
+    // set product favorite
     if (typeof productsFavorite == 'object') {
       productsFavorite.forEach(e => {
         if (e.id == productId) {
@@ -80,7 +79,7 @@ const ProducDetailScreen = ({route}) => {
         }
       });
     }
-  }, [productsFavorite]);
+  }, []);
 
   // handler show description
   const handlerShowDescript = () => {
@@ -101,10 +100,9 @@ const ProducDetailScreen = ({route}) => {
   const saveProductToReduxAndStorage = token => {
     getProductsFavoriteFromAPI(token)
       .then(res => {
-        dispatch(hanlderSetProductFavorite(res.data.content.productsFavorite));
-        saveProductsFavoriteToStorage(
-          JSON.stringify(res.data.content.productsFavorite),
-        );
+        const response = res.data.content.productsFavorite;
+        dispatch(hanlderSetProductFavorite(response));
+        saveProductsFavoriteToStorage(JSON.stringify(response));
       })
       .catch(err => console.log(err));
   };

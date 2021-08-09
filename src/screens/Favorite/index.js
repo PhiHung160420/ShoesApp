@@ -34,13 +34,6 @@ const FavoriteScreen = ({navigation}) => {
   // get products favorite from redux
   const productsFavorite = useSelector(getProductsFavoriteSelector);
 
-  // state list product
-  const [listFavorite, setListFavorite] = useState([]);
-
-  useEffect(() => {
-    setListFavorite(productsFavorite);
-  }, [productsFavorite]);
-
   // save products favorite to storage
   const saveProductsFavoriteToStorage = async data => {
     return await setProductsFavoriteToStorage(data);
@@ -50,10 +43,9 @@ const FavoriteScreen = ({navigation}) => {
   const saveFavoriteToReduxAndStorage = token => {
     getProductsFavoriteFromAPI(token)
       .then(res => {
-        dispatch(hanlderSetProductFavorite(res.data.content.productsFavorite));
-        saveProductsFavoriteToStorage(
-          JSON.stringify(res.data.content.productsFavorite),
-        );
+        const response = res.data.content.productsFavorite;
+        dispatch(hanlderSetProductFavorite(response));
+        saveProductsFavoriteToStorage(JSON.stringify(response));
       })
       .catch(err => console.log(err));
   };
@@ -88,9 +80,10 @@ const FavoriteScreen = ({navigation}) => {
             backgroundColor: appTheme.backgroundColor,
           },
         ]}>
-        {listFavorite.length !== 0 ? (
+        {typeof productsFavorite == 'object' &&
+        productsFavorite.length !== 0 ? (
           <FlatList
-            data={listFavorite}
+            data={productsFavorite}
             keyExtractor={item => item.id}
             renderItem={renderListFavorite}
             horizontal={false}

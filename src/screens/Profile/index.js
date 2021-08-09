@@ -13,7 +13,7 @@ import {COLORS, SIZES, tools} from '../../constants';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {getProfile} from '../../services/profileAPI';
+import {getProfileAPI} from '../../services/profileAPI';
 import {getAccessTokenFromStorage} from '../../utils/storage';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -26,22 +26,7 @@ const ProfileScreen = () => {
   const appTheme = useSelector(getAppThemeSelector);
 
   // get profile
-  const myProfile = useSelector(getProfileSelector);
-
-  // state my profile
-  const [profile, setProfile] = useState({});
-
-  // get access token
-  const token = useSelector(getAccessTokenSelector);
-
-  // get profile info from api
-  useEffect(() => {
-    if (token) {
-      getProfile(token)
-        .then(res => setProfile(res.data.content))
-        .catch(err => console.log(err));
-    }
-  }, [myProfile]);
+  const profile = useSelector(getProfileSelector);
 
   // render list tools
   const renderListTools = ({item}) => {

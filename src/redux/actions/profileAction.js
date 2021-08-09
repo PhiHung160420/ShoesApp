@@ -1,18 +1,18 @@
-import {getProfile} from '../../services/profileAPI';
-import {GET_PROFILE, UPDATE_PROFILE} from './actionType';
+import {getProfileAPI} from '../../services/profileAPI';
+import {SET_PROFILE, UPDATE_PROFILE} from './actionType';
 
-export const handlerGetProfile = data => {
+export const handlerSetProfile = data => {
   return {
-    type: GET_PROFILE,
+    type: SET_PROFILE,
     payload: data,
   };
 };
 
 export const actFetchGetProfileRequest = token => {
   return dispatch => {
-    getProfile(token)
+    getProfileAPI(token)
       .then(res => {
-        dispatch(handlerGetProfile(res.data.content));
+        dispatch(handlerSetProfile(res.data.content));
       })
       .catch(err => console.log(err));
   };

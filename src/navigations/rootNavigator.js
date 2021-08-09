@@ -38,8 +38,6 @@ const RootNavigator = () => {
   // lấy access token từ redux
   const accessToken = useSelector(getAccessTokenSelector);
 
-  console.log(accessToken);
-
   // dispatch
   const dispatch = useDispatch();
 

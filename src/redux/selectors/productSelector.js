@@ -3,3 +3,5 @@ export const getProductsFavoriteSelector = state =>
 
 export const getAllProductsSelector = state =>
   state.ProductReducer.listProducts;
+
+export const getProductByIdSelector = state => state.ProductReducer.productById;
