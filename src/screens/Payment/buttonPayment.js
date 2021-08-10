@@ -2,15 +2,16 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {COLORS, SIZES} from '../../constants';
-import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {handlderSaveInfoPayment} from '../../redux/actions/paymentAction';
+import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
-import {submitOrder} from '../../services/orderAPI';
+import {submitOrderAPI} from '../../services/orderAPI';
+import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 
 const ButtonPayment = ({
   appTheme,
   address,
-  cartsInfo,
+  cartInfo,
   setOrderSuccess,
   setModalVisible,
   isModalVisible,
@@ -18,14 +19,16 @@ const ButtonPayment = ({
   // get profile from redux
   const profile = useSelector(getProfileSelector);
 
+  const token = useSelector(getAccessTokenSelector);
+
   // use dispatch
   const dispatch = useDispatch();
 
   const handlerPayment = async () => {
-    // object to save order in server
+    // object to save order to server
     let data = {};
     let orderDetail = [];
-    cartsInfo.carts.forEach(item => {
+    cartInfo.carts.forEach(item => {
       let order = {};
       order.productId = item.id;
       order.quantity = item.quantity;
@@ -36,12 +39,11 @@ const ButtonPayment = ({
 
     // call api order
     if (data.length !== 0) {
-      submitOrder(data)
+      submitOrderAPI(data)
         .then(res => {
-          if (res.data.statusCode === 200) {
-            setOrderSuccess(true);
-            setModalVisible(!isModalVisible);
-          }
+          dispatch(actFetchOrderHistoryRequest(token));
+          setOrderSuccess(true);
+          setModalVisible(!isModalVisible);
         })
         .catch(err => {
           setOrderSuccess(false);

@@ -14,51 +14,50 @@ import moment from 'moment';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Feather from 'react-native-vector-icons/Feather';
-import {deleteOrder} from '../../services/orderAPI';
+import {deleteOrderAPI} from '../../services/orderAPI';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {useNavigation} from '@react-navigation/native';
 
-const ListOrder = ({data}) => {
+const ListOrder = ({order}) => {
   // get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
-
-  // use navigation
-  const navigation = useNavigation();
-
-  //use dispatch
-  const dispatch = useDispatch();
-
-  // state show hide alert
-  const [showAlert, setShowAlert] = useState(false);
 
   // get token from redux
   const token = useSelector(getAccessTokenSelector);
 
+  // use navigation
+  const navigation = useNavigation();
+
+  // use dispatch
+  const dispatch = useDispatch();
+
   // use ref
   const swipeableRef = useRef(null);
 
-  // hide alert
+  // state show hide alert
+  const [showAlert, setShowAlert] = useState(false);
+
+  // show alert
   const handlerShowAlert = () => {
     setShowAlert(true);
     swipeableRef.current.close();
   };
 
-  // show alert
+  // hide alert
   const handlerHideAlert = () => {
     setShowAlert(false);
   };
 
-  const handlerRemoveOrderHistory = item => {
-    handlerHideAlert();
+  // remove order history
+  const handlerRemoveOrderHistory = () => {
     let data = {};
-    data.orderId = item.id;
-    deleteOrder(data, token)
+    data.orderId = order.id;
+
+    deleteOrderAPI(data, token)
       .then(res => {
-        if (res.data.statusCode == 200) {
-          dispatch(actFetchOrderHistoryRequest(token));
-        }
+        dispatch(actFetchOrderHistoryRequest(token));
       })
       .catch(err => console.log(err));
   };
@@ -92,7 +91,7 @@ const ListOrder = ({data}) => {
         ]}>
         {/* ALERT CONFIRM REMOVE PRODUCT */}
         <AlertConfirmRemove
-          item={data}
+          item={order}
           showAlert={showAlert}
           handlerHideAlert={handlerHideAlert}
           handlerRemoveItem={handlerRemoveOrderHistory}
@@ -106,21 +105,21 @@ const ListOrder = ({data}) => {
         />
         <View style={styles.infoOrder}>
           <Text style={[styles.dateStyle, {color: appTheme.textColor}]}>
-            Date: {moment(data.date).format('DD/MM/YYYY')}
+            Date: {moment(order.date).format('DD/MM/YYYY')}
           </Text>
           <Text style={[styles.orderIdStyle, {color: appTheme.textColor}]}>
-            Order ID: #{data.id}
+            Order ID: #{order.id}
           </Text>
         </View>
         <View
           style={[styles.separate, {borderRightColor: appTheme.textColor}]}
         />
         <Text style={[styles.totalItem, {color: appTheme.textColor}]}>
-          {data.orderDetail.length} item
+          {order.orderDetail.length} item
         </Text>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('OrderDetailScreen', {orderId: data.id})
+            navigation.navigate('OrderDetailScreen', {orderId: order.id})
           }>
           <AntDesign name="arrowright" size={35} color={appTheme.textColor} />
         </TouchableOpacity>

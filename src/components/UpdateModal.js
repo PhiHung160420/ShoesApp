@@ -13,7 +13,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
 import {COLORS, SIZES} from '../constants';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
-import {changePassword} from '../services/profileAPI';
+import {changePasswordAPI} from '../services/profileAPI';
 
 const iconSuccess = 'smile-o';
 const iconFailed = 'frown-o';
@@ -82,7 +82,7 @@ const UpdateModal = ({isModalVisible, toggleModal}) => {
       navigation.navigate('ProfileScreen');
       toggleModal();
     } else {
-      changePassword(password, token)
+      changePasswordAPI(password, token)
         .then(res => {
           if (res.data.statusCode === 200) {
             setIsSuccess(true);

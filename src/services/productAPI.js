@@ -8,7 +8,7 @@ export const getAllProduct = () => {
   });
 };
 
-export const getProductById = id => {
+export const getProductByIdAPI = id => {
   return axios({
     method: 'GET',
     url: `${apiUrl}/Product/getbyid?id=${id}`,

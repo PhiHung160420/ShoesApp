@@ -113,6 +113,7 @@ const RootTab = () => {
   // get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
 
+  // state color icon
   const [colorIcon, setColorIcon] = useState(COLORS.primary);
 
   // get numberCart from redux

@@ -2,7 +2,7 @@ import axios from 'axios';
 import {apiUrl} from '../utils/urlConst';
 
 // api get profile info
-export const getProfile = token => {
+export const getProfileAPI = token => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/getProfile`,
@@ -10,7 +10,7 @@ export const getProfile = token => {
   });
 };
 
-export const updateProfile = (data, token) => {
+export const updateProfileAPI = (data, token) => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/updateProfile`,
@@ -19,7 +19,7 @@ export const updateProfile = (data, token) => {
   });
 };
 
-export const changePassword = (data, token) => {
+export const changePasswordAPI = (data, token) => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/changePassword`,
@@ -28,7 +28,7 @@ export const changePassword = (data, token) => {
   });
 };
 
-export const uploadAvatar = (formData, token) => {
+export const uploadAvatarAPI = (formData, token) => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/uploadavatar`,

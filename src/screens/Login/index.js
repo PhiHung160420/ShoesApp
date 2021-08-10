@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Formik} from 'formik';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import {LoginButton, AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -22,11 +22,13 @@ import {useDispatch} from 'react-redux';
 import {handlerSignIn} from '../../redux/actions/authAction';
 import {SetAccessTokenToStorage} from '../../utils/storage';
 
-const SignInSchema = Yup.object().shape({
-  email: Yup.string()
+const signInValidateSchema = yup.object().shape({
+  email: yup
+    .string()
     .email('email không hợp lệ')
     .required('email không được bỏ trống'),
-  password: Yup.string()
+  password: yup
+    .string()
     .min(5, 'mật khẩu tối thiểu 5 kí tự')
     .max(8, 'mật khẩu tối đa 8 kí tự')
     .required('mật khẩu không được bỏ trống'),
@@ -44,25 +46,21 @@ const SignInScreen = ({navigation}) => {
   const handleSignIn = values => {
     useSignIn(values)
       .then(res => {
-        if (res.data.statusCode === 200) {
-          SetAccessTokenToStorage(res.data.content.accessToken);
-
-          dispatch(handlerSignIn(res.data.content.accessToken));
-        }
+        SetAccessTokenToStorage(res.data.content.accessToken);
+        dispatch(handlerSignIn(res.data.content.accessToken));
       })
       .catch(err => {
         setModalVisible(!isModalVisible);
-
         setMsgSignIn(`${err.response.data.message}`);
-
-        console.log(err);
       });
   };
 
+  // handler show hide password
   const handlerEntryPassword = () => {
     setEntryPwd(!isEntryPwd);
   };
 
+  // login with facebook
   const loginWithFacebook = () => {
     LoginManager.logInWithPermissions(['public_profile', 'email']).then(
       function (result) {
@@ -98,7 +96,8 @@ const SignInScreen = ({navigation}) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              {msgSignIn !== '' && msgSignIn} Vui lòng đăng nhập lại.
+              {msgSignIn !== '' && msgSignIn} Vui lòng kiểm tra lại thông tin
+              đăng nhập.
             </Text>
             <TouchableOpacity
               style={[styles.buttonModal]}
@@ -112,13 +111,20 @@ const SignInScreen = ({navigation}) => {
 
       {/* FOOTER */}
       <Formik
-        validationSchema={SignInSchema}
+        validationSchema={signInValidateSchema}
         initialValues={{
           email: '',
           password: '',
         }}
         onSubmit={handleSignIn}>
-        {({values, errors, handleChange, handleSubmit}) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
           <>
             <Animatable.View
               style={styles.footer}
@@ -127,20 +133,25 @@ const SignInScreen = ({navigation}) => {
               {/* EMAIL */}
               <Text style={styles.text_footer}>Email</Text>
               <View
-                style={[styles.input_field, errors.email && styles.inputError]}>
+                style={[
+                  styles.input_field,
+                  errors.email && touched.email && styles.inputError,
+                ]}>
                 <FontAwesome name="user-o" color={'#009387'} size={20} />
                 <TextInput
-                  placeholder="Your Email"
+                  name="email"
+                  placeholder="email address"
                   placeholderTextColor="#666666"
                   style={styles.textInput}
                   autoCapitalize="none"
                   keyboardType="email-address"
                   onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
                   value={values.email}
                 />
 
                 {/* CHECK EMAIL */}
-                {!errors.email && (
+                {!errors.email && values.email.length !== 0 && (
                   <Animatable.View animation="bounceIn">
                     <Feather name="check-circle" color="green" size={20} />
                   </Animatable.View>
@@ -149,7 +160,7 @@ const SignInScreen = ({navigation}) => {
               </View>
 
               {/* ERROR EMAIL */}
-              {errors.email && (
+              {errors.email && touched.email && (
                 <Text style={styles.textError}>{errors.email}</Text>
               )}
               {/* ERROR EMAIL */}
@@ -163,16 +174,19 @@ const SignInScreen = ({navigation}) => {
               <View
                 style={[
                   styles.input_field,
-                  errors.password && styles.inputError,
+                  errors.password && touched.password && styles.inputError,
                 ]}>
                 <Feather name="lock" color={'#009387'} size={20} />
                 <TextInput
-                  placeholder="Your Password"
+                  name="password"
+                  placeholder="password"
                   placeholderTextColor="#666666"
                   secureTextEntry={isEntryPwd ? true : false}
                   style={styles.textInput}
                   autoCapitalize="none"
                   onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
                 />
 
                 {/* SECURE ENTRY TEXT */}
@@ -188,7 +202,7 @@ const SignInScreen = ({navigation}) => {
               {/* PASSWORD */}
 
               {/* ERROR PASSWORD */}
-              {errors.password && (
+              {errors.password && touched.password && (
                 <Text style={styles.textError}>{errors.password}</Text>
               )}
               {/* ERROR PASSWORD */}
@@ -224,7 +238,7 @@ const SignInScreen = ({navigation}) => {
                 {/* SIGN IN WITH */}
                 <View style={styles.signInWith}>
                   <View style={styles.borderLeft}></View>
-                  <Text style={styles.textSignOther}>Or sign in with</Text>
+                  <Text style={styles.textSignOther}>or sign in with</Text>
                   <View style={styles.borderRight}></View>
                 </View>
                 {/* SIGN IN WITH */}

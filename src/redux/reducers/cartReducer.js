@@ -4,8 +4,8 @@ import {
   DECREMENT_QUANTITY,
   REMOVE_FROM_CART,
   GET_NUMBER_CART,
-  SET_CARTS,
-  REMOVE_ALL_CARTS,
+  SET_CART,
+  REMOVE_ALL_CART,
 } from '../actions/actionType';
 
 const initialState = {
@@ -15,7 +15,7 @@ const initialState = {
 
 const CartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CARTS:
+    case SET_CART:
       return {
         ...state,
         carts: action.payload.carts,
@@ -25,7 +25,7 @@ const CartReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    case REMOVE_ALL_CARTS:
+    case REMOVE_ALL_CART:
       return {
         ...state,
         carts: action.payload,

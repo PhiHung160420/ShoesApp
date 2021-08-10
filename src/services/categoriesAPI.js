@@ -8,7 +8,7 @@ export const getAllCategoriesAPI = () => {
   });
 };
 
-export const getProductByCategory = categoryId => {
+export const getProductByCategoryAPI = categoryId => {
   return axios({
     method: 'GET',
     url: `${apiUrl}/Product/getProductByCategory?categoryId=${categoryId}`,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {StyleSheet} from 'react-native';
 import {COLORS, SIZES} from '../constants';
@@ -15,6 +15,7 @@ const AlertConfirmRemove = ({
       show={showAlert}
       title="Confirm"
       message={message}
+      closeOnTouchOutside={true}
       showCancelButton={true}
       showConfirmButton={true}
       cancelText="No"

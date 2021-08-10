@@ -14,13 +14,13 @@ import * as Animatable from 'react-native-animatable';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES} from '../../constants';
+import {actFetchGetProfileRequest} from '../../redux/actions/profileAction';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
-import {handlerSetProfile} from '../../redux/actions/profileAction';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import {updateProfile, uploadAvatar} from '../../services/profileAPI';
+import {updateProfileAPI, uploadAvatarAPI} from '../../services/profileAPI';
 import UpdateProfileSuccess from '../../components/UpdateProfileSuccess';
 import UploadPhoto from './UploadPhoto';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -90,8 +90,7 @@ const UpdateProfile = ({route}) => {
   // state show hide panel
   const [showPanel, setShowPanel] = useState(false);
 
-  // state gender selected
-  // true = male, false = female
+  // state gender selected (true = male, false = female)
   const [gender, setGender] = useState(data.gender);
 
   // state validate
@@ -198,19 +197,15 @@ const UpdateProfile = ({route}) => {
       validate.phone.isValid !== false &&
       validate.password.isValid !== false
     ) {
-      updateProfile(data, accessToken)
+      updateProfileAPI(data, accessToken)
         .then(res => {
-          if (res.data.statusCode === 200) {
-            dispatch(handlerSetProfile(data));
-            if (!updateSuccess) {
-              setUpdateSuccess(true);
-            }
-            setModalVisible(!isModalVisible);
-            setModalContent({
-              title: 'Successfully',
-              message: 'Update profile successfully !',
-            });
-          }
+          dispatch(actFetchGetProfileRequest(accessToken));
+          setUpdateSuccess(true);
+          setModalVisible(!isModalVisible);
+          setModalContent({
+            title: 'Successfully',
+            message: 'Update profile successfully !',
+          });
         })
         .catch(err => {
           setUpdateSuccess(false);
@@ -249,7 +244,7 @@ const UpdateProfile = ({route}) => {
 
   // handler upload avatar
   const handlerClickUploadAvatar = () => {
-    uploadAvatar(createFormData(photo), accessToken)
+    uploadAvatarAPI(createFormData(photo), accessToken)
       .then(res => {
         setUploadSuccess(true);
       })

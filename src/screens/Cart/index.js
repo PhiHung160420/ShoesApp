@@ -26,25 +26,25 @@ const CartScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   // get cart info from redux
-  const cartsInfo = useSelector(getCartsSelector);
+  const cartInfo = useSelector(getCartsSelector);
 
   // total price
   const [totalCart, setTotalCart] = useState(0);
 
   useEffect(() => {
     let totalPrice = 0;
-    cartsInfo.carts.forEach(item => {
+    cartInfo.carts.forEach(item => {
       totalPrice += item.quantity * item.price;
-      setTotalCart(totalPrice);
     });
+    setTotalCart(totalPrice);
 
     // save carts to storage
     const handlerSaveCartToStorage = async data => {
       return await setCartsToStorage(data);
     };
 
-    handlerSaveCartToStorage(JSON.stringify(cartsInfo));
-  }, [cartsInfo]);
+    handlerSaveCartToStorage(JSON.stringify(cartInfo));
+  }, [cartInfo]);
 
   // render list product in cart
   const renderListProduct = ({item}) => {
@@ -72,7 +72,7 @@ const CartScreen = ({navigation}) => {
           styles.cartContent,
           {backgroundColor: appTheme.backgroundColor},
         ]}>
-        {cartsInfo.carts.length !== 0 ? (
+        {cartInfo.carts.length !== 0 ? (
           <>
             <View
               style={[
@@ -80,7 +80,7 @@ const CartScreen = ({navigation}) => {
                 {backgroundColor: appTheme.backgroundColor},
               ]}>
               <FlatList
-                data={cartsInfo.carts}
+                data={cartInfo.carts}
                 keyExtractor={item => item.id}
                 renderItem={renderListProduct}
                 horizontal={false}
@@ -101,7 +101,7 @@ const CartScreen = ({navigation}) => {
               ]}>
               <View style={styles.cartTotal}>
                 <Text style={[styles.totalItem, {color: appTheme.textColor}]}>
-                  {cartsInfo.numberCart} item
+                  {cartInfo.numberCart} item
                 </Text>
                 <ProductPrice>{totalCart}</ProductPrice>
               </View>

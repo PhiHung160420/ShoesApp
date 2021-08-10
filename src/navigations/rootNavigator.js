@@ -24,11 +24,11 @@ import {
 } from '../utils/storage';
 import {handlerSignIn} from '../redux/actions/authAction';
 import {getProfile} from '../services/profileAPI';
-import {handlerSetProfile} from '../redux/actions/profileAction';
+import {actFetchGetProfileRequest} from '../redux/actions/profileAction';
 import {getProductsFavoriteFromAPI} from '../services/productAPI';
 import {hanlderSetProductFavorite} from '../redux/actions/productAction';
 import {addProductToCart, setCarts} from '../redux/actions/cartAction';
-import {getProfileSelector} from '../redux/selectors/profileSelector';
+import {actFetchOrderHistoryRequest} from '../redux/actions/orderAction';
 
 const Stack = createStackNavigator();
 
@@ -39,14 +39,11 @@ const RootNavigator = () => {
   // lấy access token từ redux
   const accessToken = useSelector(getAccessTokenSelector);
 
-  //console.log(accessToken);
-
   // dispatch
   const dispatch = useDispatch();
 
   // lấy access token từ asyncStorage lưu vào redux
   // lấy products favorite từ asyncStorage lưu vào redux
-  // lấy carts từ asyncStorage lưu vào redux
   useEffect(() => {
     // access token
     const setAccessTokenToRedux = async () => {
@@ -92,11 +89,11 @@ const RootNavigator = () => {
       // xác thực đăng nhập thành công
       setAuthSuccess(true);
 
-      // gọi api để lấy profile
-      // + Lưu vào redux
-      getProfile(accessToken)
-        .then(res => dispatch(handlerSetProfile(res.data.content)))
-        .catch(err => console.log(err));
+      // gọi api để lấy profile và lưu vào redux
+      dispatch(actFetchGetProfileRequest(accessToken));
+
+      // gọi api để lấy order history lưu vào redux
+      dispatch(actFetchOrderHistoryRequest(accessToken));
 
       // gọi api để lấy danh sách sản phẩm yêu thích
       // + lưu vào redux

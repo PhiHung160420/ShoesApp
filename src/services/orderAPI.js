@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {apiUrl} from '../utils/urlConst';
 
-export const submitOrder = data => {
+export const submitOrderAPI = data => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/order`,
@@ -9,7 +9,7 @@ export const submitOrder = data => {
   });
 };
 
-export const deleteOrder = (data, token) => {
+export const deleteOrderAPI = (data, token) => {
   return axios({
     method: 'POST',
     url: `${apiUrl}/Users/deleteOrder`,
