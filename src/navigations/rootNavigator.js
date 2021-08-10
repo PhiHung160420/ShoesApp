@@ -28,6 +28,7 @@ import {actFetchGetProfileRequest} from '../redux/actions/profileAction';
 import {getProductsFavoriteFromAPI} from '../services/productAPI';
 import {hanlderSetProductFavorite} from '../redux/actions/productAction';
 import {addProductToCart, setCarts} from '../redux/actions/cartAction';
+import {actFetchOrderHistoryRequest} from '../redux/actions/orderAction';
 
 const Stack = createStackNavigator();
 
@@ -88,8 +89,11 @@ const RootNavigator = () => {
       // xác thực đăng nhập thành công
       setAuthSuccess(true);
 
-      // gọi api để lấy profile
+      // gọi api để lấy profile và lưu vào redux
       dispatch(actFetchGetProfileRequest(accessToken));
+
+      // gọi api để lấy order history lưu vào redux
+      dispatch(actFetchOrderHistoryRequest(accessToken));
 
       // gọi api để lấy danh sách sản phẩm yêu thích
       // + lưu vào redux

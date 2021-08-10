@@ -4,20 +4,20 @@ import {
   DECREMENT_QUANTITY,
   REMOVE_FROM_CART,
   GET_NUMBER_CART,
-  SET_CARTS,
-  REMOVE_ALL_CARTS,
+  SET_CART,
+  REMOVE_ALL_CART,
 } from './actionType';
 
 export const setCarts = payload => {
   return {
-    type: SET_CARTS,
+    type: SET_CART,
     payload,
   };
 };
 
 export const removeAllCarts = payload => {
   return {
-    type: REMOVE_ALL_CARTS,
+    type: REMOVE_ALL_CART,
     payload,
   };
 };

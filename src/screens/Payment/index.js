@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES} from '../../constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
@@ -16,8 +16,17 @@ import ChangeAddress from '../../components/ChangeAddress';
 const nameIcon = 'arrow-back-outline';
 
 const PaymentScreen = ({route}) => {
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // get total cart from params
+  const {totalCart} = route.params;
+
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
+
+  // get cart from redux
+  const cartInfo = useSelector(getCartsSelector);
 
   // state show modal
   const [isModalVisible, setModalVisible] = useState(false);
@@ -38,12 +47,6 @@ const PaymentScreen = ({route}) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  // get total cart from params
-  const {totalCart} = route.params;
-
-  // get carts from redux
-  const cartsInfo = useSelector(getCartsSelector);
 
   useEffect(() => {
     if (isOrderSuccess) {
@@ -120,7 +123,7 @@ const PaymentScreen = ({route}) => {
           {/* BUTTON PAYMENT */}
           <ButtonPayment
             appTheme={appTheme}
-            cartsInfo={cartsInfo}
+            cartInfo={cartInfo}
             address={address}
             setOrderSuccess={setOrderSuccess}
             isOrderSuccess={isOrderSuccess}

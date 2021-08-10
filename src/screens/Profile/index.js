@@ -49,12 +49,12 @@ const ProfileScreen = () => {
         <View style={styles.infoProfileContainer}>
           <View style={styles.infoProfileStyle}>
             {/* IMAGES */}
-            <Image source={{uri: profile.avatar}} style={styles.avatarStyle} />
+            <Image source={{uri: profile?.avatar}} style={styles.avatarStyle} />
             {/* IMAGES */}
 
             {/* NAME */}
             <Text style={[styles.nameStyle, {color: appTheme.textColor}]}>
-              {profile.name}
+              {profile?.name}
             </Text>
             {/* NAME */}
           </View>
@@ -67,7 +67,7 @@ const ProfileScreen = () => {
           <View style={styles.emailContainer}>
             <Materia name="email" size={15} color={appTheme.textColor} />
             <Text style={[styles.emailText, {color: appTheme.textColor}]}>
-              {profile.email}
+              {profile?.email}
             </Text>
           </View>
           {/* EMAIL */}
@@ -76,7 +76,7 @@ const ProfileScreen = () => {
           <View style={styles.phoneContainer}>
             <AntDesign name="phone" size={15} color={appTheme.textColor} />
             <Text style={[styles.phoneText, {color: appTheme.textColor}]}>
-              {profile.phone}
+              {profile?.phone}
             </Text>
           </View>
           {/* PHONE */}

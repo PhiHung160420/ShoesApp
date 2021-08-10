@@ -28,17 +28,16 @@ const OrderSuccess = ({
   // use navigation
   const navigation = useNavigation();
 
+  // use dispatch
   const dispatch = useDispatch();
 
   const handlerClickButton = async () => {
+    toggleModal();
     if (orderSuccess) {
-      toggleModal();
-      navigation.push('HomeScreen');
       // remove all product in cart in redux and storage
       await removeCartsInStorage();
       dispatch(removeAllCarts([]));
-    } else {
-      toggleModal();
+      navigation.push('HomeScreen');
     }
   };
 

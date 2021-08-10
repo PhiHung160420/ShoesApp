@@ -21,7 +21,6 @@ import {
   removeFromCart,
 } from '../../redux/actions/cartAction';
 import AlertConfirmRemove from '../../components/AlertConfirmRemove';
-import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
 
@@ -41,13 +40,13 @@ const ProductItem = ({item}) => {
   // use navigation
   const navigation = useNavigation();
 
-  // hide alert
+  // show alert
   const handlerShowAlert = () => {
     setShowAlert(true);
     swipeableRef.current.close();
   };
 
-  // show alert
+  // hide alert
   const handlerHideAlert = () => {
     setShowAlert(false);
   };
@@ -108,7 +107,7 @@ const ProductItem = ({item}) => {
           showAlert={showAlert}
           handlerHideAlert={handlerHideAlert}
           handlerRemoveItem={handlerRemoveProductFromCart}
-          message={'Are you sure want to delete this shoes ?'}
+          message={'Are you sure want to remove this shoes ?'}
         />
         {/* ALERT CONFIRM REMOVE PRODUCT */}
 

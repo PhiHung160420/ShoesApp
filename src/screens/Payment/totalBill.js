@@ -18,7 +18,7 @@ const TotalBill = ({appTheme, totalCart}) => {
 
   useEffect(() => {
     setTotalBill(totalCart - deliveryCost);
-  }, []);
+  }, [totalCart]);
 
   return (
     <View

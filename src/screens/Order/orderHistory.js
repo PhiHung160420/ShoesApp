@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {COLORS, SIZES} from '../../constants';
@@ -26,20 +26,12 @@ const OrderHistoryScreen = ({navigation}) => {
   // get token from redux
   const token = useSelector(getAccessTokenSelector);
 
-  // use dispatch
-  const dispatch = useDispatch();
-
   // get ordersHistory from redux
   const ordersHistory = useSelector(getOrderHistorySelector);
 
-  // call api get orders history and save to redux
-  useEffect(() => {
-    dispatch(actFetchOrderHistoryRequest(token));
-  }, []);
-
   // render list order history
   const renderListOrder = ({item}) => {
-    return <ListOrder data={item} />;
+    return <ListOrder order={item} />;
   };
 
   return (
