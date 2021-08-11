@@ -117,7 +117,7 @@ const RootNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none">
+      <Stack.Navigator headerMode="none" mode="modal">
         {authSuccess ? (
           <>
             <Stack.Screen component={RootTab} name="HomeScreen" />
