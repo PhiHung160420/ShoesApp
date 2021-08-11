@@ -5,12 +5,49 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  FlatList,
+  ScrollView,
 } from 'react-native';
 import {COLORS, SIZES} from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import {payments} from '../../constants/index';
+
+const Method = ({item, appTheme, methodSelected, handerSelectedMethod}) => {
+  return (
+    <TouchableOpacity
+      style={[
+        styles.methodContainer,
+        {
+          backgroundColor: appTheme.viewBackground,
+          borderWidth: methodSelected == item.id ? 4 : 0,
+          borderColor: methodSelected == item.id && COLORS.lightGreen,
+        },
+      ]}
+      onPress={() => handerSelectedMethod(item.id)}>
+      {/* INFO CARD */}
+      <View style={styles.methodInfo}>
+        {/* CARD ICON */}
+        <Image style={styles.methodImage} source={item.image} />
+        {/* CARD ICON */}
+
+        {/* CARD NAME */}
+        <Text style={[styles.methodName, {color: appTheme.textColor}]}>
+          {item.name}
+        </Text>
+        {/* CARD NAME */}
+      </View>
+      {/* INFO CARD */}
+
+      {/* ICON CHECKED */}
+      {methodSelected == item.id && (
+        <View style={styles.checkedContainer}>
+          <Feather name="check-circle" size={20} color={appTheme.textColor} />
+        </View>
+      )}
+      {/* ICON CHECKED */}
+    </TouchableOpacity>
+  );
+};
 
 const PaymentMethod = ({appTheme}) => {
   // state method selected
@@ -19,43 +56,6 @@ const PaymentMethod = ({appTheme}) => {
   // handler selected method
   const handerSelectedMethod = methodId => {
     setMethodSelected(methodId);
-  };
-
-  const renderMethod = ({item}) => {
-    return (
-      <TouchableOpacity
-        style={[
-          styles.methodContainer,
-          {
-            backgroundColor: appTheme.viewBackground,
-            borderWidth: methodSelected == item.id ? 4 : 0,
-            borderColor: methodSelected == item.id && COLORS.lightGreen,
-          },
-        ]}
-        onPress={() => handerSelectedMethod(item.id)}>
-        {/* INFO CARD */}
-        <View style={styles.methodInfo}>
-          {/* CARD ICON */}
-          <Image style={styles.methodImage} source={item.image} />
-          {/* CARD ICON */}
-
-          {/* CARD NAME */}
-          <Text style={[styles.methodName, {color: appTheme.textColor}]}>
-            {item.name}
-          </Text>
-          {/* CARD NAME */}
-        </View>
-        {/* INFO CARD */}
-
-        {/* ICON CHECKED */}
-        {methodSelected == item.id && (
-          <View style={styles.checkedContainer}>
-            <Feather name="check-circle" size={20} color={appTheme.textColor} />
-          </View>
-        )}
-        {/* ICON CHECKED */}
-      </TouchableOpacity>
-    );
   };
 
   return (
@@ -71,14 +71,17 @@ const PaymentMethod = ({appTheme}) => {
       </View>
 
       {/* METHOD LIST */}
-      <FlatList
-        data={payments}
-        keyExtractor={item => item.id}
-        renderItem={renderMethod}
-        horizontal={false}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{height: 10}} />}
-      />
+      <ScrollView horizontal={false} showsVerticalScrollIndicator={false}>
+        {payments.map((item, index) => (
+          <Method
+            item={item}
+            key={index}
+            appTheme={appTheme}
+            methodSelected={methodSelected}
+            handerSelectedMethod={handerSelectedMethod}
+          />
+        ))}
+      </ScrollView>
       {/* METHOD LIST */}
     </View>
   );
@@ -87,12 +90,13 @@ const PaymentMethod = ({appTheme}) => {
 const styles = StyleSheet.create({
   paymentMethodContainer: {
     flex: 2,
-    paddingHorizontal: 10,
+    marginTop: 15,
   },
   paymentMethodBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
+    alignItems: 'center',
   },
   paymentMethodTitle: {
     fontSize: 20,
@@ -115,9 +119,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: SIZES.radius,
-    width: SIZES.width - 50,
     height: 45,
     paddingHorizontal: 15,
+    marginBottom: 5,
   },
   methodInfo: {
     flexDirection: 'row',

@@ -51,19 +51,16 @@ const styles = StyleSheet.create({
   addressContainer: {
     flex: 1,
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   addressTitle: {
     fontSize: 20,
     fontWeight: '500',
-    marginLeft: 10,
   },
   addressStyle: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     borderRadius: SIZES.radius,
-    width: SIZES.width - 50,
-    marginHorizontal: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginTop: 10,

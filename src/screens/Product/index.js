@@ -36,7 +36,7 @@ import PopupAddToCart from '../../components/popupAddToCart';
 
 const nameIcon = 'arrow-back-outline';
 
-const ProducDetailScreen = ({route}) => {
+const ProducDetailScreen = ({route, navigation}) => {
   // get product id
   const {productId} = route.params;
 
@@ -137,6 +137,13 @@ const ProducDetailScreen = ({route}) => {
     dispatch(addProductToCart(product));
     // show popup
     setShowHidePopup(true);
+  };
+
+  // handler checkout product
+  const handlerCheckoutProduct = product => {
+    // save to redux
+    dispatch(addProductToCart(product));
+    navigation.navigate('PaymentScreen');
   };
 
   // render list sizes
@@ -292,7 +299,9 @@ const ProducDetailScreen = ({route}) => {
               onPress={() => handlerAddProductToCart(product)}>
               <Text style={[styles.addCardStyle]}>Add To Cart</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buyProductBtn}>
+            <TouchableOpacity
+              style={styles.buyProductBtn}
+              onPress={() => handlerCheckoutProduct(product)}>
               <Text style={styles.buyProductStyle}>Buy Now</Text>
             </TouchableOpacity>
           </View>

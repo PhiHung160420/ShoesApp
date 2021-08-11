@@ -108,9 +108,7 @@ const CartScreen = ({navigation}) => {
               <View style={styles.checkoutButton}>
                 <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() =>
-                    navigation.navigate('PaymentScreen', {totalCart: totalCart})
-                  }>
+                  onPress={() => navigation.navigate('PaymentScreen')}>
                   <Text
                     style={[styles.buttonText, {color: appTheme.textColor}]}>
                     Checkout

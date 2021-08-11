@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     height: 70,
     marginTop: 10,
     marginBottom: 20,
-    paddingHorizontal: 10,
   },
   promoTitle: {
     fontSize: 20,
