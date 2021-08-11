@@ -66,8 +66,6 @@ const styles = StyleSheet.create({
   totalContainer: {
     flex: 1,
     borderRadius: SIZES.radius,
-    width: SIZES.width - 50,
-    marginHorizontal: 10,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },

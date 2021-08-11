@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {COLORS, SIZES} from '../../constants';
@@ -12,15 +18,13 @@ import Promotion from './promotion';
 import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import OrderSuccess from '../../components/OrderSuccess';
 import ChangeAddress from '../../components/ChangeAddress';
+import ProductList from './productList';
 
 const nameIcon = 'arrow-back-outline';
 
-const PaymentScreen = ({route}) => {
+const PaymentScreen = () => {
   // use dispatch
   const dispatch = useDispatch();
-
-  // get total cart from params
-  const {totalCart} = route.params;
 
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
@@ -33,6 +37,9 @@ const PaymentScreen = ({route}) => {
 
   // state message show modal
   const [modalContent, setModalContent] = useState({});
+
+  // state total cart
+  const [totalCart, setTotalCart] = useState(0);
 
   // state order success
   const [isOrderSuccess, setOrderSuccess] = useState(false);
@@ -47,6 +54,14 @@ const PaymentScreen = ({route}) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  useEffect(() => {
+    let totalPrice = 0;
+    cartInfo.carts.forEach(item => {
+      totalPrice += item.quantity * item.price;
+    });
+    setTotalCart(totalPrice);
+  }, [cartInfo]);
 
   useEffect(() => {
     if (isOrderSuccess) {
@@ -100,37 +115,45 @@ const PaymentScreen = ({route}) => {
             styles.paymentContainer,
             {backgroundColor: appTheme.flatlistbackgroundItem},
           ]}>
-          {/* DELIVERY ADDRESS */}
-          <DeliveryAddress
-            appTheme={appTheme}
-            address={address}
-            setIsChangeAddress={setIsChangeAddress}
-          />
-          {/* DELIVERY ADDRESS */}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}>
+            {/* DELIVERY ADDRESS */}
+            <DeliveryAddress
+              appTheme={appTheme}
+              address={address}
+              setIsChangeAddress={setIsChangeAddress}
+            />
+            {/* DELIVERY ADDRESS */}
 
-          {/* PAYMENT METHOD */}
-          <PaymentMethod appTheme={appTheme} />
-          {/* PAYMENT METHOD */}
+            {/* PRODUCT LIST */}
+            <ProductList items={cartInfo} />
+            {/* PRODUCT LIST */}
 
-          {/* PROMOTION */}
-          <Promotion />
-          {/* PROMOTION */}
+            {/* PAYMENT METHOD */}
+            <PaymentMethod appTheme={appTheme} />
+            {/* PAYMENT METHOD */}
 
-          {/* TOTAL BILL */}
-          <TotalBill appTheme={appTheme} totalCart={totalCart} />
-          {/* TOTAL BILL */}
+            {/* PROMOTION */}
+            <Promotion />
+            {/* PROMOTION */}
 
-          {/* BUTTON PAYMENT */}
-          <ButtonPayment
-            appTheme={appTheme}
-            cartInfo={cartInfo}
-            address={address}
-            setOrderSuccess={setOrderSuccess}
-            isOrderSuccess={isOrderSuccess}
-            setModalVisible={setModalVisible}
-            isModalVisible={isModalVisible}
-          />
-          {/* BUTTON PAYMENT */}
+            {/* TOTAL BILL */}
+            <TotalBill appTheme={appTheme} totalCart={totalCart} />
+            {/* TOTAL BILL */}
+
+            {/* BUTTON PAYMENT */}
+            <ButtonPayment
+              appTheme={appTheme}
+              cartInfo={cartInfo}
+              address={address}
+              setOrderSuccess={setOrderSuccess}
+              isOrderSuccess={isOrderSuccess}
+              setModalVisible={setModalVisible}
+              isModalVisible={isModalVisible}
+            />
+            {/* BUTTON PAYMENT */}
+          </ScrollView>
         </View>
         {/* PAYMENT CONTAINER */}
       </View>
@@ -157,10 +180,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   paymentContainer: {
-    width: SIZES.width - 30,
-    height: SIZES.height - 170,
+    width: SIZES.width - 20,
+    height: SIZES.height - 120,
     borderRadius: SIZES.radius * 2,
-    marginTop: -80,
+    marginTop: -50,
+    alignItems: 'center',
+  },
+  contentContainerStyle: {
+    paddingBottom: 40,
   },
 });
 
