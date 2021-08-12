@@ -12,6 +12,8 @@ target 'Final_Project_RN02' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
+
   target 'Final_Project_RN02Tests' do
     inherit! :complete
     # Pods for testing

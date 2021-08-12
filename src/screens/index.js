@@ -12,6 +12,7 @@ import PaymentScreen from './Payment/index';
 import UpdateProfile from './Profile/UpdateProfile';
 import OrderHistoryScreen from './Order/orderHistory';
 import OrderDetailScreen from './Order/orderDetail';
+import MapScreen from './Map/index';
 
 export {
   SignInScreen,
@@ -28,4 +29,5 @@ export {
   UpdateProfile,
   OrderHistoryScreen,
   OrderDetailScreen,
+  MapScreen,
 };
