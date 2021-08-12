@@ -23,7 +23,7 @@ import {getInfoPaymentSelector} from '../../redux/selectors/paymentSelector';
 
 const iconName = 'arrow-back-outline';
 
-const OrderDetailScreen = ({route}) => {
+const OrderDetailScreen = ({route, navigation}) => {
   // get order id
   const {orderId} = route.params;
 
@@ -117,13 +117,15 @@ const OrderDetailScreen = ({route}) => {
 
           <View style={styles.deliveryInfoContainer}>
             {/* MAP */}
-            <View style={styles.mapContainer}>
+            <TouchableOpacity
+              style={styles.mapContainer}
+              onPress={() => navigation.navigate('MapScreen')}>
               <Image
                 source={require('../../assets/images/map.jpg')}
                 style={styles.mapStyle}
                 resizeMode="contain"
               />
-            </View>
+            </TouchableOpacity>
             {/* MAP */}
 
             {/* INFO */}

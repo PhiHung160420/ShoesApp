@@ -9,6 +9,7 @@ import {
   UpdateProfile,
   OrderHistoryScreen,
   OrderDetailScreen,
+  MapScreen,
 } from '../screens/index';
 import RootTab from './rootTab';
 import {NavigationContainer} from '@react-navigation/native';
@@ -136,6 +137,7 @@ const RootNavigator = () => {
               component={OrderDetailScreen}
               name="OrderDetailScreen"
             />
+            <Stack.Screen component={MapScreen} name="MapScreen" />
           </>
         ) : (
           <>
