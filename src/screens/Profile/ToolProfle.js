@@ -12,6 +12,7 @@ import {COLORS, SIZES} from '../../constants';
 import {useNavigation} from '@react-navigation/native';
 import UpdateModal from '../../components/UpdateModal';
 import {removeAllCarts} from '../../redux/actions/cartAction';
+import {handlerLoading} from '../../redux/actions/loadingAction';
 
 const ToolProfle = ({item, profile}) => {
   // use dispatch
@@ -37,6 +38,7 @@ const ToolProfle = ({item, profile}) => {
     await removeAccessTokenInStorage();
     dispatch(removeAllCarts([]));
     dispatch(handlerSignOut(null));
+    dispatch(handlerLoading(true));
   };
 
   //handler on press
