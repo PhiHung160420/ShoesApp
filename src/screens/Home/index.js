@@ -51,6 +51,8 @@ const HomeScreen = ({navigation}) => {
   // get list product from redux
   const listProducts = useSelector(getAllProductsSelector);
 
+  console.log('render');
+
   useEffect(() => {
     // get all category
     dispatch(actFetchGetAllCategoryRequest());
@@ -65,7 +67,7 @@ const HomeScreen = ({navigation}) => {
       }
     }, 2000);
     return () => clearTimeout(action);
-  }, [listProducts, listCate]);
+  }, [listProducts, accessToken]);
 
   // render items
   const renderListProduct = ({item}) => {
