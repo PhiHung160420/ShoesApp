@@ -25,6 +25,9 @@ import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {actFetchGetAllCategoryRequest} from '../../redux/actions/categoryAction';
 import {actFetchGetAllProductRequest} from '../../redux/actions/productAction';
 import {getAllCategorySelector} from '../../redux/selectors/categorySelector';
+import {handlerLoading} from '../../redux/actions/loadingAction';
+import {loadingSelector} from '../../redux/selectors/loadingSelector';
+import Loading from '../Loading/index';
 
 const HomeScreen = ({navigation}) => {
   // dispatch
@@ -35,6 +38,9 @@ const HomeScreen = ({navigation}) => {
 
   // get theme from store
   const appTheme = useSelector(getAppThemeSelector);
+
+  // get loading from store
+  const loading = useSelector(loadingSelector);
 
   // get products favorite from redux
   const productsFavorite = useSelector(getProductsFavoriteSelector);
@@ -51,6 +57,15 @@ const HomeScreen = ({navigation}) => {
     // get all product
     dispatch(actFetchGetAllProductRequest());
   }, []);
+
+  useEffect(() => {
+    const action = setTimeout(() => {
+      if (listProducts.length !== 0 && listCate.length !== 0) {
+        dispatch(handlerLoading(false));
+      }
+    }, 2000);
+    return () => clearTimeout(action);
+  }, [listProducts, listCate]);
 
   // render items
   const renderListProduct = ({item}) => {
@@ -102,40 +117,42 @@ const HomeScreen = ({navigation}) => {
       </HeaderBar>
       {/* HEADER */}
 
-      {/* CONTENT */}
-      <View style={styles(appTheme).contentContainer}>
-        {/* CATEGORY */}
-        <View style={styles(appTheme).categoryContainer}>
-          <Text style={styles(appTheme).categoryTitle}>Categories</Text>
+      {loading ? (
+        <Loading />
+      ) : (
+        <View style={styles(appTheme).contentContainer}>
+          {/* CATEGORY */}
+          <View style={styles(appTheme).categoryContainer}>
+            <Text style={styles(appTheme).categoryTitle}>Categories</Text>
 
-          <FlatList
-            horizontal={true}
-            data={listCate}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles(appTheme).cateListItem}
-            snapToInterval={120}
-            ItemSeparatorComponent={() => <View style={{width: 10}}></View>}
-            renderItem={renderListCategories}
-          />
-        </View>
-        {/* CATEGORY */}
+            <FlatList
+              horizontal={true}
+              data={listCate}
+              keyExtractor={item => item.id}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles(appTheme).cateListItem}
+              snapToInterval={120}
+              ItemSeparatorComponent={() => <View style={{width: 10}}></View>}
+              renderItem={renderListCategories}
+            />
+          </View>
+          {/* CATEGORY */}
 
-        {/* LIST PRODUCT */}
-        <View style={styles(appTheme).listProductContainer}>
-          <FlatList
-            data={listProducts}
-            keyExtractor={item => item.id}
-            renderItem={renderListProduct}
-            horizontal={false}
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            contentContainerStyle={styles(appTheme).listProductStyle}
-          />
+          {/* LIST PRODUCT */}
+          <View style={styles(appTheme).listProductContainer}>
+            <FlatList
+              data={listProducts}
+              keyExtractor={item => item.id}
+              renderItem={renderListProduct}
+              horizontal={false}
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              contentContainerStyle={styles(appTheme).listProductStyle}
+            />
+          </View>
+          {/* LIST PRODUCT */}
         </View>
-        {/* LIST PRODUCT */}
-      </View>
-      {/* CONTENT */}
+      )}
     </View>
   );
 };
