@@ -51,8 +51,6 @@ const HomeScreen = ({navigation}) => {
   // get list product from redux
   const listProducts = useSelector(getAllProductsSelector);
 
-  console.log('render');
-
   useEffect(() => {
     // get all category
     dispatch(actFetchGetAllCategoryRequest());
