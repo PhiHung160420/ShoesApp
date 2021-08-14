@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Animated,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
@@ -13,21 +14,43 @@ import {SIZES, COLORS} from '../../constants';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 
-const ProductItem = ({item}) => {
+const ITEM_SIZE = 150;
+
+const ProductItem = ({item, index, scrollY}) => {
   // get appTheme from store
   const appTheme = useSelector(getAppThemeSelector);
 
   // use navigation
   const navigation = useNavigation();
 
+  const scaleInputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
+
+  const scaleOutputRange = [1, 1, 1, 0];
+
+  const opacityInputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 1)];
+
+  const opacityOutputRange = [1, 1, 1, 0];
+
+  const scale = scrollY.interpolate({
+    inputRange: scaleInputRange,
+    outputRange: scaleOutputRange,
+  });
+
+  const opacity = scrollY.interpolate({
+    inputRange: opacityInputRange,
+    outputRange: opacityOutputRange,
+  });
+
   return (
-    <View
+    <Animated.View
       style={[
         styles.ItemContainer,
         {
           backgroundColor:
             appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
           shadowColor: appTheme.shadowColor,
+          transform: [{scale}],
+          opacity,
         },
       ]}>
       {/* LEFT CONTENT */}
@@ -67,7 +90,7 @@ const ProductItem = ({item}) => {
         />
       </View>
       {/* RIGHT CONTENT */}
-    </View>
+    </Animated.View>
   );
 };
 
