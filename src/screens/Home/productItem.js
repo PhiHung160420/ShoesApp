@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SharedElement} from 'react-navigation-shared-element';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, SIZES} from '../../constants';
@@ -63,48 +64,53 @@ const ProductItem = ({product, appTheme, isLiked}) => {
   };
 
   return (
-    <TouchableOpacity
-      style={[
-        styles.productItem,
-        {
-          backgroundColor:
-            appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
-          shadowColor:
-            appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
-        },
-      ]}
-      onPress={() =>
-        navigation.navigate('ProducDetailScreen', {productId: product.id})
-      }>
-      <View style={styles.productItemHeader}>
-        <View style={styles.productPriceLeftContent}>
-          <MatIcon name="attach-money" size={18} color={appTheme.textColor} />
-          <Text style={[styles.productPriceText, {color: appTheme.textColor}]}>
-            {product.price}
-          </Text>
-        </View>
-        <TouchableOpacity onPress={handlerClickLikeProduct}>
-          <FontAwesome
-            name={isLiked == true ? 'heart' : 'heart-o'}
-            color={isLiked ? COLORS.red : appTheme.textColor}
-            size={25}
-          />
-        </TouchableOpacity>
-      </View>
-      <Image
-        source={{uri: product.image}}
+    <SharedElement id={product.id}>
+      <TouchableOpacity
         style={[
-          styles.productImage,
+          styles.productItem,
           {
+            backgroundColor:
+              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
             shadowColor:
-              appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
+              appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
           },
         ]}
-      />
-      <Text style={[styles.productName, {color: appTheme.textColor}]}>
-        {product.name}
-      </Text>
-    </TouchableOpacity>
+        onPress={() =>
+          navigation.navigate('ProducDetailScreen', {item: product})
+        }>
+        <View style={styles.productItemHeader}>
+          <View style={styles.productPriceLeftContent}>
+            <MatIcon name="attach-money" size={18} color={appTheme.textColor} />
+            <Text
+              style={[styles.productPriceText, {color: appTheme.textColor}]}>
+              {product.price}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={handlerClickLikeProduct}>
+            <FontAwesome
+              name={isLiked == true ? 'heart' : 'heart-o'}
+              color={isLiked ? COLORS.red : appTheme.textColor}
+              size={25}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <Image
+          source={{uri: product.image}}
+          style={[
+            styles.productImage,
+            {
+              shadowColor:
+                appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
+            },
+          ]}
+        />
+
+        <Text style={[styles.productName, {color: appTheme.textColor}]}>
+          {product.name}
+        </Text>
+      </TouchableOpacity>
+    </SharedElement>
   );
 };
 
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
   productItemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   productPriceLeftContent: {
     flexDirection: 'row',

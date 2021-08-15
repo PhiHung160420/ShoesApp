@@ -39,9 +39,7 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     const action = setTimeout(() => {
-      if (profile) {
-        dispatch(handlerLoading(false));
-      }
+      dispatch(handlerLoading(false));
     }, 2000);
 
     return () => clearTimeout(action);
