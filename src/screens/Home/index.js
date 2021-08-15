@@ -178,7 +178,8 @@ const styles = appTheme =>
     },
     listProductContainer: {
       flex: 10,
-      paddingHorizontal: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     categoryTitle: {
       color: appTheme.textColor,

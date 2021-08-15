@@ -140,9 +140,6 @@ const RootNavigator = () => {
                   open: {animation: 'timing', config: {duration: 500}},
                   close: {animation: 'timing', config: {duration: 300}},
                 },
-                /* cardStyleInterpolator: ({current: {progress}}) => {
-                  return {cardStyle: {opacity: progress}};
-                }, */
               })}
             />
             <Stack.Screen component={PaymentScreen} name="PaymentScreen" />

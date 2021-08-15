@@ -15,6 +15,7 @@ import {actFetchGetProductByCategoryRequest} from '../../redux/actions/categoryA
 import {getProductsByCategorySelector} from '../../redux/selectors/categorySelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getProductByCategory} from '../../services/categoriesAPI';
+import * as Animatable from 'react-native-animatable';
 import ProductItem from './ProductItem';
 
 const iconName = 'arrow-back-outline';
@@ -58,7 +59,9 @@ const CategoryScreen = ({route, navigation}) => {
       {/* HEADER BAR */}
 
       {/* LIST PRODUCT */}
-      <View
+      <Animatable.View
+        animation="fadeInUp"
+        delay={200}
         style={[
           styles.contentContainer,
           {backgroundColor: appTheme.backgroundColor},
@@ -77,7 +80,7 @@ const CategoryScreen = ({route, navigation}) => {
           snapToInterval={150}
           ItemSeparatorComponent={() => <View style={{height: 20}} />}
         />
-      </View>
+      </Animatable.View>
       {/* LIST PRODUCT */}
     </View>
   );

@@ -20,11 +20,12 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ToolProfle from './ToolProfle';
 import {handlerLoading} from '../../redux/actions/loadingAction';
 import {loadingSelector} from '../../redux/selectors/loadingSelector';
+import * as Animatable from 'react-native-animatable';
 import Loading from '../Loading/index';
 
 const iconName = 'arrow-back-outline';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
@@ -59,7 +60,9 @@ const ProfileScreen = () => {
       {loading ? (
         <Loading />
       ) : (
-        <View
+        <Animatable.View
+          animation="fadeInUp"
+          delay={300}
           style={[
             styles.contentContainer,
             {backgroundColor: appTheme.backgroundColor},
@@ -117,7 +120,7 @@ const ProfileScreen = () => {
             />
           </View>
           {/* TOOLS PROFILE */}
-        </View>
+        </Animatable.View>
       )}
     </View>
   );

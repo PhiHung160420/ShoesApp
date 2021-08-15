@@ -26,9 +26,7 @@ const ProductFavorite = ({handlerRemoveProduct, item}) => {
         styles.productContainer,
         {backgroundColor: appTheme.flatlistbackgroundItem},
       ]}
-      onPress={() =>
-        navigation.navigate('ProducDetailScreen', {productId: item.id})
-      }>
+      onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
       <View style={styles.leftContainer}>
         <Image source={{uri: item.image}} style={styles.productImage} />
         <View style={styles.productNameContainer}>

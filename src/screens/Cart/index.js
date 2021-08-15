@@ -17,6 +17,7 @@ import ProductPrice from '../../components/ProductPrice';
 import ProductItem from './ProductItem';
 import {setCartsToStorage} from '../../utils/storage';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
+import * as Animatable from 'react-native-animatable';
 
 const CartScreen = ({navigation}) => {
   // get app theme from store
@@ -47,8 +48,8 @@ const CartScreen = ({navigation}) => {
   }, [cartInfo]);
 
   // render list product in cart
-  const renderListProduct = ({item}) => {
-    return <ProductItem item={item} />;
+  const renderListProduct = ({item, index}) => {
+    return <ProductItem item={item} index={index} />;
   };
 
   return (

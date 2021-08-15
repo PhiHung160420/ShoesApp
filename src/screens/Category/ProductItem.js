@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -13,8 +13,10 @@ import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {SIZES, COLORS} from '../../constants';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
+import {SharedElement} from 'react-navigation-shared-element';
 
 const ITEM_SIZE = 150;
+const DURATION = 1000;
 
 const ProductItem = ({item, index, scrollY}) => {
   // get appTheme from store
@@ -25,72 +27,71 @@ const ProductItem = ({item, index, scrollY}) => {
 
   const scaleInputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
 
-  const scaleOutputRange = [1, 1, 1, 0];
+  const outputRange = [1, 1, 1, 0];
 
   const opacityInputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 1)];
 
-  const opacityOutputRange = [1, 1, 1, 0];
-
   const scale = scrollY.interpolate({
     inputRange: scaleInputRange,
-    outputRange: scaleOutputRange,
+    outputRange,
   });
 
   const opacity = scrollY.interpolate({
     inputRange: opacityInputRange,
-    outputRange: opacityOutputRange,
+    outputRange,
   });
 
   return (
-    <Animated.View
-      style={[
-        styles.ItemContainer,
-        {
-          backgroundColor:
-            appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
-          shadowColor: appTheme.shadowColor,
-          transform: [{scale}],
-          opacity,
-        },
-      ]}>
-      {/* LEFT CONTENT */}
-      <View style={styles.leftContent}>
-        <Text style={[styles.productName, {color: appTheme.textColor}]}>
-          {item.name}
-        </Text>
-        <View style={styles.productPrice}>
-          <MatIcon name="attach-money" size={22} color={appTheme.textColor} />
-          <Text style={[styles.productPriceText, {color: appTheme.textColor}]}>
-            {item.price}
+    <SharedElement id={item.id}>
+      <Animated.View
+        style={[
+          styles.ItemContainer,
+          {
+            backgroundColor:
+              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
+            shadowColor: appTheme.shadowColor,
+            transform: [{scale}],
+            opacity,
+          },
+        ]}>
+        {/* LEFT CONTENT */}
+        <View style={styles.leftContent}>
+          <Text style={[styles.productName, {color: appTheme.textColor}]}>
+            {item.name}
           </Text>
+          <View style={styles.productPrice}>
+            <MatIcon name="attach-money" size={22} color={appTheme.textColor} />
+            <Text
+              style={[styles.productPriceText, {color: appTheme.textColor}]}>
+              {item.price}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.viewBtnContainer}
+            onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
+            <Text style={[styles.viewBtnContent, {color: appTheme.textColor}]}>
+              View
+            </Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.viewBtnContainer}
-          onPress={() =>
-            navigation.navigate('ProducDetailScreen', {productId: item.id})
-          }>
-          <Text style={[styles.viewBtnContent, {color: appTheme.textColor}]}>
-            View
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {/* LEFT CONTENT */}
+        {/* LEFT CONTENT */}
 
-      {/* RIGHT CONTENT */}
-      <View style={styles.rightContent}>
-        <Image
-          source={{uri: item.image}}
-          style={[
-            styles.imageProduct,
-            {
-              shadowColor:
-                appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
-            },
-          ]}
-        />
-      </View>
-      {/* RIGHT CONTENT */}
-    </Animated.View>
+        {/* RIGHT CONTENT */}
+        <View style={styles.rightContent}>
+          <Image
+            source={{uri: item.image}}
+            style={[
+              styles.imageProduct,
+              {
+                shadowColor:
+                  appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
+              },
+            ]}
+          />
+        </View>
+        {/* RIGHT CONTENT */}
+      </Animated.View>
+    </SharedElement>
   );
 };
 

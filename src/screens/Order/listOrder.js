@@ -19,8 +19,11 @@ import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {useNavigation} from '@react-navigation/native';
+import * as Animatable from 'react-native-animatable';
 
-const ListOrder = ({order}) => {
+const DURATION = 1000;
+
+const ListOrder = ({order, index}) => {
   // get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
 
@@ -82,7 +85,10 @@ const ListOrder = ({order}) => {
 
   return (
     <Swipeable ref={swipeableRef} renderLeftActions={RightSwiper}>
-      <View
+      <Animatable.View
+        animation="fadeInLeft"
+        delay={DURATION + index * 200}
+        duration={200}
         style={[
           styles.itemContainer,
           {
@@ -123,7 +129,7 @@ const ListOrder = ({order}) => {
           }>
           <AntDesign name="arrowright" size={35} color={appTheme.textColor} />
         </TouchableOpacity>
-      </View>
+      </Animatable.View>
     </Swipeable>
   );
 };

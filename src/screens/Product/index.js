@@ -38,7 +38,7 @@ import * as Animatable from 'react-native-animatable';
 
 const nameIcon = 'arrow-back-outline';
 
-const DURATION = 1500;
+const DURATION = 1200;
 
 const ProducDetailScreen = ({route, navigation}) => {
   // get product id

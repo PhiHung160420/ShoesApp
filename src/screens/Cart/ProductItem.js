@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -24,7 +24,9 @@ import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
 
-const ProductItem = ({item}) => {
+const DURATION = 500;
+
+const ProductItem = ({item, index}) => {
   // get app theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
@@ -33,6 +35,9 @@ const ProductItem = ({item}) => {
 
   // use ref
   const swipeableRef = useRef(null);
+
+  // initial opacity
+  const opacity = useRef(new Animated.Value(0)).current;
 
   // use dispatch
   const dispatch = useDispatch();
@@ -88,115 +93,125 @@ const ProductItem = ({item}) => {
     await removeCartsInStorage();
   };
 
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      delay: DURATION + index * 200,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <Swipeable ref={swipeableRef} renderLeftActions={rightSwiper}>
-      <TouchableOpacity
-        style={[
-          styles.productItemContainer,
-          {
-            backgroundColor: appTheme.flatlistbackgroundItem,
-            shadowColor: appTheme.shadowColor,
-          },
-        ]}
-        onPress={() =>
-          navigation.navigate('ProducDetailScreen', {productId: item.id})
-        }>
-        {/* ALERT CONFIRM REMOVE PRODUCT */}
-        <AlertConfirmRemove
-          item={item}
-          showAlert={showAlert}
-          handlerHideAlert={handlerHideAlert}
-          handlerRemoveItem={handlerRemoveProductFromCart}
-          message={'Are you sure want to remove this shoes ?'}
-        />
-        {/* ALERT CONFIRM REMOVE PRODUCT */}
-
-        <View style={styles.leftItemContainer}>
-          {/* NAME */}
-          <Text style={[styles.productName, {color: appTheme.textColor}]}>
-            {item.name}
-          </Text>
-          {/* NAME */}
-
-          {/* PRICE */}
-          <ProductPrice>{item.price}</ProductPrice>
-          {/* PRICE */}
-
-          {/* QUANTITY - SIZE */}
-          <View style={styles.productInfo}>
-            {/* QUANTITY */}
-            <View style={styles.quantityContainer}>
-              {/* DESC BUTTON */}
-              <TouchableOpacity
-                style={styles.ascQuantity}
-                onPress={() => handlerDecrementQuantity(item)}>
-                <Feather name="minus" size={20} color="black" />
-              </TouchableOpacity>
-              {/* DESC BUTTON */}
-
-              {/* QUANTITY */}
-              <Text style={[styles.quantityText, {color: appTheme.textColor}]}>
-                {item.quantity}
-              </Text>
-              {/* QUANTITY */}
-
-              {/* ASC BUTTON */}
-              <TouchableOpacity
-                style={styles.descQuantity}
-                onPress={() => handlerIncrementQuantity(item)}>
-                <Feather name="plus" size={20} color="white" />
-              </TouchableOpacity>
-              {/* ASC BUTTON */}
-            </View>
-            {/* QUANTITY */}
-
-            <View style={styles.seperateContainer}>
-              <View style={styles.seperate} />
-            </View>
-
-            {/* SIZE */}
-            <View style={styles.sizeContainer}>
-              <View
-                style={[
-                  styles.sizeTextContainer,
-                  {
-                    backgroundColor:
-                      appTheme.name == 'dark'
-                        ? COLORS.gainsboro
-                        : COLORS.darkgray,
-                  },
-                ]}>
-                <Text style={styles.sizeText}>42</Text>
-              </View>
-              <ModalDropdown
-                options={item.size}
-                defaultValue={'42'}
-                style={styles.sizeStyle}
-                dropdownStyle={styles.sizeDropdown}
-                dropdownTextStyle={styles.sizeTextDropdown}
-                showsVerticalScrollIndicator={false}>
-                <Feather name="chevron-down" size={25} />
-              </ModalDropdown>
-            </View>
-            {/* SIZE */}
-          </View>
-          {/* QUANTITY - SIZE */}
-        </View>
-        {/* IMAGE */}
-        <View style={styles.rightItemContainer}>
-          <Image
-            source={{uri: item.image}}
-            style={[
-              styles.imageProduct,
-              {
-                shadowColor:
-                  appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
-              },
-            ]}
+      <Animated.View style={{opacity}}>
+        <TouchableOpacity
+          style={[
+            styles.productItemContainer,
+            {
+              backgroundColor: appTheme.flatlistbackgroundItem,
+              shadowColor: appTheme.shadowColor,
+            },
+          ]}
+          onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
+          {/* ALERT CONFIRM REMOVE PRODUCT */}
+          <AlertConfirmRemove
+            item={item}
+            showAlert={showAlert}
+            handlerHideAlert={handlerHideAlert}
+            handlerRemoveItem={handlerRemoveProductFromCart}
+            message={'Are you sure want to remove this shoes ?'}
           />
-        </View>
-        {/* IMAGE */}
-      </TouchableOpacity>
+          {/* ALERT CONFIRM REMOVE PRODUCT */}
+
+          <View style={styles.leftItemContainer}>
+            {/* NAME */}
+            <Text style={[styles.productName, {color: appTheme.textColor}]}>
+              {item.name}
+            </Text>
+            {/* NAME */}
+
+            {/* PRICE */}
+            <ProductPrice>{item.price}</ProductPrice>
+            {/* PRICE */}
+
+            {/* QUANTITY - SIZE */}
+            <View style={styles.productInfo}>
+              {/* QUANTITY */}
+              <View style={styles.quantityContainer}>
+                {/* DESC BUTTON */}
+                <TouchableOpacity
+                  style={styles.ascQuantity}
+                  onPress={() => handlerDecrementQuantity(item)}>
+                  <Feather name="minus" size={20} color="black" />
+                </TouchableOpacity>
+                {/* DESC BUTTON */}
+
+                {/* QUANTITY */}
+                <Text
+                  style={[styles.quantityText, {color: appTheme.textColor}]}>
+                  {item.quantity}
+                </Text>
+                {/* QUANTITY */}
+
+                {/* ASC BUTTON */}
+                <TouchableOpacity
+                  style={styles.descQuantity}
+                  onPress={() => handlerIncrementQuantity(item)}>
+                  <Feather name="plus" size={20} color="white" />
+                </TouchableOpacity>
+                {/* ASC BUTTON */}
+              </View>
+              {/* QUANTITY */}
+
+              <View style={styles.seperateContainer}>
+                <View style={styles.seperate} />
+              </View>
+
+              {/* SIZE */}
+              <View style={styles.sizeContainer}>
+                <View
+                  style={[
+                    styles.sizeTextContainer,
+                    {
+                      backgroundColor:
+                        appTheme.name == 'dark'
+                          ? COLORS.gainsboro
+                          : COLORS.darkgray,
+                    },
+                  ]}>
+                  <Text style={styles.sizeText}>42</Text>
+                </View>
+                <ModalDropdown
+                  options={item.size}
+                  defaultValue={'42'}
+                  style={styles.sizeStyle}
+                  dropdownStyle={styles.sizeDropdown}
+                  dropdownTextStyle={styles.sizeTextDropdown}
+                  showsVerticalScrollIndicator={false}>
+                  <Feather name="chevron-down" size={25} />
+                </ModalDropdown>
+              </View>
+              {/* SIZE */}
+            </View>
+            {/* QUANTITY - SIZE */}
+          </View>
+          {/* IMAGE */}
+          <View style={styles.rightItemContainer}>
+            <Image
+              source={{uri: item.image}}
+              style={[
+                styles.imageProduct,
+                {
+                  shadowColor:
+                    appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
+                },
+              ]}
+            />
+          </View>
+          {/* IMAGE */}
+        </TouchableOpacity>
+      </Animated.View>
     </Swipeable>
   );
 };
