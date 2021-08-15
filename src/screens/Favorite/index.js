@@ -60,8 +60,12 @@ const FavoriteScreen = ({navigation}) => {
   };
 
   // render list product favorite
-  const renderListFavorite = ({item}) => (
-    <ProductFavorite handlerRemoveProduct={handlerRemoveProduct} item={item} />
+  const renderListFavorite = ({item, index}) => (
+    <ProductFavorite
+      handlerRemoveProduct={handlerRemoveProduct}
+      item={item}
+      index={index}
+    />
   );
 
   return (

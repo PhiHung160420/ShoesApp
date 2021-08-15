@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,37 +12,53 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
+import * as Animatable from 'react-native-animatable';
 
-const ProductFavorite = ({handlerRemoveProduct, item}) => {
+const DURATION = 500;
+
+const ProductFavorite = ({handlerRemoveProduct, item, index}) => {
   //get app theme from redux
   const appTheme = useSelector(getAppThemeSelector);
 
   // use navigation
   const navigation = useNavigation();
 
+  const [reload, setReload] = useState(null);
+
+  useEffect(() => {
+    navigation.addListener('focus', e => {
+      if (e) {
+        setReload(Math.random());
+      }
+    });
+  }, []);
+
   return (
-    <TouchableOpacity
-      style={[
-        styles.productContainer,
-        {backgroundColor: appTheme.flatlistbackgroundItem},
-      ]}
-      onPress={() =>
-        navigation.navigate('ProducDetailScreen', {productId: item.id})
-      }>
-      <View style={styles.leftContainer}>
-        <Image source={{uri: item.image}} style={styles.productImage} />
-        <View style={styles.productNameContainer}>
-          <Text style={[styles.productname, {color: appTheme.textColor}]}>
-            {item.name}
-          </Text>
+    <Animatable.View
+      animation="fadeInLeft"
+      duration={DURATION + index * 300}
+      key={reload}>
+      <TouchableOpacity
+        style={[
+          styles.productContainer,
+          {backgroundColor: appTheme.flatlistbackgroundItem},
+        ]}
+        onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
+        <View style={styles.leftContainer}>
+          <Image source={{uri: item.image}} style={styles.productImage} />
+          <View style={styles.productNameContainer}>
+            <Text style={[styles.productname, {color: appTheme.textColor}]}>
+              {item.name}
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.rightContainer}>
-        <TouchableOpacity onPress={() => handlerRemoveProduct(item.id)}>
-          <Ionicons name="heart-dislike-sharp" size={40} color={COLORS.red} />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.rightContainer}>
+          <TouchableOpacity onPress={() => handlerRemoveProduct(item.id)}>
+            <Ionicons name="heart-dislike-sharp" size={40} color={COLORS.red} />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </Animatable.View>
   );
 };
 

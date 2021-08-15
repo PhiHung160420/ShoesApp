@@ -5,14 +5,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loadingSelector} from '../../redux/selectors/loadingSelector';
 import {handlerLoading} from '../../redux/actions/loadingAction';
 
-const Loading = ({listCate, listProducts}) => {
+const LoadingScreen = ({listCate, listProducts}) => {
   return (
-    <LottieView
-      source={require('../../assets/icons/loading.json')}
-      autoPlay
-      loop
-    />
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <LottieView
+        source={require('../../assets/icons/shopping.json')}
+        autoPlay
+        loop
+      />
+    </View>
   );
 };
 
-export default Loading;
+export default LoadingScreen;

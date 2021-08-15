@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SharedElement} from 'react-navigation-shared-element';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, SIZES} from '../../constants';
@@ -63,59 +64,57 @@ const ProductItem = ({product, appTheme, isLiked}) => {
   };
 
   return (
-    <TouchableOpacity
-      style={[
-        styles.productItem,
-        {
-          backgroundColor:
-            appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
-          shadowColor:
-            appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
-        },
-      ]}
-      onPress={() =>
-        navigation.navigate('ProducDetailScreen', {productId: product.id})
-      }>
-      <View style={styles.productItemHeader}>
-        <View style={styles.productPriceLeftContent}>
-          <MatIcon name="attach-money" size={18} color={appTheme.textColor} />
-          <Text style={[styles.productPriceText, {color: appTheme.textColor}]}>
-            {product.price}
-          </Text>
-        </View>
-        <TouchableOpacity onPress={handlerClickLikeProduct}>
-          <FontAwesome
-            name={isLiked == true ? 'heart' : 'heart-o'}
-            color={isLiked ? COLORS.red : appTheme.textColor}
-            size={25}
-          />
-        </TouchableOpacity>
-      </View>
-      <Image
-        source={{uri: product.image}}
+    <SharedElement id={product.id}>
+      <TouchableOpacity
         style={[
-          styles.productImage,
+          styles.productItem,
           {
+            backgroundColor:
+              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
             shadowColor:
-              appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
+              appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
           },
         ]}
-      />
-      <Text style={[styles.productName, {color: appTheme.textColor}]}>
-        {product.name}
-      </Text>
-    </TouchableOpacity>
+        onPress={() =>
+          navigation.navigate('ProducDetailScreen', {item: product})
+        }>
+        <View style={styles.productItemHeader}>
+          <View style={styles.productPriceLeftContent}>
+            <MatIcon name="attach-money" size={18} color={appTheme.textColor} />
+            <Text
+              style={[styles.productPriceText, {color: appTheme.textColor}]}>
+              {product.price}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.iconStyle}
+            onPress={handlerClickLikeProduct}>
+            <FontAwesome
+              name={isLiked == true ? 'heart' : 'heart-o'}
+              color={isLiked ? COLORS.red : appTheme.textColor}
+              size={25}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <Image source={{uri: product.image}} style={[styles.productImage]} />
+
+        <Text style={[styles.productName, {color: appTheme.textColor}]}>
+          {product.name}
+        </Text>
+      </TouchableOpacity>
+    </SharedElement>
   );
 };
 
 const styles = StyleSheet.create({
   productItem: {
     justifyContent: 'center',
-    width: (SIZES.width - 80) / 2,
+    width: (SIZES.width - 60) / 2,
     paddingHorizontal: 10,
-    height: 190,
-    marginBottom: 25,
-    marginHorizontal: 15,
+    height: 210,
+    marginBottom: 20,
+    marginHorizontal: 10,
     borderRadius: 15,
     shadowOffset: {
       height: 3,
@@ -126,18 +125,22 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   productItemHeader: {
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   productPriceLeftContent: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   productPriceText: {
     fontWeight: 'bold',
+    fontSize: 18,
   },
   productImage: {
-    width: 150,
-    height: 110,
+    width: 165,
+    height: 120,
     alignSelf: 'center',
     shadowOffset: {
       height: 10,
@@ -146,9 +149,10 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   productName: {
-    fontSize: 16,
-    height: 40,
+    fontSize: 17,
+    textAlign: 'center',
     fontWeight: '500',
+    height: 50,
   },
 });
 

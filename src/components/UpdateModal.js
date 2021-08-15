@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {
   View,
@@ -14,6 +13,7 @@ import {useSelector} from 'react-redux';
 import {COLORS, SIZES} from '../constants';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
 import {changePasswordAPI} from '../services/profileAPI';
+import {useNavigation} from '@react-navigation/native';
 
 const iconSuccess = 'smile-o';
 const iconFailed = 'frown-o';

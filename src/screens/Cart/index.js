@@ -47,8 +47,8 @@ const CartScreen = ({navigation}) => {
   }, [cartInfo]);
 
   // render list product in cart
-  const renderListProduct = ({item}) => {
-    return <ProductItem item={item} />;
+  const renderListProduct = ({item, index}) => {
+    return <ProductItem item={item} index={index} />;
   };
 
   return (

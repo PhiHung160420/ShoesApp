@@ -16,6 +16,7 @@ import ListOrder from './listOrder';
 import {getOrderHistorySelector} from '../../redux/selectors/orderSelector';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
+import * as Animatable from 'react-native-animatable';
 
 const iconName = 'arrow-back-outline';
 
@@ -30,8 +31,8 @@ const OrderHistoryScreen = ({navigation}) => {
   const ordersHistory = useSelector(getOrderHistorySelector);
 
   // render list order history
-  const renderListOrder = ({item}) => {
-    return <ListOrder order={item} />;
+  const renderListOrder = ({item, index}) => {
+    return <ListOrder order={item} index={index} />;
   };
 
   return (

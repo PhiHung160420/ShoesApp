@@ -21,13 +21,13 @@ import {
 } from '../../redux/selectors/productSelector';
 import {getAllProduct} from '../../services/productAPI';
 import ProductItem from './productItem';
+import LoadingScreen from '../Loading/index';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {actFetchGetAllCategoryRequest} from '../../redux/actions/categoryAction';
 import {actFetchGetAllProductRequest} from '../../redux/actions/productAction';
 import {getAllCategorySelector} from '../../redux/selectors/categorySelector';
-import {handlerLoading} from '../../redux/actions/loadingAction';
-import {loadingSelector} from '../../redux/selectors/loadingSelector';
-import Loading from '../Loading/index';
+import {getLoadingSelector} from '../../redux/selectors/loadingSelector';
+import {handlerSetLoading} from '../../redux/actions/loadingAction';
 
 const HomeScreen = ({navigation}) => {
   // dispatch
@@ -39,8 +39,8 @@ const HomeScreen = ({navigation}) => {
   // get theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
-  // get loading from store
-  const loading = useSelector(loadingSelector);
+  // get loading from redux
+  const isLoading = useSelector(getLoadingSelector);
 
   // get products favorite from redux
   const productsFavorite = useSelector(getProductsFavoriteSelector);
@@ -59,16 +59,17 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    const action = setTimeout(() => {
+    const loading = setTimeout(() => {
       if (listProducts.length !== 0 && listCate.length !== 0) {
-        dispatch(handlerLoading(false));
+        dispatch(handlerSetLoading(false));
       }
-    }, 2000);
-    return () => clearTimeout(action);
-  }, [listProducts, accessToken]);
+    }, 4000);
+
+    return () => clearTimeout(loading);
+  }, [listProducts, listCate]);
 
   // render items
-  const renderListProduct = ({item}) => {
+  const renderListProduct = ({item, index}) => {
     var isLiked = false;
 
     if (typeof productsFavorite == 'object') {
@@ -117,8 +118,8 @@ const HomeScreen = ({navigation}) => {
       </HeaderBar>
       {/* HEADER */}
 
-      {loading ? (
-        <Loading />
+      {isLoading ? (
+        <LoadingScreen />
       ) : (
         <View style={styles(appTheme).contentContainer}>
           {/* CATEGORY */}
@@ -178,7 +179,8 @@ const styles = appTheme =>
     },
     listProductContainer: {
       flex: 10,
-      paddingHorizontal: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     categoryTitle: {
       color: appTheme.textColor,

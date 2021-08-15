@@ -23,6 +23,7 @@ import {
   likeProductAPI,
   unLikeProductAPI,
 } from '../../services/productAPI';
+import {SharedElement} from 'react-navigation-shared-element';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -33,12 +34,15 @@ import {
 import {setProductsFavoriteToStorage} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
 import PopupAddToCart from '../../components/popupAddToCart';
+import * as Animatable from 'react-native-animatable';
 
 const nameIcon = 'arrow-back-outline';
 
+const DURATION = 500;
+
 const ProducDetailScreen = ({route, navigation}) => {
   // get product id
-  const {productId} = route.params;
+  const {item} = route.params;
 
   // use dispatch
   const dispatch = useDispatch();
@@ -69,12 +73,12 @@ const ProducDetailScreen = ({route, navigation}) => {
 
   useEffect(() => {
     // get product by id
-    dispatch(actFetchGetProductByIdRequest(productId));
+    dispatch(actFetchGetProductByIdRequest(item.id));
 
     // set product favorite
     if (typeof productsFavorite == 'object') {
       productsFavorite.forEach(e => {
-        if (e.id == productId) {
+        if (e.id == item.id) {
           setProductFavorite(true);
         }
       });
@@ -111,14 +115,14 @@ const ProducDetailScreen = ({route, navigation}) => {
   const handlerLikeOrUnLikeProduct = () => {
     if (productFavorite) {
       setProductFavorite(false);
-      unLikeProductAPI(productId, accessToken)
+      unLikeProductAPI(item.id, accessToken)
         .then(res => {
           saveProductToReduxAndStorage(accessToken);
         })
         .catch(err => console.log(err));
     } else {
       setProductFavorite(true);
-      likeProductAPI(productId, accessToken)
+      likeProductAPI(item.id, accessToken)
         .then(res => {
           saveProductToReduxAndStorage(accessToken);
         })
@@ -166,9 +170,11 @@ const ProducDetailScreen = ({route, navigation}) => {
   };
 
   //render list related
-  const renderRelatedList = ({item}) => {
+  const renderRelatedList = ({item, index}) => {
     return (
-      <TouchableOpacity
+      <Animatable.View
+        animation="bounceIn"
+        delay={DURATION + index * 400}
         style={[
           styles.relatedItem,
           {
@@ -176,7 +182,7 @@ const ProducDetailScreen = ({route, navigation}) => {
           },
         ]}>
         <Image source={{uri: item.image}} style={styles.imageRelated} />
-      </TouchableOpacity>
+      </Animatable.View>
     );
   };
 
@@ -192,124 +198,144 @@ const ProducDetailScreen = ({route, navigation}) => {
       {/* POPUP */}
       <HeaderBar nameIcon={nameIcon} customStyle={styles.customStyle} />
       <View style={[styles.contentContainer]}>
-        <View
-          style={[
-            styles.imageContainer,
-            {
-              shadowColor: appTheme.shadowColor,
-              backgroundColor: appTheme.flatlistbackgroundItem,
-            },
-          ]}>
-          <Image source={{uri: product.image}} style={styles.imageStyle} />
-          <TouchableOpacity
-            style={styles.likeButton}
-            onPress={handlerLikeOrUnLikeProduct}>
-            <FontAwesome
-              name={productFavorite ? 'heart' : 'heart-o'}
-              size={30}
-              color={productFavorite ? COLORS.red : appTheme.textColor}
-            />
-          </TouchableOpacity>
-        </View>
-        <ScrollView
-          style={[
-            styles.productContent,
-            {
-              backgroundColor: appTheme.flatlistbackgroundItem,
-            },
-          ]}>
-          {/* PRICE - NAME */}
-          <View style={styles.productInfo}>
-            <View style={styles.productPrice}>
-              <MatIcon
-                name="attach-money"
-                size={25}
-                color={appTheme.textColor}
+        <SharedElement id={product.id}>
+          <Animatable.View
+            animation="fadeInDown"
+            delay={400}
+            style={[
+              styles.imageContainer,
+              {
+                shadowColor: appTheme.shadowColor,
+                backgroundColor: appTheme.flatlistbackgroundItem,
+              },
+            ]}>
+            <Image source={{uri: product.image}} style={styles.imageStyle} />
+            <TouchableOpacity
+              style={styles.likeButton}
+              onPress={handlerLikeOrUnLikeProduct}>
+              <FontAwesome
+                name={productFavorite ? 'heart' : 'heart-o'}
+                size={30}
+                color={productFavorite ? COLORS.red : appTheme.textColor}
               />
-              <Text
-                style={[styles.productPriceText, {color: appTheme.textColor}]}>
-                {product.price}
+            </TouchableOpacity>
+          </Animatable.View>
+        </SharedElement>
+
+        <Animatable.View animation="fadeInUp" delay={800}>
+          <ScrollView
+            style={[
+              styles.productContent,
+              {
+                backgroundColor: appTheme.flatlistbackgroundItem,
+              },
+            ]}>
+            {/* PRICE - NAME */}
+            <View style={styles.productInfo}>
+              <View style={styles.productPrice}>
+                <MatIcon
+                  name="attach-money"
+                  size={25}
+                  color={appTheme.textColor}
+                />
+                <Text
+                  style={[
+                    styles.productPriceText,
+                    {color: appTheme.textColor},
+                  ]}>
+                  {product.price}
+                </Text>
+              </View>
+              <Text style={[styles.productName, {color: appTheme.textColor}]}>
+                {product.name}
               </Text>
             </View>
-            <Text style={[styles.productName, {color: appTheme.textColor}]}>
-              {product.name}
-            </Text>
-          </View>
-          {/* PRICE - NAME */}
+            {/* PRICE - NAME */}
 
-          {/* SIZE */}
-          <View style={styles.sizeContainer}>
-            <Text style={[styles.sizeTitle, {color: appTheme.textColor}]}>
-              Available Size
-            </Text>
-            <FlatList
-              data={product.size}
-              keyExtractor={index => index.toString()}
-              renderItem={renderListSize}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={{width: 15}} />}
-              contentContainerStyle={styles.listSizeStyle}
-            />
-          </View>
-          {/* SIZE */}
-
-          {/* DESCRIPTION */}
-          <View style={styles.descriptionContainer}>
-            <Text style={[styles.descriptionText, {color: appTheme.textColor}]}>
-              Description
-            </Text>
-            {showDescript}
-            <TouchableOpacity onPress={handlerShowDescript}>
-              <Ionicons
-                name={showDescript ? 'chevron-up' : 'chevron-down-sharp'}
-                size={30}
+            {/* SIZE */}
+            <View style={styles.sizeContainer}>
+              <Text style={[styles.sizeTitle, {color: appTheme.textColor}]}>
+                Available Size
+              </Text>
+              <FlatList
+                data={product.size}
+                keyExtractor={index => index.toString()}
+                renderItem={renderListSize}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={{width: 15}} />}
+                contentContainerStyle={styles.listSizeStyle}
               />
-            </TouchableOpacity>
-          </View>
-          {showDescript && (
-            <Text style={styles.descriptContent}>
-              {product.description !== undefined
-                ? product.description.split('.')[0].trim()
-                : ''}
-            </Text>
-          )}
-          {/* DESCRIPTION */}
+            </View>
+            {/* SIZE */}
 
-          {/* RELATED PRODUCT */}
-          <View style={styles.relatedContainer}>
-            <Text style={[styles.relatedTitle, {color: appTheme.textColor}]}>
-              Related product
-            </Text>
-            <FlatList
-              data={product.relatedProducts}
-              keyExtractor={item => item.id}
-              renderItem={renderRelatedList}
-              horizontal={true}
-              contentContainerStyle={styles.relatedListContainer}
-              ItemSeparatorComponent={() => <View style={{width: 20}} />}
-            />
-          </View>
-          {/* RELATED PRODUCT */}
+            {/* DESCRIPTION */}
+            <View style={styles.descriptionContainer}>
+              <Text
+                style={[styles.descriptionText, {color: appTheme.textColor}]}>
+                Description
+              </Text>
+              {showDescript}
+              <TouchableOpacity onPress={handlerShowDescript}>
+                <Ionicons
+                  name={showDescript ? 'chevron-up' : 'chevron-down-sharp'}
+                  size={30}
+                />
+              </TouchableOpacity>
+            </View>
+            {showDescript && (
+              <Text style={styles.descriptContent}>
+                {product.description !== undefined
+                  ? product.description.split('.')[0].trim()
+                  : ''}
+              </Text>
+            )}
+            {/* DESCRIPTION */}
 
-          {/* ADD - BUY */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.addCardBtn]}
-              onPress={() => handlerAddProductToCart(product)}>
-              <Text style={[styles.addCardStyle]}>Add To Cart</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buyProductBtn}
-              onPress={() => handlerCheckoutProduct(product)}>
-              <Text style={styles.buyProductStyle}>Buy Now</Text>
-            </TouchableOpacity>
-          </View>
-          {/* ADD - BUY */}
-        </ScrollView>
+            {/* RELATED PRODUCT */}
+            <View style={styles.relatedContainer}>
+              <Text style={[styles.relatedTitle, {color: appTheme.textColor}]}>
+                Related product
+              </Text>
+              <FlatList
+                data={product.relatedProducts}
+                keyExtractor={item => item.id}
+                renderItem={renderRelatedList}
+                horizontal={true}
+                contentContainerStyle={styles.relatedListContainer}
+                ItemSeparatorComponent={() => <View style={{width: 20}} />}
+              />
+            </View>
+            {/* RELATED PRODUCT */}
+
+            {/* ADD - BUY */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.addCardBtn]}
+                onPress={() => handlerAddProductToCart(product)}>
+                <Text style={[styles.addCardStyle]}>Add To Cart</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buyProductBtn}
+                onPress={() => handlerCheckoutProduct(product)}>
+                <Text style={styles.buyProductStyle}>Buy Now</Text>
+              </TouchableOpacity>
+            </View>
+            {/* ADD - BUY */}
+          </ScrollView>
+        </Animatable.View>
       </View>
     </View>
   );
+};
+
+ProducDetailScreen.sharedElements = (route, otherNavigation, showing) => {
+  const {item} = route.params;
+  return [
+    {
+      id: item.id,
+    },
+  ];
 };
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
@@ -12,9 +12,11 @@ import {COLORS, SIZES} from '../../constants';
 import {useNavigation} from '@react-navigation/native';
 import UpdateModal from '../../components/UpdateModal';
 import {removeAllCarts} from '../../redux/actions/cartAction';
-import {handlerLoading} from '../../redux/actions/loadingAction';
+import * as Animatable from 'react-native-animatable';
 
-const ToolProfle = ({item, profile}) => {
+const DURATION = 500;
+
+const ToolProfle = ({item, index, profile}) => {
   // use dispatch
   const dispatch = useDispatch();
 
@@ -27,6 +29,16 @@ const ToolProfle = ({item, profile}) => {
   // state show modal
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const [reload, setReload] = useState(null);
+
+  useEffect(() => {
+    navigation.addListener('focus', e => {
+      if (e) {
+        setReload(Math.random());
+      }
+    });
+  }, []);
+
   // handler show modal
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -38,7 +50,6 @@ const ToolProfle = ({item, profile}) => {
     await removeAccessTokenInStorage();
     dispatch(removeAllCarts([]));
     dispatch(handlerSignOut(null));
-    dispatch(handlerLoading(true));
   };
 
   //handler on press
@@ -68,34 +79,39 @@ const ToolProfle = ({item, profile}) => {
       )}
       {/* MODAL */}
 
-      <TouchableOpacity
-        style={[
-          styles.toolsContainer,
-          {backgroundColor: appTheme.flatlistbackgroundItem},
-        ]}
-        onPress={handlerOnPress}>
-        {/* PROFILE ICON */}
-        <View style={styles.toolIconContainer}>
-          <AntDesign
-            name={item.icon}
-            size={35}
-            color={item.icon == 'logout' ? '#dc143c' : appTheme.textColor}
-          />
-        </View>
-        {/* PROFILE ICON */}
+      <Animatable.View
+        animation="fadeInLeft"
+        duration={DURATION + index * 200}
+        key={reload}>
+        <TouchableOpacity
+          style={[
+            styles.toolsContainer,
+            {backgroundColor: appTheme.flatlistbackgroundItem},
+          ]}
+          onPress={handlerOnPress}>
+          {/* PROFILE ICON */}
+          <View style={styles.toolIconContainer}>
+            <AntDesign
+              name={item.icon}
+              size={35}
+              color={item.icon == 'logout' ? '#dc143c' : appTheme.textColor}
+            />
+          </View>
+          {/* PROFILE ICON */}
 
-        {/* PROFILE TEXT */}
-        <View style={styles.toolContent}>
-          <Text
-            style={[
-              styles.toolText,
-              {color: item.icon == 'logout' ? '#dc143c' : appTheme.textColor},
-            ]}>
-            {item.text}
-          </Text>
-        </View>
-        {/* PROFILE TEXT */}
-      </TouchableOpacity>
+          {/* PROFILE TEXT */}
+          <View style={styles.toolContent}>
+            <Text
+              style={[
+                styles.toolText,
+                {color: item.icon == 'logout' ? '#dc143c' : appTheme.textColor},
+              ]}>
+              {item.text}
+            </Text>
+          </View>
+          {/* PROFILE TEXT */}
+        </TouchableOpacity>
+      </Animatable.View>
     </>
   );
 };

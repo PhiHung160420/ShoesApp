@@ -1,6 +1,6 @@
 import {LOADING} from './actionType';
 
-export const handlerLoading = payload => {
+export const handlerSetLoading = payload => {
   return {
     type: LOADING,
     payload,

@@ -12,8 +12,9 @@ import {
   MapScreen,
 } from '../screens/index';
 import RootTab from './rootTab';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
+import {enableScreens} from 'react-native-screens';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
 import {getProductsFavoriteSelector} from '../redux/selectors/productSelector';
@@ -23,6 +24,7 @@ import {
   getProductsFavoriteFromStorage,
   setProductsFavoriteToStorage,
 } from '../utils/storage';
+import {createStackNavigator} from '@react-navigation/stack';
 import {handlerSignIn} from '../redux/actions/authAction';
 import {getProfile} from '../services/profileAPI';
 import {actFetchGetProfileRequest} from '../redux/actions/profileAction';
@@ -34,8 +36,12 @@ import {
 import {addProductToCart, setCarts} from '../redux/actions/cartAction';
 import {actFetchOrderHistoryRequest} from '../redux/actions/orderAction';
 import {actFetchGetAllCategoryRequest} from '../redux/actions/categoryAction';
+import {getLoadingSelector} from '../redux/selectors/loadingSelector';
+import {handlerSetLoading} from '../redux/actions/loadingAction';
 
-const Stack = createStackNavigator();
+enableScreens();
+
+const Stack = createSharedElementStackNavigator();
 
 const RootNavigator = () => {
   // state xác thực đăng nhập thành công
@@ -97,10 +103,6 @@ const RootNavigator = () => {
       // gọi api để lấy profile và lưu vào redux
       dispatch(actFetchGetProfileRequest(accessToken));
 
-      //dispatch(actFetchGetAllCategoryRequest());
-
-      //dispatch(actFetchGetAllProductRequest());
-
       // gọi api để lấy order history lưu vào redux
       dispatch(actFetchOrderHistoryRequest(accessToken));
 
@@ -134,6 +136,13 @@ const RootNavigator = () => {
             <Stack.Screen
               component={ProducDetailScreen}
               name="ProducDetailScreen"
+              options={() => ({
+                gestureEnabled: false,
+                transitionSpec: {
+                  open: {animation: 'timing', config: {duration: 500}},
+                  close: {animation: 'timing', config: {duration: 300}},
+                },
+              })}
             />
             <Stack.Screen component={PaymentScreen} name="PaymentScreen" />
             <Stack.Screen component={UpdateProfile} name="UpdateProfile" />

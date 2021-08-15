@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Animated,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
@@ -14,6 +15,7 @@ import {actFetchGetProductByCategoryRequest} from '../../redux/actions/categoryA
 import {getProductsByCategorySelector} from '../../redux/selectors/categorySelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getProductByCategory} from '../../services/categoriesAPI';
+import * as Animatable from 'react-native-animatable';
 import ProductItem from './ProductItem';
 
 const iconName = 'arrow-back-outline';
@@ -24,6 +26,9 @@ const CategoryScreen = ({route, navigation}) => {
 
   // use dispatch
   const dispatch = useDispatch();
+
+  // initial animated
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   // get list product by category
   const listProduct = useSelector(getProductsByCategorySelector);
@@ -37,8 +42,8 @@ const CategoryScreen = ({route, navigation}) => {
   }, []);
 
   // render list product
-  const renderProduct = ({item}) => {
-    return <ProductItem item={item} />;
+  const renderProduct = ({item, index}) => {
+    return <ProductItem item={item} index={index} scrollY={scrollY} />;
   };
 
   return (
@@ -54,13 +59,19 @@ const CategoryScreen = ({route, navigation}) => {
       {/* HEADER BAR */}
 
       {/* LIST PRODUCT */}
-      <View
+      <Animatable.View
+        animation="fadeInUp"
+        delay={200}
         style={[
           styles.contentContainer,
           {backgroundColor: appTheme.backgroundColor},
         ]}>
-        <FlatList
+        <Animated.FlatList
           data={listProduct}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: scrollY}}}],
+            {useNativeDriver: true},
+          )}
           keyExtractor={item => item.id}
           renderItem={renderProduct}
           horizontal={false}
@@ -69,7 +80,7 @@ const CategoryScreen = ({route, navigation}) => {
           snapToInterval={150}
           ItemSeparatorComponent={() => <View style={{height: 20}} />}
         />
-      </View>
+      </Animatable.View>
       {/* LIST PRODUCT */}
     </View>
   );
@@ -99,7 +110,7 @@ const styles = StyleSheet.create({
   },
   listProductContainer: {
     paddingTop: 10,
-    paddingBottom: 50,
+    paddingBottom: 60,
     paddingHorizontal: 10,
   },
 });
