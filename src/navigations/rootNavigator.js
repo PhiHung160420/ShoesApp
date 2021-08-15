@@ -36,6 +36,8 @@ import {
 import {addProductToCart, setCarts} from '../redux/actions/cartAction';
 import {actFetchOrderHistoryRequest} from '../redux/actions/orderAction';
 import {actFetchGetAllCategoryRequest} from '../redux/actions/categoryAction';
+import {getLoadingSelector} from '../redux/selectors/loadingSelector';
+import {handlerSetLoading} from '../redux/actions/loadingAction';
 
 enableScreens();
 

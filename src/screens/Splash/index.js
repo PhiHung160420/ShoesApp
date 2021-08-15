@@ -23,6 +23,8 @@ const SplashScreen = ({navigation}) => {
       <View style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
+          delay={500}
+          duration={1000}
           style={styles.logo}
           source={require('../../assets/images/logo.png')}
           resizeMode="stretch"
@@ -30,9 +32,10 @@ const SplashScreen = ({navigation}) => {
       </View>
       <Animatable.View
         animation="fadeInUpBig"
-        delay={500}
+        delay={800}
+        duration={1000}
         style={styles.footer}>
-        <Text style={styles.title}>Stay connected with everyone!</Text>
+        <Text style={styles.title}>Everything you need is already inside</Text>
         <Text style={styles.text}>Sign in with account</Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>

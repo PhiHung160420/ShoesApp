@@ -38,7 +38,7 @@ import * as Animatable from 'react-native-animatable';
 
 const nameIcon = 'arrow-back-outline';
 
-const DURATION = 1200;
+const DURATION = 500;
 
 const ProducDetailScreen = ({route, navigation}) => {
   // get product id
@@ -174,7 +174,7 @@ const ProducDetailScreen = ({route, navigation}) => {
     return (
       <Animatable.View
         animation="bounceIn"
-        delay={DURATION + index * 200}
+        delay={DURATION + index * 400}
         style={[
           styles.relatedItem,
           {
@@ -201,7 +201,7 @@ const ProducDetailScreen = ({route, navigation}) => {
         <SharedElement id={product.id}>
           <Animatable.View
             animation="fadeInDown"
-            delay={700}
+            delay={400}
             style={[
               styles.imageContainer,
               {
@@ -222,7 +222,7 @@ const ProducDetailScreen = ({route, navigation}) => {
           </Animatable.View>
         </SharedElement>
 
-        <Animatable.View animation="fadeInUp" delay={1000}>
+        <Animatable.View animation="fadeInUp" delay={800}>
           <ScrollView
             style={[
               styles.productContent,

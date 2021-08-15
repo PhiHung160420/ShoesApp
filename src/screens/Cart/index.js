@@ -17,7 +17,6 @@ import ProductPrice from '../../components/ProductPrice';
 import ProductItem from './ProductItem';
 import {setCartsToStorage} from '../../utils/storage';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
-import * as Animatable from 'react-native-animatable';
 
 const CartScreen = ({navigation}) => {
   // get app theme from store

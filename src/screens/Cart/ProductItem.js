@@ -23,6 +23,8 @@ import {
 import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
+import {getLoadingSelector} from '../../redux/selectors/loadingSelector';
+import * as Animatable from 'react-native-animatable';
 
 const DURATION = 500;
 
@@ -33,11 +35,11 @@ const ProductItem = ({item, index}) => {
   // state show hide alert
   const [showAlert, setShowAlert] = useState(false);
 
+  // state reload
+  const [reload, setReload] = useState(null);
+
   // use ref
   const swipeableRef = useRef(null);
-
-  // initial opacity
-  const opacity = useRef(new Animated.Value(0)).current;
 
   // use dispatch
   const dispatch = useDispatch();
@@ -94,17 +96,19 @@ const ProductItem = ({item, index}) => {
   };
 
   useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 500,
-      delay: DURATION + index * 200,
-      useNativeDriver: true,
-    }).start();
+    navigation.addListener('focus', e => {
+      if (e) {
+        setReload(Math.random());
+      }
+    });
   }, []);
 
   return (
     <Swipeable ref={swipeableRef} renderLeftActions={rightSwiper}>
-      <Animated.View style={{opacity}}>
+      <Animatable.View
+        key={reload}
+        animation="fadeInLeft"
+        duration={DURATION + index * 300}>
         <TouchableOpacity
           style={[
             styles.productItemContainer,
@@ -211,7 +215,7 @@ const ProductItem = ({item, index}) => {
           </View>
           {/* IMAGE */}
         </TouchableOpacity>
-      </Animated.View>
+      </Animatable.View>
     </Swipeable>
   );
 };

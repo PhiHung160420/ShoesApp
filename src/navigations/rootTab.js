@@ -22,9 +22,10 @@ import {
 import Svg, {Path} from 'react-native-svg';
 import {COLORS, SIZES, icons} from '../constants/index';
 import Feather from 'react-native-vector-icons/Feather';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
 import {getCartsSelector} from '../redux/selectors/cartSelector';
+import {handlerSetLoading} from '../redux/actions/loadingAction';
 
 const Tab = createBottomTabNavigator();
 
@@ -54,6 +55,7 @@ const CustomTabbarBottom = ({
   children,
   appTheme,
   numberCart,
+  state,
 }) => {
   if (isFloat) {
     return (
