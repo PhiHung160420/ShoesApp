@@ -70,7 +70,7 @@ const ProductItem = ({product, appTheme, isLiked}) => {
           styles.productItem,
           {
             backgroundColor: appTheme.flatlistbackgroundItem,
-            shadowColor: appTheme.name == appTheme.shadowColor,
+            shadowColor: appTheme.shadowColor,
           },
         ]}
         onPress={() =>

@@ -72,13 +72,16 @@ const styles = StyleSheet.create({
     height: SIZES.height * 0.28,
   },
   title: {
-    fontSize: 30,
+    fontSize: 28,
     color: '#05375a',
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   text: {
     color: 'grey',
     marginTop: 5,
+    fontSize: 18,
+    fontFamily: 'Roboto Mono',
   },
   button: {
     alignItems: 'flex-end',
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   linearGradient: {
     flex: 1,
@@ -110,6 +114,7 @@ const styles = StyleSheet.create({
     margin: 10,
     color: '#ffffff',
     backgroundColor: 'transparent',
+    fontFamily: 'Roboto Mono',
   },
 });
 

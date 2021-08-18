@@ -198,7 +198,7 @@ const SignUpScreen = ({navigation}) => {
                   />
 
                   {/* CHECK EMAIL */}
-                  {!errors.email && (
+                  {!errors.email && touched.email && (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={20} />
                     </Animatable.View>
@@ -234,7 +234,7 @@ const SignUpScreen = ({navigation}) => {
                   />
 
                   {/* CHECK PHONE */}
-                  {!errors.phone && (
+                  {!errors.phone && touched.phone && (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={20} />
                     </Animatable.View>
@@ -407,10 +407,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
+    fontFamily: 'Roboto Mono',
   },
   text_footer: {
     color: '#05375a',
     fontSize: 22,
+    fontFamily: 'Roboto Mono',
   },
   action: {
     flexDirection: 'row',
@@ -425,6 +427,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: '#05375a',
     fontSize: 20,
+    fontFamily: 'Roboto Mono',
   },
   genderGroup: {
     flexDirection: 'row',
@@ -439,7 +442,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 30,
   },
   signIn: {
     width: '100%',
@@ -449,8 +452,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textSign: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   buttonContainHorizontal: {
     flexDirection: 'row',
@@ -477,11 +481,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#fafafa',
     paddingHorizontal: 10,
+    fontFamily: 'Roboto Mono',
   },
   buttonTextNonSelect: {
     fontSize: 14,
     color: '#777',
     paddingHorizontal: 10,
+    fontFamily: 'Roboto Mono',
   },
   successField: {
     flexDirection: 'row',

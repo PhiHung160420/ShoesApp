@@ -209,7 +209,12 @@ const SignInScreen = ({navigation}) => {
 
               {/* FORGOT PASSWORD BUTTON */}
               <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop: 15}}>
+                <Text
+                  style={{
+                    color: '#009387',
+                    marginTop: 15,
+                    fontFamily: 'Roboto Mono',
+                  }}>
                   Forgot password?
                 </Text>
               </TouchableOpacity>
@@ -325,10 +330,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
+    fontFamily: 'Roboto Mono',
   },
   text_footer: {
     color: '#05375a',
-    fontSize: 18,
+    fontSize: 22,
+    fontFamily: 'Roboto Mono',
   },
   input_field: {
     flexDirection: 'row',
@@ -342,7 +349,8 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
     color: '#05375a',
-    fontSize: 18,
+    fontSize: 20,
+    fontFamily: 'Roboto Mono',
   },
   button: {
     flexDirection: 'column',
@@ -359,6 +367,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   signUp: {
     width: '100%',
@@ -374,11 +383,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#009387',
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   textSignOther: {
     color: '#009387',
     fontWeight: '500',
     fontSize: 15,
+    fontFamily: 'Roboto Mono',
   },
   linearGradient: {
     paddingLeft: 10,
