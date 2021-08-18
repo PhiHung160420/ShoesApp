@@ -4,6 +4,17 @@
 
 A project The Shoes App was built with react native. Some screenshots below
 
+<p align="center" >
+  <kbd>
+    <img src="https://github.com/PhiHung160420/Shoes_App/blob/master/src/assets/gif/loginscreen.gif" title="Login Screen Demo" float="left">
+  </kbd>
+  <kbd>
+    <img src="https://github.com/PhiHung160420/Shoes_App/blob/master/src/assets/gif/homescreen.gif" title="Home Screen Demo" float="left">
+  </kbd>
+  <br>
+  <em>Demo Shoes App</em>
+</p>
+
 ## Features
 
 - Sign in, Log in, Log out
