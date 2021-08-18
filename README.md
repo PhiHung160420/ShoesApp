@@ -4,8 +4,16 @@
 
 A project The Shoes App was built with react native. Some screenshots below
 
-![Login Screen](https://i.ibb.co/s5DJZrw/Screen-Shot-2021-08-18-at-20-40-04.png)
-![Home Screen](https://i.ibb.co/qyCsFW5/Screen-Shot-2021-08-18-at-20-40-46.png)
+<p align="center" >
+  <kbd>
+    <img src="https://github.com/DylanVann/react-native-fast-image/raw/master/docs/assets/scroll.gif" title="Scroll Demo" float="left">
+  </kbd>
+  <kbd>
+    <img src="https://github.com/DylanVann/react-native-fast-image/raw/master/docs/assets/priority.gif" title="Priority Demo" float="left">
+  </kbd>
+  <br>
+  <em>FastImage example app.</em>
+</p>
 
 ## Features
 
