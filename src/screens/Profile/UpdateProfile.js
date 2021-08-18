@@ -580,6 +580,7 @@ const styles = StyleSheet.create({
   updateTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   avatarProfileContainer: {
     flex: 1,
@@ -626,6 +627,7 @@ const styles = StyleSheet.create({
   textField: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   buttonContainHorizontal: {
     flexDirection: 'row',

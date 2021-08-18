@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   addressTitle: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   addressStyle: {
     flexDirection: 'column',
@@ -79,16 +80,18 @@ const styles = StyleSheet.create({
   titleHomeAddress: {
     color: COLORS.black,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   addressTextContainer: {
     marginVertical: 10,
   },
   addressText: {
-    fontSize: 16,
+    fontSize: 14,
+    fontFamily: 'Roboto Mono',
   },
   btnChangeContent: {
     fontSize: 15,
-    fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
 });
 

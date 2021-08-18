@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   orderHistoryTitle: {
     fontSize: 25,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   orderHistoryContainer: {
     paddingTop: 20,

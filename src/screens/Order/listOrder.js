@@ -20,8 +20,7 @@ import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {useNavigation} from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-
-const DURATION = 1000;
+import {DURATION} from '../../constants/index';
 
 const ListOrder = ({order, index}) => {
   // get app theme from redux
@@ -87,8 +86,7 @@ const ListOrder = ({order, index}) => {
     <Swipeable ref={swipeableRef} renderLeftActions={RightSwiper}>
       <Animatable.View
         animation="fadeInLeft"
-        delay={DURATION + index * 200}
-        duration={200}
+        delay={DURATION + index * 100}
         style={[
           styles.itemContainer,
           {
@@ -114,7 +112,7 @@ const ListOrder = ({order, index}) => {
             Date: {moment(order.date).format('DD/MM/YYYY')}
           </Text>
           <Text style={[styles.orderIdStyle, {color: appTheme.textColor}]}>
-            Order ID: #{order.id}
+            ID: #{order.id}
           </Text>
         </View>
         <View
@@ -153,12 +151,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dateStyle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   orderIdStyle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   separate: {
     height: 40,
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   totalItem: {
     fontSize: 18,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   rightSwiperContainer: {
     justifyContent: 'center',

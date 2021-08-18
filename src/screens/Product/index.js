@@ -35,10 +35,9 @@ import {setProductsFavoriteToStorage} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
 import PopupAddToCart from '../../components/popupAddToCart';
 import * as Animatable from 'react-native-animatable';
+import {DURATION} from '../../constants/index';
 
 const nameIcon = 'arrow-back-outline';
-
-const DURATION = 500;
 
 const ProducDetailScreen = ({route, navigation}) => {
   // get product id
@@ -174,7 +173,7 @@ const ProducDetailScreen = ({route, navigation}) => {
     return (
       <Animatable.View
         animation="bounceIn"
-        delay={DURATION + index * 400}
+        delay={DURATION + index * 500}
         style={[
           styles.relatedItem,
           {
@@ -390,24 +389,29 @@ const styles = StyleSheet.create({
   productPriceText: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   productName: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   descriptionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
     marginHorizontal: 20,
+    fontFamily: 'Roboto Mono',
   },
   descriptionText: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   descriptContent: {
     marginHorizontal: 20,
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: 'Roboto Mono',
   },
   listSizeStyle: {
     marginVertical: 5,
@@ -415,13 +419,14 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   sizeContainer: {
-    marginTop: 25,
+    marginTop: 15,
     marginLeft: 20,
   },
   sizeTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: 'Roboto Mono',
   },
   sizeItemStyle: {
     justifyContent: 'center',
@@ -447,6 +452,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 20,
+    fontFamily: 'Roboto Mono',
   },
   relatedItem: {
     borderRadius: 10,
@@ -485,6 +491,7 @@ const styles = StyleSheet.create({
   addCardStyle: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   buyProductBtn: {
     backgroundColor: COLORS.primary,
@@ -498,6 +505,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLORS.white,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   likeButton: {
     position: 'absolute',

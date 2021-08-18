@@ -88,11 +88,14 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: COLORS.white,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   msgPopupContent: {
     fontSize: 18,
     color: COLORS.white,
     textAlign: 'center',
+    fontFamily: 'Roboto Mono',
+    marginBottom: 10,
   },
   buttonContainer: {
     flex: 1,
@@ -112,6 +115,7 @@ const styles = StyleSheet.create({
   btnCancelText: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   btnOkStyle: {
     flex: 1,
@@ -124,6 +128,7 @@ const styles = StyleSheet.create({
   btnOkText: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   successIcon: {
     width: 100,

@@ -94,14 +94,17 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   costText: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   totalText: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   colorText: {
     color: COLORS.black,

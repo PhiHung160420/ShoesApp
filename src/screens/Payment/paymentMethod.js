@@ -66,7 +66,6 @@ const PaymentMethod = ({appTheme}) => {
         </Text>
         <TouchableOpacity style={styles.addBtnContainer}>
           <Text style={styles.addBtnContent}>Add</Text>
-          <AntDesign name="plus" size={15} />
         </TouchableOpacity>
       </View>
 
@@ -101,18 +100,21 @@ const styles = StyleSheet.create({
   paymentMethodTitle: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   addBtnContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 10,
     backgroundColor: COLORS.green,
   },
   addBtnContent: {
     fontSize: 15,
+    fontWeight: '400',
+    fontFamily: 'Roboto Mono',
   },
   methodContainer: {
     flexDirection: 'row',
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'Roboto Mono',
   },
   methodImage: {
     width: 40,

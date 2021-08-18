@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 30,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   contentContainer: {
     flex: 2,

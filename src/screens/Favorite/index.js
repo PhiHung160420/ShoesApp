@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 30,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   contentContainer: {
     flex: 2,

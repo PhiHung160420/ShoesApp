@@ -79,8 +79,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   buttonText: {
-    fontSize: SIZES.h2,
+    fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
 });
 

@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
   },
   text_footer: {
     color: '#05375a',
-    fontSize: 18,
+    fontSize: 22,
   },
   action: {
     flexDirection: 'row',
@@ -424,6 +424,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
     color: '#05375a',
+    fontSize: 20,
   },
   genderGroup: {
     flexDirection: 'row',

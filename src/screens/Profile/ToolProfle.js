@@ -13,8 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import UpdateModal from '../../components/UpdateModal';
 import {removeAllCarts} from '../../redux/actions/cartAction';
 import * as Animatable from 'react-native-animatable';
-
-const DURATION = 500;
+import {DURATION} from '../../constants/index';
 
 const ToolProfle = ({item, index, profile}) => {
   // use dispatch
@@ -29,6 +28,7 @@ const ToolProfle = ({item, index, profile}) => {
   // state show modal
   const [isModalVisible, setModalVisible] = useState(false);
 
+  // state reload
   const [reload, setReload] = useState(null);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const ToolProfle = ({item, index, profile}) => {
 
       <Animatable.View
         animation="fadeInLeft"
-        duration={DURATION + index * 200}
+        duration={DURATION + index * 150}
         key={reload}>
         <TouchableOpacity
           style={[
@@ -136,8 +136,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   toolText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
 });
 

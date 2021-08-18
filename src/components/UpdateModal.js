@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.white,
     marginBottom: 10,
+    fontFamily: 'Roboto Mono',
   },
   modalContainer: {
     borderRadius: SIZES.radius,
@@ -241,10 +242,12 @@ const styles = StyleSheet.create({
     height: 30,
     fontSize: 18,
     width: '95%',
+    fontFamily: 'Roboto Mono',
   },
   newPassText: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   buttonContainer: {
     flex: 1,
@@ -264,6 +267,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.white,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   btnCancelStyle: {
     paddingHorizontal: 35,
@@ -277,6 +281,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.white,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   modalContent: {
     flex: 3,

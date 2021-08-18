@@ -16,7 +16,6 @@ import {useNavigation} from '@react-navigation/native';
 import {SharedElement} from 'react-navigation-shared-element';
 
 const ITEM_SIZE = 150;
-const DURATION = 1000;
 
 const ProductItem = ({item, index, scrollY}) => {
   // get appTheme from store
@@ -47,8 +46,7 @@ const ProductItem = ({item, index, scrollY}) => {
         style={[
           styles.ItemContainer,
           {
-            backgroundColor:
-              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
+            backgroundColor: appTheme.flatlistbackgroundItem,
             shadowColor: appTheme.shadowColor,
             transform: [{scale}],
             opacity,
@@ -123,6 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Roboto Mono',
   },
   productPrice: {
     flexDirection: 'row',
@@ -146,6 +145,7 @@ const styles = StyleSheet.create({
   viewBtnContent: {
     fontSize: 18,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   rightContent: {
     flex: 1,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   imageProduct: {
-    width: 180,
+    width: 170,
     height: 140,
     shadowOffset: {
       height: 3,

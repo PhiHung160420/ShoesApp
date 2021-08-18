@@ -68,7 +68,9 @@ const ProfileScreen = ({navigation}) => {
         <View style={styles.subInfoContainer}>
           {/* EMAIL */}
           <View style={styles.emailContainer}>
-            <Materia name="email" size={15} color={appTheme.textColor} />
+            {profile ? (
+              <Materia name="email" size={15} color={appTheme.textColor} />
+            ) : null}
             <Text style={[styles.emailText, {color: appTheme.textColor}]}>
               {profile?.email}
             </Text>
@@ -77,7 +79,9 @@ const ProfileScreen = ({navigation}) => {
 
           {/* PHONE */}
           <View style={styles.phoneContainer}>
-            <AntDesign name="phone" size={15} color={appTheme.textColor} />
+            {profile ? (
+              <AntDesign name="phone" size={15} color={appTheme.textColor} />
+            ) : null}
             <Text style={[styles.phoneText, {color: appTheme.textColor}]}>
               {profile?.phone}
             </Text>
@@ -141,6 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     marginTop: 5,
+    fontFamily: 'Roboto Mono',
   },
   iconContainer: {
     position: 'absolute',
@@ -161,17 +166,23 @@ const styles = StyleSheet.create({
   },
   emailContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   emailText: {
     fontSize: 14,
     marginLeft: 5,
+    fontFamily: 'Roboto Mono',
   },
   phoneContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   phoneText: {
     fontSize: 14,
     marginLeft: 5,
+    fontFamily: 'Roboto Mono',
   },
 });
 

@@ -69,10 +69,8 @@ const ProductItem = ({product, appTheme, isLiked}) => {
         style={[
           styles.productItem,
           {
-            backgroundColor:
-              appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
-            shadowColor:
-              appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
+            backgroundColor: appTheme.flatlistbackgroundItem,
+            shadowColor: appTheme.name == appTheme.shadowColor,
           },
         ]}
         onPress={() =>
@@ -110,9 +108,9 @@ const ProductItem = ({product, appTheme, isLiked}) => {
 const styles = StyleSheet.create({
   productItem: {
     justifyContent: 'center',
-    width: (SIZES.width - 60) / 2,
+    width: (SIZES.width - 40) / 2,
     paddingHorizontal: 10,
-    height: 210,
+    paddingVertical: 5,
     marginBottom: 20,
     marginHorizontal: 10,
     borderRadius: 15,
@@ -125,7 +123,6 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   productItemHeader: {
-    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -139,20 +136,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   productImage: {
-    width: 165,
-    height: 120,
+    width: 170,
+    height: 135,
     alignSelf: 'center',
-    shadowOffset: {
-      height: 10,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
   },
   productName: {
     fontSize: 17,
     textAlign: 'center',
     fontWeight: '500',
     height: 50,
+    fontFamily: 'Roboto Mono',
   },
 });
 

@@ -13,8 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import * as Animatable from 'react-native-animatable';
-
-const DURATION = 500;
+import {DURATION} from '../../constants/index';
 
 const ProductFavorite = ({handlerRemoveProduct, item, index}) => {
   //get app theme from redux
@@ -97,6 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
+    fontFamily: 'Roboto Mono',
   },
 });
 

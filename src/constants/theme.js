@@ -58,6 +58,8 @@ export const SIZES = {
   height,
 };
 
+export const DURATION = 500;
+
 /* export const FONTS = {
     largeTitle: { fontFamily: "Roboto-Black", fontSize: SIZES.largeTitle },
     h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36 },
@@ -76,13 +78,9 @@ export const darkTheme = {
   backgroundColor: COLORS.secondary,
   subBackgroundColor: COLORS.lightGray,
   textColor: COLORS.white,
-  tabBackgroundColor: COLORS.lightGray,
   flatlistbackgroundItem: COLORS.lightGray,
-  buttonBackgroundColor: COLORS.lightGray,
   shadowColor: COLORS.lightGray2,
   cardBackgroundColor: COLORS.gray3,
-  bottomTabBarBackgroundColor: COLORS.gray3,
-  headerColor: COLORS.yellow,
   viewBackground: COLORS.darkgray,
   borderBottomColor: COLORS.white,
 };
@@ -92,19 +90,15 @@ export const lightTheme = {
   backgroundColor: COLORS.lightGray3,
   subBackgroundColor: COLORS.gainsboro,
   textColor: COLORS.black,
-  tabBackgroundColor: COLORS.yellow,
   flatlistbackgroundItem: COLORS.silver,
-  buttonBackgroundColor: COLORS.silver,
   shadowColor: COLORS.gray3,
   cardBackgroundColor: COLORS.silver,
-  bottomTabBarBackgroundColor: COLORS.lightYellow,
-  headerColor: COLORS.red,
   viewBackground: COLORS.gainsboro,
   borderBottomColor: COLORS.black,
 };
 
 export const selectedTheme = darkTheme;
 
-const appTheme = {COLORS, SIZES, darkTheme, lightTheme};
+const appTheme = {COLORS, SIZES, darkTheme, lightTheme, DURATION};
 
 export default appTheme;

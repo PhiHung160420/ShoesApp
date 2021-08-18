@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 25,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   contentContainer: {
     flex: 2,

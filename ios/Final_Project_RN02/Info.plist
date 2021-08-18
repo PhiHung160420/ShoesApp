@@ -35,21 +35,21 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-	<string>fbapi</string>
-	<string>fbapi20130214</string>
-	<string>fbapi20130410</string>
-	<string>fbapi20130702</string>
-	<string>fbapi20131010</string>
-	<string>fbapi20131219</string>
-	<string>fbapi20140410</string>
-	<string>fbapi20140116</string>
-	<string>fbapi20150313</string>
-	<string>fbapi20150629</string>
-	<string>fbapi20160328</string>
-	<string>fbauth</string>
-	<string>fb-messenger-share-api</string>
-	<string>fbauth2</string>
-	<string>fbshareextension</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -92,6 +92,22 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>RobotoMono-VariableFont_wght.ttf</string>
+		<string>RobotoMono-Bold.ttf</string>
+		<string>RobotoMono-BoldItalic.ttf</string>
+		<string>RobotoMono-ExtraLight.ttf</string>
+		<string>RobotoMono-ExtraLightItalic.ttf</string>
+		<string>RobotoMono-Italic-VariableFont_wght.ttf</string>
+		<string>RobotoMono-Italic.ttf</string>
+		<string>RobotoMono-Light.ttf</string>
+		<string>RobotoMono-LightItalic.ttf</string>
+		<string>RobotoMono-Medium.ttf</string>
+		<string>RobotoMono-MediumItalic.ttf</string>
+		<string>RobotoMono-Regular.ttf</string>
+		<string>RobotoMono-SemiBold.ttf</string>
+		<string>RobotoMono-SemiBoldItalic.ttf</string>
+		<string>RobotoMono-Thin.ttf</string>
+		<string>RobotoMono-ThinItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   productContainer: {
     flexDirection: 'row',
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     marginRight: 10,
+    fontFamily: 'Roboto Mono',
   },
   productQuantity: {
     backgroundColor: COLORS.lightGray,
@@ -123,7 +125,8 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
   },
   buttonText: {
-    fontWeight: '500',
+    fontWeight: '400',
+    fontFamily: 'Roboto Mono',
   },
   titleBar: {
     flexDirection: 'row',

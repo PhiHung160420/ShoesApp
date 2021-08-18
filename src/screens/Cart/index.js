@@ -152,12 +152,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   titleMain: {
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   titleSub: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   cartContent: {
     flex: 2,
@@ -196,6 +198,7 @@ const styles = StyleSheet.create({
   totalItem: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   checkoutButton: {
     flex: 3,
@@ -210,6 +213,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 22,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   cartImageContainer: {
     flex: 2,
@@ -227,11 +231,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     opacity: 0.8,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   contentCartEmpty: {
     fontSize: 20,
     textAlign: 'center',
     opacity: 0.5,
+    fontFamily: 'Roboto Mono',
+    paddingHorizontal: 5,
   },
   backToHomeBtn: {
     marginTop: 15,

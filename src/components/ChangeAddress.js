@@ -68,9 +68,10 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius * 2,
   },
   locationTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '500',
     marginTop: 5,
+    fontFamily: 'Roboto Mono',
   },
   inputStyle: {
     borderBottomWidth: 1,
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop: 20,
     fontSize: 18,
+    fontFamily: 'Roboto Mono',
   },
   buttonContainer: {
     position: 'absolute',
@@ -105,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     color: COLORS.white,
+    fontFamily: 'Roboto Mono',
   },
 });
 

@@ -92,11 +92,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: COLORS.white,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   msgModalStyle: {
     fontSize: 18,
     color: COLORS.white,
     textAlign: 'center',
+    fontFamily: 'Roboto Mono',
   },
   buttonContainer: {
     flex: 1,
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
   btnContinueText: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   iconStyle: {
     width: 100,

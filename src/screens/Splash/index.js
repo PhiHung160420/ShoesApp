@@ -11,10 +11,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-const {height} = Dimensions.get('screen');
-
-const height_logo = height * 0.28;
+import {DURATION, SIZES} from '../../constants/index';
 
 const SplashScreen = ({navigation}) => {
   return (
@@ -24,7 +21,7 @@ const SplashScreen = ({navigation}) => {
         <Animatable.Image
           animation="bounceIn"
           delay={500}
-          duration={1000}
+          duration={DURATION * 2}
           style={styles.logo}
           source={require('../../assets/images/logo.png')}
           resizeMode="stretch"
@@ -33,7 +30,7 @@ const SplashScreen = ({navigation}) => {
       <Animatable.View
         animation="fadeInUpBig"
         delay={800}
-        duration={1000}
+        duration={DURATION * 2}
         style={styles.footer}>
         <Text style={styles.title}>Everything you need is already inside</Text>
         <Text style={styles.text}>Sign in with account</Text>
@@ -71,8 +68,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   logo: {
-    width: height_logo,
-    height: height_logo,
+    width: SIZES.height * 0.28,
+    height: SIZES.height * 0.28,
   },
   title: {
     fontSize: 30,

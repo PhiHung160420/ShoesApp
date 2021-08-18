@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+import {SIZES} from '../../constants';
 
 const ProductOrder = ({item, appTheme}) => {
   return (
@@ -27,22 +28,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    paddingVertical: 5,
   },
   imageItem: {
-    width: 100,
+    width: 110,
     height: 70,
   },
   itemInfo: {
     flexDirection: 'column',
     marginLeft: 10,
+    width: SIZES.width / 2 + 60,
   },
   itemName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
+    fontFamily: 'Roboto Mono',
   },
   itemQuantity: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
+    fontFamily: 'Roboto Mono',
   },
 });
 

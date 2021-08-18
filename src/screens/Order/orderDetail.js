@@ -131,14 +131,14 @@ const OrderDetailScreen = ({route, navigation}) => {
             {/* INFO */}
             <View style={styles.deliveredInfo}>
               <Text style={[styles.deliveryName, {color: appTheme.textColor}]}>
-                <Text style={{fontWeight: 'bold'}}>Name:</Text> {profile.name}
+                <Text style={styles.titleInfo}>Name:</Text> {profile.name}
               </Text>
               <Text style={[styles.deliveryPhone, {color: appTheme.textColor}]}>
-                <Text style={{fontWeight: 'bold'}}>Phone:</Text> {profile.phone}
+                <Text style={styles.titleInfo}>Phone:</Text> {profile.phone}
               </Text>
               <Text
                 style={[styles.deliveryAddress, {color: appTheme.textColor}]}>
-                <Text style={{fontWeight: 'bold'}}>Address: </Text>
+                <Text style={styles.titleInfo}>Address: </Text>
                 112 Lý Chính Thắng, Quận 1, TP.HCM
               </Text>
             </View>
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
   orderDetailTitle: {
     fontSize: 25,
     fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   contentContainer: {
     flex: 1,
@@ -264,6 +265,11 @@ const styles = StyleSheet.create({
   orderContainer: {
     paddingTop: 10,
     paddingBottom: 50,
+  },
+  titleInfo: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto Mono',
   },
   mapContainer: {
     marginVertical: 5,
@@ -280,10 +286,12 @@ const styles = StyleSheet.create({
   orderId: {
     fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   orderDate: {
     fontSize: 15,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   rowInfo: {
     flexDirection: 'row',
@@ -314,6 +322,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     marginLeft: 10,
+    fontFamily: 'Roboto Mono',
   },
   delivery: {
     marginTop: 15,
@@ -328,6 +337,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'Roboto Mono',
   },
   deliveryInfoContainer: {
     flexDirection: 'row',
@@ -339,13 +349,16 @@ const styles = StyleSheet.create({
   },
   deliveryName: {
     fontSize: 16,
+    fontFamily: 'Roboto Mono',
   },
   deliveryPhone: {
     fontSize: 16,
+    fontFamily: 'Roboto Mono',
   },
   deliveryAddress: {
     fontSize: 16,
     width: 230,
+    fontFamily: 'Roboto Mono',
   },
   itemsContainer: {
     marginTop: 15,
@@ -360,6 +373,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'Roboto Mono',
   },
   paymentMethod: {
     flexDirection: 'column',
@@ -375,12 +389,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'Roboto Mono',
   },
   paymentContent: {
-    fontSize: 18,
+    fontSize: 16,
     marginVertical: 5,
     marginLeft: 10,
     opacity: 0.7,
+    fontFamily: 'Roboto Mono',
   },
   totalOrderContainer: {
     marginTop: 15,
@@ -396,10 +412,12 @@ const styles = StyleSheet.create({
   totalText: {
     fontSize: 18,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   subTotalPrice: {
     fontSize: 16,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
   buttonContainer: {
     flexDirection: 'row',

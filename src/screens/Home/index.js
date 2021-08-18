@@ -87,7 +87,7 @@ const HomeScreen = ({navigation}) => {
       <TouchableOpacity
         style={[
           styles(appTheme).cateItemContainer,
-          {width: item.id == 'VANS_CONVERSE' ? 200 : 100},
+          {width: item.id == 'VANS_CONVERSE' ? 200 : 110},
         ]}
         onPress={() => navigation.navigate('CategoryScreen', {id: item.id})}>
         <Text style={styles(appTheme).cateItemName}>{item.category}</Text>
@@ -132,8 +132,8 @@ const HomeScreen = ({navigation}) => {
               keyExtractor={item => item.id}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles(appTheme).cateListItem}
-              snapToInterval={120}
-              ItemSeparatorComponent={() => <View style={{width: 10}}></View>}
+              snapToInterval={125}
+              ItemSeparatorComponent={() => <View style={{width: 5}}></View>}
               renderItem={renderListCategories}
             />
           </View>
@@ -186,10 +186,13 @@ const styles = appTheme =>
       color: appTheme.textColor,
       fontSize: 25,
       fontWeight: 'bold',
+      marginLeft: 10,
+      fontFamily: 'Roboto Mono',
     },
     cateListItem: {
       marginTop: 10,
       paddingRight: 20,
+      marginLeft: -10,
     },
     cateItemContainer: {
       backgroundColor:
@@ -212,6 +215,7 @@ const styles = appTheme =>
       color: appTheme.textColor,
       fontWeight: 'bold',
       fontSize: 20,
+      fontFamily: 'Roboto Mono',
     },
     listProductStyle: {
       paddingBottom: 100,

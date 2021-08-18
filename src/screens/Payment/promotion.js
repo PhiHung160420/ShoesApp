@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     textTransform: 'uppercase',
+    fontFamily: 'Roboto Mono',
   },
   promoStyle: {
     flexDirection: 'row',
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
   applyBtnText: {
     fontSize: 15,
     fontWeight: '500',
+    fontFamily: 'Roboto Mono',
   },
 });
 

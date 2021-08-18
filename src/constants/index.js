@@ -1,6 +1,7 @@
 import theme, {
   COLORS,
   SIZES,
+  DURATION,
   darkTheme,
   lightTheme,
   selectedTheme,
@@ -16,6 +17,7 @@ export {
   tools,
   payments,
   COLORS,
+  DURATION,
   SIZES,
   darkTheme,
   lightTheme,

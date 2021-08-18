@@ -25,8 +25,7 @@ import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
 import {getLoadingSelector} from '../../redux/selectors/loadingSelector';
 import * as Animatable from 'react-native-animatable';
-
-const DURATION = 500;
+import {DURATION} from '../../constants/index';
 
 const ProductItem = ({item, index}) => {
   // get app theme from store
@@ -136,7 +135,9 @@ const ProductItem = ({item, index}) => {
             {/* NAME */}
 
             {/* PRICE */}
-            <ProductPrice>{item.price}</ProductPrice>
+            <ProductPrice style={styles.productPrice}>
+              {item.price}
+            </ProductPrice>
             {/* PRICE */}
 
             {/* QUANTITY - SIZE */}
@@ -250,9 +251,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   productName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
     textAlign: 'center',
+    fontFamily: 'Roboto Mono',
+  },
+  productPrice: {
+    fontFamily: 'Roboto Mono',
   },
   productInfo: {
     flexDirection: 'row',
