@@ -4,16 +4,6 @@
 
 A project The Shoes App was built with react native. Some screenshots below
 
-<p align="center" >
-  <kbd>
-    <img src="https://i.ibb.co/s5DJZrw/Screen-Shot-2021-08-18-at-20-40-04.png" title="Scroll Demo" float="left">
-  </kbd>
-  <kbd>
-    <img src="https://i.ibb.co/s5DJZrw/Screen-Shot-2021-08-18-at-20-40-04.png" title="Priority Demo" float="left">
-  </kbd>
-  <br>
-  <em>FastImage example app.</em>
-</p>
 
 ## Features
 
@@ -86,3 +76,7 @@ npx react-native run-android
 ```
 npx react-native run-ios
 ```
+
+## Support
+
+For support please contact with email hungphanlk@gmail.com
