@@ -89,4 +89,6 @@ npx react-native run-ios
 
 ## Troubleshooting
 
-If you have any problems using this library try the steps in [troubleshooting](https://reactnative.dev/docs/environment-setup).
+If you have any problems when run project try the steps in [troubleshooting](https://reactnative.dev/docs/environment-setup).
+
+🙈🙈 Happy Coding 🙈🙈
