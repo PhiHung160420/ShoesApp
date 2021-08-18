@@ -14,6 +14,7 @@ import UpdateModal from '../../components/UpdateModal';
 import {removeAllCarts} from '../../redux/actions/cartAction';
 import * as Animatable from 'react-native-animatable';
 import {DURATION} from '../../constants/index';
+import {handlerSetLoading} from '../../redux/actions/loadingAction';
 
 const ToolProfle = ({item, index, profile}) => {
   // use dispatch
@@ -50,6 +51,7 @@ const ToolProfle = ({item, index, profile}) => {
     await removeAccessTokenInStorage();
     dispatch(removeAllCarts([]));
     dispatch(handlerSignOut(null));
+    dispatch(handlerSetLoading(true));
   };
 
   //handler on press

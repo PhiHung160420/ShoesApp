@@ -4,9 +4,6 @@
 
 A project The Shoes App was built with react native. Some screenshots below
 
-![Login Screen](https://i.ibb.co/s5DJZrw/Screen-Shot-2021-08-18-at-20-40-04.png)
-![Home Screen](https://i.ibb.co/qyCsFW5/Screen-Shot-2021-08-18-at-20-40-46.png)
-
 ## Features
 
 - Sign in, Log in, Log out
@@ -78,3 +75,7 @@ npx react-native run-android
 ```
 npx react-native run-ios
 ```
+
+## Support
+
+For support please contact with email hungphanlk@gmail.com
