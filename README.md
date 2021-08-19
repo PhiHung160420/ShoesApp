@@ -27,7 +27,7 @@ The challenge (for learning purpose) was to develop the The Shoes app for mobile
 
 ## Demo
 
-Link demo the project [Demo The Shoes App](https://pages.github.com/).
+Link demo the project [The Shoes App](https://www.youtube.com/watch?v=sYQ0j9UcWDs).
 
 ## Getting Started
 
@@ -91,4 +91,4 @@ npx react-native run-ios
 
 If you have any problems when run project try the steps in [troubleshooting](https://reactnative.dev/docs/environment-setup).
 
-🙈🙈 Happy Coding 🙈🙈
+🤟🤟 Happy Coding 🤟🤟
