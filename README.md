@@ -2,7 +2,18 @@
 
 # About The Project
 
-A project The Shoes App was built with react native. Some screenshots below
+The challenge (for learning purpose) was to develop the The Shoes app for mobile version using React Native
+
+<p align="center" >
+  <kbd>
+    <img src="https://github.com/PhiHung160420/Shoes_App/blob/master/src/assets/gif/loginscreen.gif" title="Login Screen Demo" float="left">
+  </kbd>
+  <kbd>
+    <img src="https://github.com/PhiHung160420/Shoes_App/blob/master/src/assets/gif/homescreen.gif" title="Home Screen Demo" float="left">
+  </kbd>
+  <br>
+  <em>Demo Some Screen Of The Shoes App</em>
+</p>
 
 ## Features
 
@@ -16,7 +27,7 @@ A project The Shoes App was built with react native. Some screenshots below
 
 ## Demo
 
-Link demo the project [GitHub Pages](https://pages.github.com/).
+Link demo the project [The Shoes App](https://www.youtube.com/watch?v=sYQ0j9UcWDs).
 
 ## Getting Started
 
@@ -76,6 +87,8 @@ npx react-native run-android
 npx react-native run-ios
 ```
 
-## Support
+## Troubleshooting
 
-For support please contact with email hungphanlk@gmail.com
+If you have any problems when run project try the steps in [troubleshooting](https://reactnative.dev/docs/environment-setup).
+
+🤟🤟 Happy Coding 🤟🤟
