@@ -1,10 +1,17 @@
 import {getProfileAPI} from '../../services/profileAPI';
-import {SET_PROFILE, UPDATE_PROFILE} from './actionType';
+import {SET_PROFILE, UPDATE_PROFILE, TOKEN_SESSION} from './actionType';
 
 export const handlerSetProfile = data => {
   return {
     type: SET_PROFILE,
     payload: data,
+  };
+};
+
+export const handlerSession = payload => {
+  return {
+    type: TOKEN_SESSION,
+    payload,
   };
 };
 
@@ -14,6 +21,8 @@ export const actFetchGetProfileRequest = token => {
       .then(res => {
         dispatch(handlerSetProfile(res.data.content));
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        dispatch(handlerSession(false));
+      });
   };
 };

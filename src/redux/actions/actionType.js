@@ -37,6 +37,7 @@ const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
 
 // loading
 const LOADING = 'LOADING';
+const TOKEN_SESSION = 'TOKEN_SESSION';
 
 export {
   SET_ACCESS_TOKEN,
@@ -60,4 +61,5 @@ export {
   GET_ALL_PRODUCT,
   GET_PRODUCT_BY_ID,
   LOADING,
+  TOKEN_SESSION,
 };

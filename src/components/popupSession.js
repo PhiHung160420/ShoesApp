@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,31 +10,30 @@ import {
 import Modal from 'react-native-modal';
 import {COLORS, SIZES} from '../constants';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {getCartsSelector} from '../redux/selectors/cartSelector';
-import {setCartsToStorage} from '../utils/storage';
+import {useDispatch, useSelector} from 'react-redux';
+import Feather from 'react-native-vector-icons/Feather';
+import {removeAccessTokenInStorage} from '../utils/storage';
+import {handlerSignOut} from '../redux/actions/authAction';
+import {handlerSession} from '../redux/actions/profileAction';
+import {handlerSetLoading} from '../redux/actions/loadingAction';
 
-const PopupAddToCart = ({handlerShowHidePopup, showHidePopup}) => {
+const PopupSession = ({handlerShowHidePopup, showHidePopup}) => {
   const navigation = useNavigation();
 
-  const cartsInfo = useSelector(getCartsSelector);
+  const dispatch = useDispatch();
 
-  const handlerClickButton = () => {
+  const handlerClickButton = async () => {
     handlerShowHidePopup();
-    navigation.navigate('CartScreen');
+    await removeAccessTokenInStorage();
+    dispatch(handlerSignOut(null));
+    dispatch(handlerSession(true));
+    dispatch(handlerSetLoading(true));
+    navigation.navigate('SignInScreen');
   };
 
-  const handlerClickKeepShopping = () => {
-    // save carts to storage
-    const handlerSaveCartToStorage = async data => {
-      return await setCartsToStorage(data);
-    };
-
-    handlerSaveCartToStorage(JSON.stringify(cartsInfo));
-
+  const handlerClickCancel = () => {
     handlerShowHidePopup();
   };
-
   return (
     <View style={styles.container}>
       <Modal
@@ -44,24 +43,24 @@ const PopupAddToCart = ({handlerShowHidePopup, showHidePopup}) => {
         <View style={styles.popupContainer}>
           <View style={styles.popupContent}>
             <Image
-              source={require('../assets/images/order-success.png')}
-              style={styles.successIcon}
+              source={require('../assets/icons/login.png')}
+              style={styles.iconStyle}
             />
-            <Text style={styles.titleStyle}>Awesome!</Text>
+            <Text style={styles.titleStyle}>Authentication</Text>
             <Text style={styles.msgPopupContent}>
-              You have added this item to your shopping cart
+              Phiên làm việc đã hết hạn. Hãy đăng nhập lại!
             </Text>
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.btnCancelStyle}
-              onPress={handlerClickKeepShopping}>
-              <Text style={styles.btnCancelText}>Keep Shopping</Text>
+              onPress={handlerClickCancel}>
+              <Text style={styles.btnCancelText}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnOkStyle}
               onPress={handlerClickButton}>
-              <Text style={styles.btnOkText}>Go To Cart</Text>
+              <Text style={styles.btnOkText}>Continue</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -72,7 +71,7 @@ const PopupAddToCart = ({handlerShowHidePopup, showHidePopup}) => {
 
 const styles = StyleSheet.create({
   popupContainer: {
-    height: SIZES.height / 3 - 40,
+    height: SIZES.height / 3,
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.radius,
   },
@@ -129,10 +128,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'Roboto Mono',
   },
-  successIcon: {
+  iconStyle: {
     width: 100,
     height: 100,
+    marginBottom: 10,
   },
 });
 
-export default PopupAddToCart;
+export default PopupSession;

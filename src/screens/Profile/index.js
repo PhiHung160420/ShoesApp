@@ -13,7 +13,6 @@ import {COLORS, SIZES, tools} from '../../constants';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {getProfileAPI} from '../../services/profileAPI';
 import {getAccessTokenFromStorage} from '../../utils/storage';
 import Materia from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';

@@ -28,6 +28,10 @@ import {actFetchGetAllProductRequest} from '../../redux/actions/productAction';
 import {getAllCategorySelector} from '../../redux/selectors/categorySelector';
 import {getLoadingSelector} from '../../redux/selectors/loadingSelector';
 import {handlerSetLoading} from '../../redux/actions/loadingAction';
+import {handlerSignOut} from '../../redux/actions/authAction';
+import {getSessionSelector} from '../../redux/selectors/profileSelector';
+import {removeAccessTokenInStorage} from '../../utils/storage';
+import PopupSession from '../../components/popupSession';
 
 const HomeScreen = ({navigation}) => {
   // dispatch
@@ -39,8 +43,13 @@ const HomeScreen = ({navigation}) => {
   // get theme from store
   const appTheme = useSelector(getAppThemeSelector);
 
+  // get token session from store
+  const session = useSelector(getSessionSelector);
+
   // get loading from redux
   const isLoading = useSelector(getLoadingSelector);
+
+  console.log('loading: ' + isLoading);
 
   // get products favorite from redux
   const productsFavorite = useSelector(getProductsFavoriteSelector);
@@ -51,6 +60,14 @@ const HomeScreen = ({navigation}) => {
   // get list product from redux
   const listProducts = useSelector(getAllProductsSelector);
 
+  // state show hide popup
+  const [showHidePopup, setShowHidePopup] = useState(false);
+
+  //handler show hide popup
+  const handlerShowHidePopup = () => {
+    setShowHidePopup(!showHidePopup);
+  };
+
   useEffect(() => {
     // get all category
     dispatch(actFetchGetAllCategoryRequest());
@@ -60,13 +77,19 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     const loading = setTimeout(() => {
-      if (listProducts.length !== 0 && listCate.length !== 0) {
-        dispatch(handlerSetLoading(false));
-      }
+      dispatch(handlerSetLoading(false));
     }, 4000);
 
-    return () => clearTimeout(loading);
-  }, [listProducts, listCate]);
+    const handlerSession = setTimeout(() => {
+      if (session == false) {
+        handlerShowHidePopup();
+      }
+    }, 4500);
+    return () => {
+      clearTimeout(loading);
+      clearTimeout(handlerSession);
+    };
+  }, [dispatch]);
 
   // render items
   const renderListProduct = ({item, index}) => {
@@ -97,6 +120,14 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles(appTheme).container}>
+      {/* POPUP */}
+      {showHidePopup && (
+        <PopupSession
+          showHidePopup={showHidePopup}
+          handlerShowHidePopup={handlerShowHidePopup}
+        />
+      )}
+      {/* POPUP */}
       {/* HEADER */}
       <HeaderBar>
         <View style={styles(appTheme).searchContainer}>

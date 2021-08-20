@@ -198,7 +198,7 @@ const SignUpScreen = ({navigation}) => {
                   />
 
                   {/* CHECK EMAIL */}
-                  {!errors.email && touched.email && (
+                  {!errors.email && (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={20} />
                     </Animatable.View>
@@ -234,7 +234,7 @@ const SignUpScreen = ({navigation}) => {
                   />
 
                   {/* CHECK PHONE */}
-                  {!errors.phone && touched.phone && (
+                  {!errors.phone && (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={20} />
                     </Animatable.View>
