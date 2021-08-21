@@ -31,9 +31,6 @@ const PopupSession = ({handlerShowHidePopup, showHidePopup}) => {
     navigation.navigate('SignInScreen');
   };
 
-  const handlerClickCancel = () => {
-    handlerShowHidePopup();
-  };
   return (
     <View style={styles.container}>
       <Modal
@@ -52,11 +49,6 @@ const PopupSession = ({handlerShowHidePopup, showHidePopup}) => {
             </Text>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.btnCancelStyle}
-              onPress={handlerClickCancel}>
-              <Text style={styles.btnCancelText}>Cancel</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnOkStyle}
               onPress={handlerClickButton}>
@@ -97,9 +89,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: COLORS.gainsboro,
     borderBottomLeftRadius: SIZES.radius,
     borderBottomRightRadius: SIZES.radius,
@@ -110,17 +99,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
   },
-  btnCancelText: {
-    fontSize: 20,
-    fontWeight: '500',
-    fontFamily: 'Roboto Mono',
-  },
   btnOkStyle: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.silver,
     height: '100%',
+    borderBottomLeftRadius: SIZES.radius,
     borderBottomRightRadius: SIZES.radius,
   },
   btnOkText: {

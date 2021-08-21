@@ -49,8 +49,6 @@ const HomeScreen = ({navigation}) => {
   // get loading from redux
   const isLoading = useSelector(getLoadingSelector);
 
-  console.log('loading: ' + isLoading);
-
   // get products favorite from redux
   const productsFavorite = useSelector(getProductsFavoriteSelector);
 
@@ -85,11 +83,12 @@ const HomeScreen = ({navigation}) => {
         handlerShowHidePopup();
       }
     }, 4500);
+
     return () => {
       clearTimeout(loading);
       clearTimeout(handlerSession);
     };
-  }, [dispatch]);
+  }, [session]);
 
   // render items
   const renderListProduct = ({item, index}) => {
