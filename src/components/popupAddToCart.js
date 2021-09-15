@@ -73,7 +73,7 @@ const PopupAddToCart = ({handlerShowHidePopup, showHidePopup}) => {
 
 const styles = StyleSheet.create({
   popupContainer: {
-    height: SIZES.height / 3 - 40,
+    height: SIZES.height / 3,
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.radius,
   },

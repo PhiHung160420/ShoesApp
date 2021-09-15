@@ -96,8 +96,7 @@ const CartScreen = ({navigation}) => {
               style={[
                 styles.cartSubContent,
                 {
-                  backgroundColor:
-                    appTheme.name == 'dark' ? COLORS.gray : COLORS.gainsboro,
+                  backgroundColor: appTheme.cartBackgroudColor,
                 },
               ]}>
               <View style={styles.cartTotal}>

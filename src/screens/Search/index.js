@@ -29,10 +29,8 @@ const SearchScreen = ({route}) => {
             style={[
               styles.searchStyle,
               {
-                borderColor:
-                  appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
-                backgroundColor:
-                  appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
+                borderColor: appTheme.searchBackgroundColor,
+                backgroundColor: appTheme.searchBackgroundColor,
               },
             ]}>
             <TextInput
@@ -46,11 +44,7 @@ const SearchScreen = ({route}) => {
               onPress={() =>
                 navigation.navigate('SearchScreen', {value: searchValue})
               }>
-              <Feather
-                name="search"
-                size={25}
-                color={appTheme.name == 'dark' ? 'black' : 'white'}
-              />
+              <Feather name="search" size={25} color={appTheme.iconColor} />
             </TouchableOpacity>
           </View>
         </View>

@@ -78,7 +78,7 @@ const OrderSuccess = ({
 
 const styles = StyleSheet.create({
   modalContainer: {
-    height: SIZES.height / 3 - 30,
+    height: SIZES.height / 3 - 20,
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.radius,
   },

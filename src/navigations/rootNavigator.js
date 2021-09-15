@@ -136,13 +136,6 @@ const RootNavigator = () => {
             <Stack.Screen
               component={ProducDetailScreen}
               name="ProducDetailScreen"
-              options={() => ({
-                gestureEnabled: false,
-                transitionSpec: {
-                  open: {animation: 'timing', config: {duration: 500}},
-                  close: {animation: 'timing', config: {duration: 300}},
-                },
-              })}
             />
             <Stack.Screen component={PaymentScreen} name="PaymentScreen" />
             <Stack.Screen component={UpdateProfile} name="UpdateProfile" />

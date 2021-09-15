@@ -14,7 +14,6 @@ import {COLORS} from '../../constants/colors.constants';
 import {SIZES} from '../../constants/sizes.constants';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-import {SharedElement} from 'react-navigation-shared-element';
 
 const ITEM_SIZE = 150;
 
@@ -42,55 +41,51 @@ const ProductItem = ({item, index, scrollY}) => {
   });
 
   return (
-    <SharedElement id={item.id}>
-      <Animated.View
-        style={[
-          styles.ItemContainer,
-          {
-            backgroundColor: appTheme.flatlistbackgroundItem,
-            shadowColor: appTheme.shadowColor,
-            transform: [{scale}],
-            opacity,
-          },
-        ]}>
-        {/* LEFT CONTENT */}
-        <View style={styles.leftContent}>
-          <Text style={[styles.productName, {color: appTheme.textColor}]}>
-            {item.name}
+    <Animated.View
+      style={[
+        styles.ItemContainer,
+        {
+          backgroundColor: appTheme.flatlistbackgroundItem,
+          shadowColor: appTheme.shadowColor,
+          transform: [{scale}],
+          opacity,
+        },
+      ]}>
+      {/* LEFT CONTENT */}
+      <View style={styles.leftContent}>
+        <Text style={[styles.productName, {color: appTheme.textColor}]}>
+          {item.name}
+        </Text>
+        <View style={styles.productPrice}>
+          <MatIcon name="attach-money" size={22} color={appTheme.textColor} />
+          <Text style={[styles.productPriceText, {color: appTheme.textColor}]}>
+            {item.price}
           </Text>
-          <View style={styles.productPrice}>
-            <MatIcon name="attach-money" size={22} color={appTheme.textColor} />
-            <Text
-              style={[styles.productPriceText, {color: appTheme.textColor}]}>
-              {item.price}
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={styles.viewBtnContainer}
-            onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
-            <Text style={[styles.viewBtnContent, {color: appTheme.textColor}]}>
-              View
-            </Text>
-          </TouchableOpacity>
         </View>
-        {/* LEFT CONTENT */}
+        <TouchableOpacity
+          style={styles.viewBtnContainer}
+          onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
+          <Text style={[styles.viewBtnContent, {color: appTheme.textColor}]}>
+            View
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {/* LEFT CONTENT */}
 
-        {/* RIGHT CONTENT */}
-        <View style={styles.rightContent}>
-          <Image
-            source={{uri: item.image}}
-            style={[
-              styles.imageProduct,
-              {
-                shadowColor:
-                  appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
-              },
-            ]}
-          />
-        </View>
-        {/* RIGHT CONTENT */}
-      </Animated.View>
-    </SharedElement>
+      {/* RIGHT CONTENT */}
+      <View style={styles.rightContent}>
+        <Image
+          source={{uri: item.image}}
+          style={[
+            styles.imageProduct,
+            {
+              shadowColor: appTheme.shadowImage,
+            },
+          ]}
+        />
+      </View>
+      {/* RIGHT CONTENT */}
+    </Animated.View>
   );
 };
 

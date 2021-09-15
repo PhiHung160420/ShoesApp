@@ -53,8 +53,7 @@ const HeaderBar = ({children, nameIcon, customStyle}) => {
             style={[
               styles.leftIcon,
               {
-                backgroundColor:
-                  appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
+                backgroundColor: appTheme.searchBackgroundColor,
               },
             ]}
             onPress={handlerClickIcon}>

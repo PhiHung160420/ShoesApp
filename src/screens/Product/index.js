@@ -24,7 +24,6 @@ import {
   likeProductAPI,
   unLikeProductAPI,
 } from '../../services/productAPI';
-import {SharedElement} from 'react-navigation-shared-element';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -158,8 +157,7 @@ const ProducDetailScreen = ({route, navigation}) => {
           {
             backgroundColor:
               sizeSelected == item ? COLORS.primary : COLORS.silver,
-            shadowColor:
-              appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
+            shadowColor: appTheme.shadowColor,
           },
         ]}
         onPress={() => handlerSelectedSize(`${item}`)}>
@@ -197,29 +195,27 @@ const ProducDetailScreen = ({route, navigation}) => {
       {/* POPUP */}
       <HeaderBar nameIcon={nameIcon} customStyle={styles.customStyle} />
       <View style={[styles.contentContainer]}>
-        <SharedElement id={product.id}>
-          <Animatable.View
-            animation="fadeInDown"
-            delay={400}
-            style={[
-              styles.imageContainer,
-              {
-                shadowColor: appTheme.shadowColor,
-                backgroundColor: appTheme.flatlistbackgroundItem,
-              },
-            ]}>
-            <Image source={{uri: product.image}} style={styles.imageStyle} />
-            <TouchableOpacity
-              style={styles.likeButton}
-              onPress={handlerLikeOrUnLikeProduct}>
-              <FontAwesome
-                name={productFavorite ? 'heart' : 'heart-o'}
-                size={30}
-                color={productFavorite ? COLORS.red : appTheme.textColor}
-              />
-            </TouchableOpacity>
-          </Animatable.View>
-        </SharedElement>
+        <Animatable.View
+          animation="fadeInDown"
+          delay={400}
+          style={[
+            styles.imageContainer,
+            {
+              shadowColor: appTheme.shadowColor,
+              backgroundColor: appTheme.flatlistbackgroundItem,
+            },
+          ]}>
+          <Image source={{uri: product.image}} style={styles.imageStyle} />
+          <TouchableOpacity
+            style={styles.likeButton}
+            onPress={handlerLikeOrUnLikeProduct}>
+            <FontAwesome
+              name={productFavorite ? 'heart' : 'heart-o'}
+              size={30}
+              color={productFavorite ? COLORS.red : appTheme.textColor}
+            />
+          </TouchableOpacity>
+        </Animatable.View>
 
         <ScrollView
           style={[
@@ -331,15 +327,6 @@ const ProducDetailScreen = ({route, navigation}) => {
       </View>
     </View>
   );
-};
-
-ProducDetailScreen.sharedElements = (route, otherNavigation, showing) => {
-  const {item} = route.params;
-  return [
-    {
-      id: item.id,
-    },
-  ];
 };
 
 const styles = StyleSheet.create({

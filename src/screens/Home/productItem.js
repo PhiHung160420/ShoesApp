@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SharedElement} from 'react-navigation-shared-element';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {COLORS} from '../../constants/colors.constants';
@@ -65,7 +64,7 @@ const ProductItem = ({product, appTheme, isLiked}) => {
   };
 
   return (
-    <SharedElement id={product.id}>
+    <>
       <TouchableOpacity
         style={[
           styles.productItem,
@@ -102,7 +101,7 @@ const ProductItem = ({product, appTheme, isLiked}) => {
           {product.name}
         </Text>
       </TouchableOpacity>
-    </SharedElement>
+    </>
   );
 };
 
