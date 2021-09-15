@@ -10,7 +10,8 @@ import {
 import {useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import ListOrder from './listOrder';
 import {getOrderHistorySelector} from '../../redux/selectors/orderSelector';

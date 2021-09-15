@@ -8,7 +8,8 @@ import {
   Image,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAccessTokenSelector} from '../redux/selectors/authSelector';
@@ -77,7 +78,7 @@ const OrderSuccess = ({
 
 const styles = StyleSheet.create({
   modalContainer: {
-    height: SIZES.height / 3 - 30,
+    height: SIZES.height / 3 - 20,
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.radius,
   },

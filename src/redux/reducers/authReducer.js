@@ -1,4 +1,6 @@
-import {SET_ACCESS_TOKEN, REMOVE_ACCESS_TOKEN} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
+
+const {SET_ACCESS_TOKEN, REMOVE_ACCESS_TOKEN} = typeAction.authActions;
 
 const initialState = {
   accessToken: null,

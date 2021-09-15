@@ -7,10 +7,11 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
-import {payments} from '../../constants/index';
+import payments from '../../constants/payments.constants';
 
 const Method = ({item, appTheme, methodSelected, handerSelectedMethod}) => {
   return (

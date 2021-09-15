@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SharedElement} from 'react-navigation-shared-element';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
@@ -64,7 +64,7 @@ const ProductItem = ({product, appTheme, isLiked}) => {
   };
 
   return (
-    <SharedElement id={product.id}>
+    <>
       <TouchableOpacity
         style={[
           styles.productItem,
@@ -101,7 +101,7 @@ const ProductItem = ({product, appTheme, isLiked}) => {
           {product.name}
         </Text>
       </TouchableOpacity>
-    </SharedElement>
+    </>
   );
 };
 

@@ -16,14 +16,14 @@ import {
   getProductByIdSelector,
   getProductsFavoriteSelector,
 } from '../../redux/selectors/productSelector';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {
   getProductById,
   getProductsFavoriteFromAPI,
   likeProductAPI,
   unLikeProductAPI,
 } from '../../services/productAPI';
-import {SharedElement} from 'react-navigation-shared-element';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -33,9 +33,8 @@ import {
 } from '../../redux/actions/productAction';
 import {setProductsFavoriteToStorage} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
-import PopupAddToCart from '../../components/popupAddToCart';
+import PopupAddToCart from '../../components/PopupAddToCart';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -158,8 +157,7 @@ const ProducDetailScreen = ({route, navigation}) => {
           {
             backgroundColor:
               sizeSelected == item ? COLORS.primary : COLORS.silver,
-            shadowColor:
-              appTheme.name == 'dark' ? COLORS.lightGray2 : COLORS.gray3,
+            shadowColor: appTheme.shadowColor,
           },
         ]}
         onPress={() => handlerSelectedSize(`${item}`)}>
@@ -173,7 +171,7 @@ const ProducDetailScreen = ({route, navigation}) => {
     return (
       <Animatable.View
         animation="bounceIn"
-        delay={DURATION + index * 500}
+        delay={SIZES.duration + index * 500}
         style={[
           styles.relatedItem,
           {
@@ -197,38 +195,38 @@ const ProducDetailScreen = ({route, navigation}) => {
       {/* POPUP */}
       <HeaderBar nameIcon={nameIcon} customStyle={styles.customStyle} />
       <View style={[styles.contentContainer]}>
-        <SharedElement id={product.id}>
-          <Animatable.View
-            animation="fadeInDown"
-            delay={400}
-            style={[
-              styles.imageContainer,
-              {
-                shadowColor: appTheme.shadowColor,
-                backgroundColor: appTheme.flatlistbackgroundItem,
-              },
-            ]}>
-            <Image source={{uri: product.image}} style={styles.imageStyle} />
-            <TouchableOpacity
-              style={styles.likeButton}
-              onPress={handlerLikeOrUnLikeProduct}>
-              <FontAwesome
-                name={productFavorite ? 'heart' : 'heart-o'}
-                size={30}
-                color={productFavorite ? COLORS.red : appTheme.textColor}
-              />
-            </TouchableOpacity>
-          </Animatable.View>
-        </SharedElement>
+        <Animatable.View
+          animation="fadeInDown"
+          delay={400}
+          style={[
+            styles.imageContainer,
+            {
+              shadowColor: appTheme.shadowColor,
+              backgroundColor: appTheme.flatlistbackgroundItem,
+            },
+          ]}>
+          <Image source={{uri: product.image}} style={styles.imageStyle} />
+          <TouchableOpacity
+            style={styles.likeButton}
+            onPress={handlerLikeOrUnLikeProduct}>
+            <FontAwesome
+              name={productFavorite ? 'heart' : 'heart-o'}
+              size={30}
+              color={productFavorite ? COLORS.red : appTheme.textColor}
+            />
+          </TouchableOpacity>
+        </Animatable.View>
 
-        <Animatable.View animation="fadeInUp" delay={800}>
-          <ScrollView
-            style={[
-              styles.productContent,
-              {
-                backgroundColor: appTheme.flatlistbackgroundItem,
-              },
-            ]}>
+        <ScrollView
+          style={[
+            styles.productContent,
+            {
+              backgroundColor: appTheme.flatlistbackgroundItem,
+            },
+          ]}
+          contentContainerStyle={{paddingBottom: 50}}
+          showsVerticalScrollIndicator={false}>
+          <Animatable.View animation="fadeInUp" delay={800}>
             {/* PRICE - NAME */}
             <View style={styles.productInfo}>
               <View style={styles.productPrice}>
@@ -245,9 +243,12 @@ const ProducDetailScreen = ({route, navigation}) => {
                   {product.price}
                 </Text>
               </View>
-              <Text style={[styles.productName, {color: appTheme.textColor}]}>
-                {product.name}
-              </Text>
+              <View style={styles.productName}>
+                <Text
+                  style={[styles.productNameText, {color: appTheme.textColor}]}>
+                  {product.name}
+                </Text>
+              </View>
             </View>
             {/* PRICE - NAME */}
 
@@ -321,20 +322,11 @@ const ProducDetailScreen = ({route, navigation}) => {
               </TouchableOpacity>
             </View>
             {/* ADD - BUY */}
-          </ScrollView>
-        </Animatable.View>
+          </Animatable.View>
+        </ScrollView>
       </View>
     </View>
   );
-};
-
-ProducDetailScreen.sharedElements = (route, otherNavigation, showing) => {
-  const {item} = route.params;
-  return [
-    {
-      id: item.id,
-    },
-  ];
 };
 
 const styles = StyleSheet.create({
@@ -371,19 +363,17 @@ const styles = StyleSheet.create({
   productContent: {
     paddingTop: 15,
     marginTop: 20,
-    width: SIZES.width,
     borderTopLeftRadius: SIZES.radius * 3,
     borderTopRightRadius: SIZES.radius * 3,
   },
   productInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
     marginTop: 10,
+    paddingHorizontal: 15,
   },
   productPrice: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   productPriceText: {
@@ -392,9 +382,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto Mono',
   },
   productName: {
+    flex: 2,
+    alignItems: 'flex-end',
+  },
+  productNameText: {
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto Mono',
+    textAlign: 'center',
   },
   descriptionContainer: {
     flexDirection: 'row',

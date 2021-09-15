@@ -1,4 +1,4 @@
-const tools = [
+export const tools = [
   {
     id: 'wallet',
     icon: 'wallet',
@@ -25,5 +25,3 @@ const tools = [
     text: 'Logout',
   },
 ];
-
-export default tools;

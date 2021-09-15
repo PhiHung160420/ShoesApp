@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {StyleSheet} from 'react-native';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 
 const AlertConfirmRemove = ({
   item,

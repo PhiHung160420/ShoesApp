@@ -7,7 +7,8 @@ import {
   TextInput,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -41,7 +42,11 @@ const UpdateProfileSuccess = ({
         isVisible={isModalVisible}
         animationIn="zoomIn"
         animationOut="zoomOut">
-        <View style={styles.modalContainer}>
+        <View
+          style={[
+            styles.modalContainer,
+            {backgroundColor: updateSuccess ? COLORS.primary : COLORS.orange},
+          ]}>
           <View style={styles.modalContent}>
             <FontAwesome
               name={updateSuccess ? iconSuccess : iconFailed}
@@ -72,8 +77,7 @@ const UpdateProfileSuccess = ({
 
 const styles = StyleSheet.create({
   modalContainer: {
-    height: SIZES.height / 3 - 30,
-    backgroundColor: COLORS.orange,
+    height: SIZES.height / 3 - 10,
     borderRadius: SIZES.radius,
   },
   modalContent: {

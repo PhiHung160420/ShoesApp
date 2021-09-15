@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getProductsFavoriteSelector} from '../../redux/selectors/productSelector';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';

@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import DeliveryAddress from './address';
 import PaymentMethod from './paymentMethod';
@@ -17,7 +18,7 @@ import ButtonPayment from './buttonPayment';
 import Promotion from './promotion';
 import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import OrderSuccess from '../../components/OrderSuccess';
-import ChangeAddress from '../../components/ChangeAddress';
+import ModalChangeAddress from '../../components/ModalChangeAddress';
 import ProductList from './productList';
 
 const nameIcon = 'arrow-back-outline';
@@ -100,7 +101,7 @@ const PaymentScreen = () => {
       )}
       {/* MODAL */}
       {isChangeAddress && (
-        <ChangeAddress
+        <ModalChangeAddress
           isChangeAddress={isChangeAddress}
           setIsChangeAddress={setIsChangeAddress}
           address={address}

@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 
-const ChangeAddress = ({
+const ModalChangeAddress = ({
   isChangeAddress,
   setIsChangeAddress,
   setAddress,
@@ -111,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangeAddress;
+export default ModalChangeAddress;

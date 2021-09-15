@@ -1,5 +1,7 @@
 import {getProfileAPI} from '../../services/profileAPI';
-import {SET_PROFILE, UPDATE_PROFILE, TOKEN_SESSION} from './actionType';
+import {typeAction} from './actionType';
+
+const {SET_PROFILE, UPDATE_PROFILE, TOKEN_SESSION} = typeAction.profileActions;
 
 export const handlerSetProfile = data => {
   return {

@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
-import {COLORS, icons, SIZES} from '../../constants/index';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
+import {ICONS} from '../../constants/icons.constants';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {
@@ -21,7 +23,7 @@ import {
 } from '../../redux/selectors/productSelector';
 import {getAllProduct} from '../../services/productAPI';
 import ProductItem from './productItem';
-import LoadingScreen from '../Loading/index';
+import Loading from '../../components/Loading';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {actFetchGetAllCategoryRequest} from '../../redux/actions/categoryAction';
 import {actFetchGetAllProductRequest} from '../../redux/actions/productAction';
@@ -31,7 +33,7 @@ import {handlerSetLoading} from '../../redux/actions/loadingAction';
 import {handlerSignOut} from '../../redux/actions/authAction';
 import {getSessionSelector} from '../../redux/selectors/profileSelector';
 import {removeAccessTokenInStorage} from '../../utils/storage';
-import PopupSession from '../../components/popupSession';
+import PopupSession from '../../components/PopupSession';
 
 const HomeScreen = ({navigation}) => {
   // dispatch
@@ -137,11 +139,7 @@ const HomeScreen = ({navigation}) => {
               placeholderTextColor={COLORS.gray}
             />
             <TouchableOpacity style={styles(appTheme).searchButton}>
-              <Feather
-                name="search"
-                size={25}
-                color={appTheme.name == 'dark' ? 'black' : 'white'}
-              />
+              <Feather name="search" size={25} color={appTheme.iconColor} />
             </TouchableOpacity>
           </View>
         </View>
@@ -149,7 +147,7 @@ const HomeScreen = ({navigation}) => {
       {/* HEADER */}
 
       {isLoading ? (
-        <LoadingScreen />
+        <Loading />
       ) : (
         <View style={styles(appTheme).contentContainer}>
           {/* CATEGORY */}
@@ -225,8 +223,7 @@ const styles = appTheme =>
       marginLeft: -10,
     },
     cateItemContainer: {
-      backgroundColor:
-        appTheme.name == 'dark' ? COLORS.gray3 : COLORS.gainsboro,
+      backgroundColor: appTheme.categoryBackgroundColor,
       height: 40,
       justifyContent: 'center',
       alignItems: 'center',
@@ -236,7 +233,7 @@ const styles = appTheme =>
         height: 5,
         width: 5,
       },
-      shadowColor: appTheme.name == 'dark' ? COLORS.lightGray1 : COLORS.gray3,
+      shadowColor: appTheme.categoryShawdow,
       shadowOpacity: 0.5,
       shadowRadius: 4,
       elevation: 1,
@@ -264,9 +261,8 @@ const styles = appTheme =>
       borderRadius: 20,
       height: 40,
       borderWidth: 1,
-      borderColor: appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
-      backgroundColor:
-        appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.white,
+      borderColor: appTheme.searchBackgroundColor,
+      backgroundColor: appTheme.searchBackgroundColor,
     },
     searchInput: {
       fontSize: 15,

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import * as Animatable from 'react-native-animatable';
 
 const UploadPhoto = ({

@@ -7,7 +7,8 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import ProductPrice from '../../components/ProductPrice';
 
 const TotalBill = ({appTheme, totalCart}) => {

@@ -8,7 +8,8 @@ import {
   Image,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {getCartsSelector} from '../redux/selectors/cartSelector';
@@ -72,7 +73,7 @@ const PopupAddToCart = ({handlerShowHidePopup, showHidePopup}) => {
 
 const styles = StyleSheet.create({
   popupContainer: {
-    height: SIZES.height / 3 - 40,
+    height: SIZES.height / 3,
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.radius,
   },

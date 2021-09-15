@@ -11,7 +11,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Marker} from 'react-native-maps';
 import {getAllStoreAPI} from '../../services/storeAPI';
-import {COLORS, SIZES} from '../../constants/index';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const MapScreen = ({navigation: {goBack}}) => {

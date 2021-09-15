@@ -1,5 +1,7 @@
 import {getProfileAPI} from '../../services/profileAPI';
-import {GET_ORDER_HISTORY} from './actionType';
+import {typeAction} from './actionType';
+
+const {GET_ORDER_HISTORY} = typeAction.orderActions;
 
 export const handlerGetOrderHistory = payload => {
   return {

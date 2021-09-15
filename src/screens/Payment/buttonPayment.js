@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {handlderSaveInfoPayment} from '../../redux/actions/paymentAction';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';

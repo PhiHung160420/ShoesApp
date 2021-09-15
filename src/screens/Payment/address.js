@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 
 const DeliveryAddress = ({appTheme, address, setIsChangeAddress}) => {
   return (

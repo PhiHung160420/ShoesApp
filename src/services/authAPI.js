@@ -1,11 +1,11 @@
 import axios from 'axios';
-import {apiUrl} from '../utils/urlConst';
+import {BACKEND_URL} from '../constants/url.constants';
 
 // api sign in
 export const useSignIn = data => {
   return axios({
     method: 'POST',
-    url: `${apiUrl}/Users/signin`,
+    url: `${BACKEND_URL}/Users/signin`,
     data,
   });
 };
@@ -14,7 +14,7 @@ export const useSignIn = data => {
 export const useSignUp = data => {
   return axios({
     method: 'POST',
-    url: `${apiUrl}/Users/signup`,
+    url: `${BACKEND_URL}/Users/signup`,
     data,
   });
 };

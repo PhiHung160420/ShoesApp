@@ -13,7 +13,8 @@ import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import Feather from 'react-native-vector-icons/Feather';
 import ModalDropdown from 'react-native-modal-dropdown';
 import ProductPrice from '../../components/ProductPrice';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {
   decrementQuantity,
@@ -25,7 +26,6 @@ import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
 import {getLoadingSelector} from '../../redux/selectors/loadingSelector';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 
 const ProductItem = ({item, index}) => {
   // get app theme from store
@@ -107,7 +107,7 @@ const ProductItem = ({item, index}) => {
       <Animatable.View
         key={reload}
         animation="fadeInLeft"
-        duration={DURATION + index * 300}>
+        duration={SIZES.duration + index * 300}>
         <TouchableOpacity
           style={[
             styles.productItemContainer,
@@ -148,7 +148,7 @@ const ProductItem = ({item, index}) => {
                 <TouchableOpacity
                   style={styles.ascQuantity}
                   onPress={() => handlerDecrementQuantity(item)}>
-                  <Feather name="minus" size={20} color="black" />
+                  <Feather name="minus" size={25} color="black" />
                 </TouchableOpacity>
                 {/* DESC BUTTON */}
 
@@ -163,15 +163,13 @@ const ProductItem = ({item, index}) => {
                 <TouchableOpacity
                   style={styles.descQuantity}
                   onPress={() => handlerIncrementQuantity(item)}>
-                  <Feather name="plus" size={20} color="white" />
+                  <Feather name="plus" size={25} color="white" />
                 </TouchableOpacity>
                 {/* ASC BUTTON */}
               </View>
               {/* QUANTITY */}
 
-              <View style={styles.seperateContainer}>
-                <View style={styles.seperate} />
-              </View>
+              <View style={styles.seperate} />
 
               {/* SIZE */}
               <View style={styles.sizeContainer}>
@@ -179,10 +177,7 @@ const ProductItem = ({item, index}) => {
                   style={[
                     styles.sizeTextContainer,
                     {
-                      backgroundColor:
-                        appTheme.name == 'dark'
-                          ? COLORS.gainsboro
-                          : COLORS.darkgray,
+                      backgroundColor: appTheme.sizeBackgroundColor,
                     },
                   ]}>
                   <Text style={styles.sizeText}>42</Text>
@@ -201,6 +196,7 @@ const ProductItem = ({item, index}) => {
             </View>
             {/* QUANTITY - SIZE */}
           </View>
+
           {/* IMAGE */}
           <View style={styles.rightItemContainer}>
             <Image
@@ -208,8 +204,7 @@ const ProductItem = ({item, index}) => {
               style={[
                 styles.imageProduct,
                 {
-                  shadowColor:
-                    appTheme.name == 'dark' ? COLORS.gainsboro : COLORS.black,
+                  shadowColor: appTheme.shadowImage,
                 },
               ]}
             />
@@ -227,10 +222,9 @@ const styles = StyleSheet.create({
     width: SIZES.width - 20,
     marginHorizontal: 5,
     marginVertical: 5,
-    height: 120,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     shadowOffset: {
       height: 4,
       width: 2,
@@ -239,69 +233,61 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
   },
   leftItemContainer: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 10,
   },
   rightItemContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 10,
   },
   productName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '500',
     textAlign: 'center',
     fontFamily: 'Roboto Mono',
+    marginBottom: 5,
   },
   productPrice: {
     fontFamily: 'Roboto Mono',
   },
   productInfo: {
     flexDirection: 'row',
-    marginTop: 5,
-    justifyContent: 'space-around',
+    marginTop: 10,
     alignItems: 'center',
   },
   quantityContainer: {
     flexDirection: 'row',
   },
   quantityText: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: '500',
     paddingHorizontal: 15,
   },
   ascQuantity: {
-    width: 25,
-    height: 25,
-    borderRadius: 12,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.silver,
   },
   descQuantity: {
-    width: 25,
-    height: 25,
-    borderRadius: 12,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.black,
   },
-  seperateContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 20,
-  },
   seperate: {
-    flex: 1,
     borderLeftWidth: 2,
     borderLeftColor: 'black',
+    height: 20,
+    marginHorizontal: 20,
   },
   sizeContainer: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -311,20 +297,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   sizeTextContainer: {
-    height: 30,
-    width: 30,
-    borderRadius: 15,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   sizeText: {
-    fontSize: 15,
+    fontSize: 18,
+    fontWeight: '500',
   },
   sizeDropdown: {
     backgroundColor: COLORS.green,
   },
   sizeTextDropdown: {
-    fontSize: 15,
+    fontSize: 18,
   },
   imageProduct: {
     width: 150,
@@ -338,7 +325,6 @@ const styles = StyleSheet.create({
   rightSwiperContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 130,
     backgroundColor: '#dc143c',
     width: 90,
     borderRadius: SIZES.radius * 2,

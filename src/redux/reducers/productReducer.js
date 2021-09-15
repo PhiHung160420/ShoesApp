@@ -1,8 +1,7 @@
-import {
-  GET_ALL_PRODUCT,
-  SET_PRODUCTS_FAVORITE,
-  GET_PRODUCT_BY_ID,
-} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
+
+const {GET_ALL_PRODUCT, GET_PRODUCT_BY_ID, SET_PRODUCTS_FAVORITE} =
+  typeAction.productActions;
 
 const initialState = {
   listProducts: [],

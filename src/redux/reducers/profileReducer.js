@@ -1,4 +1,6 @@
-import {SET_PROFILE, TOKEN_SESSION} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
+
+const {SET_PROFILE, UPDATE_PROFILE, TOKEN_SESSION} = typeAction.profileActions;
 
 const initialState = {
   profile: null,

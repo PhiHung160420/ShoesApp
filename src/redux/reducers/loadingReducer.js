@@ -1,4 +1,6 @@
-import {LOADING} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
+
+const {LOADING} = typeAction.loadingActions;
 
 const initialState = {
   isLoading: true,
