@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {apiUrl} from '../utils/urlConst';
+import {BACKEND_URL} from '../constants/url.constants';
 
 export const submitOrderAPI = data => {
   return axios({
     method: 'POST',
-    url: `${apiUrl}/Users/order`,
+    url: `${BACKEND_URL}/Users/order`,
     data,
   });
 };
@@ -12,7 +12,7 @@ export const submitOrderAPI = data => {
 export const deleteOrderAPI = (data, token) => {
   return axios({
     method: 'POST',
-    url: `${apiUrl}/Users/deleteOrder`,
+    url: `${BACKEND_URL}/Users/deleteOrder`,
     headers: {Authorization: `Bearer ${token}`},
     data,
   });

@@ -1,24 +1,24 @@
 import axios from 'axios';
-import {apiUrl} from '../utils/urlConst';
+import {BACKEND_URL} from '../constants/url.constants';
 
 export const getAllProduct = () => {
   return axios({
     method: 'GET',
-    url: `${apiUrl}/Product`,
+    url: `${BACKEND_URL}/Product`,
   });
 };
 
 export const getProductByIdAPI = id => {
   return axios({
     method: 'GET',
-    url: `${apiUrl}/Product/getbyid?id=${id}`,
+    url: `${BACKEND_URL}/Product/getbyid?id=${id}`,
   });
 };
 
 export const likeProductAPI = (productId, token) => {
   return axios({
     method: 'GET',
-    url: `${apiUrl}/Users/like?productId=${productId}`,
+    url: `${BACKEND_URL}/Users/like?productId=${productId}`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };
@@ -26,7 +26,7 @@ export const likeProductAPI = (productId, token) => {
 export const unLikeProductAPI = (productId, token) => {
   return axios({
     method: 'GET',
-    url: `${apiUrl}/Users/unlike?productId=${productId}`,
+    url: `${BACKEND_URL}/Users/unlike?productId=${productId}`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };
@@ -34,7 +34,7 @@ export const unLikeProductAPI = (productId, token) => {
 export const getProductsFavoriteFromAPI = token => {
   return axios({
     method: 'GET',
-    url: `${apiUrl}/Users/getproductfavorite`,
+    url: `${BACKEND_URL}/Users/getproductfavorite`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };
