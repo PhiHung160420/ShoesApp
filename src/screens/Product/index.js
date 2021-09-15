@@ -16,7 +16,8 @@ import {
   getProductByIdSelector,
   getProductsFavoriteSelector,
 } from '../../redux/selectors/productSelector';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {
   getProductById,
   getProductsFavoriteFromAPI,
@@ -35,7 +36,6 @@ import {setProductsFavoriteToStorage} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
 import PopupAddToCart from '../../components/popupAddToCart';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 
 const nameIcon = 'arrow-back-outline';
 
@@ -173,7 +173,7 @@ const ProducDetailScreen = ({route, navigation}) => {
     return (
       <Animatable.View
         animation="bounceIn"
-        delay={DURATION + index * 500}
+        delay={SIZES.duration + index * 500}
         style={[
           styles.relatedItem,
           {

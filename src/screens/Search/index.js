@@ -13,7 +13,8 @@ import HeaderBar from '../../components/HeaderBar';
 import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 
 const nameIcon = 'arrow-back-outline';
 

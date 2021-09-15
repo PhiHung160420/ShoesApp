@@ -8,7 +8,8 @@ import {
   Animated,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import moment from 'moment';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -20,7 +21,6 @@ import AlertConfirmRemove from '../../components/AlertConfirmRemove';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {useNavigation} from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 
 const ListOrder = ({order, index}) => {
   // get app theme from redux
@@ -86,7 +86,7 @@ const ListOrder = ({order, index}) => {
     <Swipeable ref={swipeableRef} renderLeftActions={RightSwiper}>
       <Animatable.View
         animation="fadeInLeft"
-        delay={DURATION + index * 100}
+        delay={SIZES.duration + index * 100}
         style={[
           styles.itemContainer,
           {

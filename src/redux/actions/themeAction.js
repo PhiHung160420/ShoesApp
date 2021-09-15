@@ -4,7 +4,7 @@ import {
   TOGGLE_THEME_FAILURE,
 } from './actionType';
 
-import {darkTheme, lightTheme} from '../../constants/index';
+import {darkTheme, lightTheme} from '../../constants/theme.constants';
 
 export const toggleThemeBegin = () => {
   return {

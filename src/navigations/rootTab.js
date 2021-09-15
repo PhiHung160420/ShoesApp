@@ -20,7 +20,9 @@ import {
   Text,
 } from 'react-native';
 import Svg, {Path} from 'react-native-svg';
-import {COLORS, SIZES, icons} from '../constants/index';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
+import {ICONS} from '../constants/icons.constants';
 import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
@@ -140,7 +142,7 @@ const RootTab = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.home}
+              source={ICONS.home}
               resizeMode="contain"
               style={[
                 styles.iconStyle,
@@ -168,7 +170,7 @@ const RootTab = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.search}
+              source={ICONS.search}
               resizeMode="contain"
               style={[
                 styles.iconStyle,
@@ -196,7 +198,7 @@ const RootTab = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.cart}
+              source={ICONS.cart}
               resizeMode="contain"
               style={[styles.iconStyle, {tintColor: COLORS.white}]}
             />
@@ -220,7 +222,7 @@ const RootTab = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.heart}
+              source={ICONS.heart}
               resizeMode="contain"
               style={[
                 styles.iconStyle,
@@ -248,7 +250,7 @@ const RootTab = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.profile}
+              source={ICONS.profile}
               resizeMode="contain"
               style={[
                 styles.iconStyle,

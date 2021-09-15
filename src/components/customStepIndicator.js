@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
-import {COLORS} from '../constants';
+import {COLORS} from '../constants/colors.constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const labels = ['Ordered', 'Confirmed', 'Deliverling', 'Completed'];

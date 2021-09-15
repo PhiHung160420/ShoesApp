@@ -7,7 +7,8 @@ import {
   TextInput,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';

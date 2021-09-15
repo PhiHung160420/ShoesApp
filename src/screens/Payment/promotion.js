@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 
 const Promotion = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
-import {SIZES} from '../../constants';
+import {SIZES} from '../../constants/sizes.constants';
 
 const ProductOrder = ({item, appTheme}) => {
   return (

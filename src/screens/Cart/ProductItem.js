@@ -13,7 +13,8 @@ import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import Feather from 'react-native-vector-icons/Feather';
 import ModalDropdown from 'react-native-modal-dropdown';
 import ProductPrice from '../../components/ProductPrice';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {
   decrementQuantity,
@@ -25,7 +26,6 @@ import {useNavigation} from '@react-navigation/native';
 import {removeCartsInStorage} from '../../utils/storage';
 import {getLoadingSelector} from '../../redux/selectors/loadingSelector';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 
 const ProductItem = ({item, index}) => {
   // get app theme from store
@@ -107,7 +107,7 @@ const ProductItem = ({item, index}) => {
       <Animatable.View
         key={reload}
         animation="fadeInLeft"
-        duration={DURATION + index * 300}>
+        duration={SIZES.duration + index * 300}>
         <TouchableOpacity
           style={[
             styles.productItemContainer,

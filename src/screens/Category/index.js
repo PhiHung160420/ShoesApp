@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
-import {SIZES, COLORS} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {actFetchGetProductByCategoryRequest} from '../../redux/actions/categoryAction';
 import {getProductsByCategorySelector} from '../../redux/selectors/categorySelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';

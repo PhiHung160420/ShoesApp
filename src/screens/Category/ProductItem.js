@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import {SIZES, COLORS} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {SharedElement} from 'react-navigation-shared-element';

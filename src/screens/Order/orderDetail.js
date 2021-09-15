@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getOrderHistorySelector} from '../../redux/selectors/orderSelector';
 import Feather from 'react-native-vector-icons/Feather';

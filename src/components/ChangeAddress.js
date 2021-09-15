@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {COLORS, SIZES} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
 
 const ChangeAddress = ({
   isChangeAddress,

@@ -6,7 +6,7 @@ const search = require('../assets/icons/search.png');
 const sunny = require('../assets/icons/sunny.png');
 const night = require('../assets/icons/night.png');
 
-const icons = {
+export const ICONS = {
   cart,
   heart,
   home,
@@ -15,4 +15,3 @@ const icons = {
   sunny,
   night,
 };
-export default icons;

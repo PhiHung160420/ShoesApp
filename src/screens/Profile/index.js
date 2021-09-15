@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import HeaderBar from '../../components/HeaderBar';
-import {COLORS, SIZES, tools} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
@@ -18,7 +19,7 @@ import Materia from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ToolProfle from './ToolProfle';
 import {handlerSignOut} from '../../redux/actions/authAction';
-
+import {tools} from '../../constants/tools.constants';
 const iconName = 'arrow-back-outline';
 
 const ProfileScreen = ({navigation}) => {

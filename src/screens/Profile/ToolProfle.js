@@ -8,12 +8,12 @@ import {
   removeCartsInStorage,
 } from '../../utils/storage';
 import {handlerSignOut} from '../../redux/actions/authAction';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import {useNavigation} from '@react-navigation/native';
 import UpdateModal from '../../components/UpdateModal';
 import {removeAllCarts} from '../../redux/actions/cartAction';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 import {handlerSetLoading} from '../../redux/actions/loadingAction';
 
 const ToolProfle = ({item, index, profile}) => {
@@ -83,7 +83,7 @@ const ToolProfle = ({item, index, profile}) => {
 
       <Animatable.View
         animation="fadeInLeft"
-        duration={DURATION + index * 150}
+        duration={SIZES.duration + index * 150}
         key={reload}>
         <TouchableOpacity
           style={[

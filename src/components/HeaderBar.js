@@ -8,14 +8,15 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import {COLORS, SIZES, icons} from '../constants';
+import {COLORS} from '../constants/colors.constants';
+import {SIZES} from '../constants/sizes.constants';
+import {ICONS} from '../constants/icons.constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
 import {toggleTheme} from '../redux/actions/themeAction';
-import appTheme from '../constants/theme';
 
 const HeaderBar = ({children, nameIcon, customStyle}) => {
   // dispatch
@@ -77,7 +78,7 @@ const HeaderBar = ({children, nameIcon, customStyle}) => {
                 styles.ThemeStyle,
                 appTheme.name === 'light' ? styles.selectedLightModeStyle : {},
               ]}>
-              <Image source={icons.sunny} style={styles.iconStyle} />
+              <Image source={ICONS.sunny} style={styles.iconStyle} />
             </View>
             {/* Light theme */}
 
@@ -87,7 +88,7 @@ const HeaderBar = ({children, nameIcon, customStyle}) => {
                 styles.ThemeStyle,
                 appTheme.name === 'dark' ? styles.selectedNightModeStyle : {},
               ]}>
-              <Image source={icons.night} style={styles.iconStyle} />
+              <Image source={ICONS.night} style={styles.iconStyle} />
             </View>
             {/* Dark theme */}
           </TouchableOpacity>

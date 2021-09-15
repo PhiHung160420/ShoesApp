@@ -7,13 +7,13 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, SIZES} from '../../constants';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import * as Animatable from 'react-native-animatable';
-import {DURATION} from '../../constants/index';
 
 const ProductFavorite = ({handlerRemoveProduct, item, index}) => {
   //get app theme from redux
@@ -35,7 +35,7 @@ const ProductFavorite = ({handlerRemoveProduct, item, index}) => {
   return (
     <Animatable.View
       animation="fadeInLeft"
-      duration={DURATION + index * 300}
+      duration={SIZES.duration + index * 300}
       key={reload}>
       <TouchableOpacity
         style={[

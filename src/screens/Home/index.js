@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
-import {COLORS, icons, SIZES} from '../../constants/index';
+import {COLORS} from '../../constants/colors.constants';
+import {SIZES} from '../../constants/sizes.constants';
+import {ICONS} from '../../constants/icons.constants';
 import HeaderBar from '../../components/HeaderBar';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {
