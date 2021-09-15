@@ -1,4 +1,6 @@
-import {
+import {typeAction} from './actionType';
+
+const {
   ADD_TO_CART,
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
@@ -6,7 +8,7 @@ import {
   GET_NUMBER_CART,
   SET_CART,
   REMOVE_ALL_CART,
-} from './actionType';
+} = typeAction.cartActions;
 
 export const setCarts = payload => {
   return {

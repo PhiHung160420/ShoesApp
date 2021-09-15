@@ -1,10 +1,8 @@
-import {
-  TOGGLE_THEME_BEGIN,
-  TOGGLE_THEME_SUCCESS,
-  TOGGLE_THEME_FAILURE,
-} from './actionType';
-
 import {darkTheme, lightTheme} from '../../constants/theme.constants';
+import {typeAction} from './actionType';
+
+const {TOGGLE_THEME_BEGIN, TOGGLE_THEME_SUCCESS, TOGGLE_THEME_FAILURE} =
+  typeAction.themeActions;
 
 export const toggleThemeBegin = () => {
   return {

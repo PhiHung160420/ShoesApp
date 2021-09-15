@@ -1,4 +1,6 @@
-import {GET_ALL_CATEGORY, GET_PRODUCT_BY_CATEGORY} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
+
+const {GET_ALL_CATEGORY, GET_PRODUCT_BY_CATEGORY} = typeAction.categoryActions;
 
 const initialState = {
   listCategory: [],

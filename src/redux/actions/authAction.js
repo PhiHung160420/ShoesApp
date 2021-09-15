@@ -1,4 +1,6 @@
-import {SET_ACCESS_TOKEN, REMOVE_ACCESS_TOKEN} from './actionType';
+import {typeAction} from './actionType';
+
+const {SET_ACCESS_TOKEN, REMOVE_ACCESS_TOKEN} = typeAction.authActions;
 
 export const handlerSignIn = data => {
   return {

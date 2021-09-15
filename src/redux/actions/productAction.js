@@ -1,9 +1,8 @@
 import {getAllProduct, getProductByIdAPI} from '../../services/productAPI';
-import {
-  GET_ALL_PRODUCT,
-  GET_PRODUCT_BY_ID,
-  SET_PRODUCTS_FAVORITE,
-} from './actionType';
+import {typeAction} from './actionType';
+
+const {GET_ALL_PRODUCT, GET_PRODUCT_BY_ID, SET_PRODUCTS_FAVORITE} =
+  typeAction.productActions;
 
 export const handlerGetAllProduct = payload => {
   return {

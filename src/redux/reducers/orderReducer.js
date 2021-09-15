@@ -1,4 +1,6 @@
-import {GET_ORDER_HISTORY} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
+
+const {GET_ORDER_HISTORY} = typeAction.orderActions;
 
 const initialState = {
   ordersHistory: [],

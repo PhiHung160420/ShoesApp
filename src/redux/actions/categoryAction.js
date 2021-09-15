@@ -2,7 +2,9 @@ import {
   getAllCategoriesAPI,
   getProductByCategoryAPI,
 } from '../../services/categoriesAPI';
-import {GET_ALL_CATEGORY, GET_PRODUCT_BY_CATEGORY} from './actionType';
+import {typeAction} from './actionType';
+
+const {GET_ALL_CATEGORY, GET_PRODUCT_BY_CATEGORY} = typeAction.categoryActions;
 
 export const handlerGetAllCategory = payload => {
   return {

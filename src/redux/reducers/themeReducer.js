@@ -1,9 +1,8 @@
-import {
-  TOGGLE_THEME_BEGIN,
-  TOGGLE_THEME_SUCCESS,
-  TOGGLE_THEME_FAILURE,
-} from '../actions/actionType';
+import {typeAction} from '../actions/actionType';
 import {selectedTheme} from '../../constants/theme.constants';
+
+const {TOGGLE_THEME_BEGIN, TOGGLE_THEME_SUCCESS, TOGGLE_THEME_FAILURE} =
+  typeAction.themeActions;
 
 const initialState = {
   appTheme: selectedTheme,

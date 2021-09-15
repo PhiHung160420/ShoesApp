@@ -11,7 +11,7 @@ import {COLORS} from '../../constants/colors.constants';
 import {SIZES} from '../../constants/sizes.constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
-import {payments} from '../../constants/payments.constants';
+import payments from '../../constants/payments.constants';
 
 const Method = ({item, appTheme, methodSelected, handerSelectedMethod}) => {
   return (
