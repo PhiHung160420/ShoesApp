@@ -34,7 +34,7 @@ import {
 } from '../../redux/actions/productAction';
 import {setProductsFavoriteToStorage} from '../../utils/storage';
 import {addProductToCart} from '../../redux/actions/cartAction';
-import PopupAddToCart from '../../components/popupAddToCart';
+import PopupAddToCart from '../../components/PopupAddToCart';
 import * as Animatable from 'react-native-animatable';
 
 const nameIcon = 'arrow-back-outline';
@@ -221,14 +221,16 @@ const ProducDetailScreen = ({route, navigation}) => {
           </Animatable.View>
         </SharedElement>
 
-        <Animatable.View animation="fadeInUp" delay={800}>
-          <ScrollView
-            style={[
-              styles.productContent,
-              {
-                backgroundColor: appTheme.flatlistbackgroundItem,
-              },
-            ]}>
+        <ScrollView
+          style={[
+            styles.productContent,
+            {
+              backgroundColor: appTheme.flatlistbackgroundItem,
+            },
+          ]}
+          contentContainerStyle={{paddingBottom: 50}}
+          showsVerticalScrollIndicator={false}>
+          <Animatable.View animation="fadeInUp" delay={800}>
             {/* PRICE - NAME */}
             <View style={styles.productInfo}>
               <View style={styles.productPrice}>
@@ -245,9 +247,12 @@ const ProducDetailScreen = ({route, navigation}) => {
                   {product.price}
                 </Text>
               </View>
-              <Text style={[styles.productName, {color: appTheme.textColor}]}>
-                {product.name}
-              </Text>
+              <View style={styles.productName}>
+                <Text
+                  style={[styles.productNameText, {color: appTheme.textColor}]}>
+                  {product.name}
+                </Text>
+              </View>
             </View>
             {/* PRICE - NAME */}
 
@@ -321,8 +326,8 @@ const ProducDetailScreen = ({route, navigation}) => {
               </TouchableOpacity>
             </View>
             {/* ADD - BUY */}
-          </ScrollView>
-        </Animatable.View>
+          </Animatable.View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -371,19 +376,17 @@ const styles = StyleSheet.create({
   productContent: {
     paddingTop: 15,
     marginTop: 20,
-    width: SIZES.width,
     borderTopLeftRadius: SIZES.radius * 3,
     borderTopRightRadius: SIZES.radius * 3,
   },
   productInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
     marginTop: 10,
+    paddingHorizontal: 15,
   },
   productPrice: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   productPriceText: {
@@ -392,9 +395,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto Mono',
   },
   productName: {
+    flex: 2,
+    alignItems: 'flex-end',
+  },
+  productNameText: {
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto Mono',
+    textAlign: 'center',
   },
   descriptionContainer: {
     flexDirection: 'row',

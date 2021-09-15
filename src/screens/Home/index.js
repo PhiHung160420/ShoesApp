@@ -23,7 +23,7 @@ import {
 } from '../../redux/selectors/productSelector';
 import {getAllProduct} from '../../services/productAPI';
 import ProductItem from './productItem';
-import LoadingScreen from '../Loading/index';
+import Loading from '../../components/Loading';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {actFetchGetAllCategoryRequest} from '../../redux/actions/categoryAction';
 import {actFetchGetAllProductRequest} from '../../redux/actions/productAction';
@@ -33,7 +33,7 @@ import {handlerSetLoading} from '../../redux/actions/loadingAction';
 import {handlerSignOut} from '../../redux/actions/authAction';
 import {getSessionSelector} from '../../redux/selectors/profileSelector';
 import {removeAccessTokenInStorage} from '../../utils/storage';
-import PopupSession from '../../components/popupSession';
+import PopupSession from '../../components/PopupSession';
 
 const HomeScreen = ({navigation}) => {
   // dispatch
@@ -151,7 +151,7 @@ const HomeScreen = ({navigation}) => {
       {/* HEADER */}
 
       {isLoading ? (
-        <LoadingScreen />
+        <Loading />
       ) : (
         <View style={styles(appTheme).contentContainer}>
           {/* CATEGORY */}

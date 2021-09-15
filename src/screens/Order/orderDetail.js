@@ -16,7 +16,7 @@ import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {getOrderHistorySelector} from '../../redux/selectors/orderSelector';
 import Feather from 'react-native-vector-icons/Feather';
 import moment from 'moment';
-import CustomStepIndicator from '../../components/customStepIndicator';
+import StepOrders from '../../components/StepOrders';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ProductOrder from './productOrder';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
@@ -97,7 +97,7 @@ const OrderDetailScreen = ({route, navigation}) => {
               Order Track
             </Text>
           </View>
-          <CustomStepIndicator appTheme={appTheme} />
+          <StepOrders appTheme={appTheme} />
         </View>
         {/* ORDER TRACK */}
 

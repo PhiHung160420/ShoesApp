@@ -18,7 +18,7 @@ import ButtonPayment from './buttonPayment';
 import Promotion from './promotion';
 import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import OrderSuccess from '../../components/OrderSuccess';
-import ChangeAddress from '../../components/ChangeAddress';
+import ModalChangeAddress from '../../components/ModalChangeAddress';
 import ProductList from './productList';
 
 const nameIcon = 'arrow-back-outline';
@@ -101,7 +101,7 @@ const PaymentScreen = () => {
       )}
       {/* MODAL */}
       {isChangeAddress && (
-        <ChangeAddress
+        <ModalChangeAddress
           isChangeAddress={isChangeAddress}
           setIsChangeAddress={setIsChangeAddress}
           address={address}

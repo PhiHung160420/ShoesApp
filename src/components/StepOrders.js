@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const labels = ['Ordered', 'Confirmed', 'Deliverling', 'Completed'];
 const icons = ['basket-sharp', 'md-thumbs-up', 'ios-location', 'checkbox'];
+
 const customStyles = {
   stepIndicatorSize: 25,
   currentStepIndicatorSize: 30,
@@ -30,7 +31,7 @@ const customStyles = {
   currentStepLabelColor: COLORS.primary,
 };
 
-const CustomStepIndicator = ({appTheme}) => {
+const StepOrders = ({appTheme}) => {
   const renderLabel = ({position, stepstatus, label, currentPosition}) => (
     <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <Icon name={icons[position]} size={25} color={COLORS.primary} />
@@ -53,4 +54,4 @@ const CustomStepIndicator = ({appTheme}) => {
   );
 };
 
-export default CustomStepIndicator;
+export default StepOrders;
