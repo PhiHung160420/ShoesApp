@@ -11,15 +11,15 @@ import HeaderBar from '../../components/HeaderBar';
 import {COLORS} from '../../constants/colors.constants';
 import {SIZES} from '../../constants/sizes.constants';
 import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
-import DeliveryAddress from './address';
-import PaymentMethod from './paymentMethod';
-import TotalBill from './totalBill';
-import ButtonPayment from './buttonPayment';
-import Promotion from './promotion';
+import DeliveryAddress from './Address';
+import PaymentMethod from './PaymentMethod';
+import TotalBill from './TotalBill';
+import ButtonPayment from './ButtonPayment';
+import Promotion from './Promotion';
 import {getCartsSelector} from '../../redux/selectors/cartSelector';
 import OrderSuccess from '../../components/OrderSuccess';
 import ModalChangeAddress from '../../components/ModalChangeAddress';
-import ProductList from './productList';
+import ProductList from './ProductList';
 
 const nameIcon = 'arrow-back-outline';
 

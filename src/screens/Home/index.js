@@ -22,7 +22,7 @@ import {
   getProductsFavoriteSelector,
 } from '../../redux/selectors/productSelector';
 import {getAllProduct} from '../../services/productAPI';
-import ProductItem from './productItem';
+import ProductItem from './ProductItem';
 import Loading from '../../components/Loading';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';
 import {actFetchGetAllCategoryRequest} from '../../redux/actions/categoryAction';

@@ -18,7 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import moment from 'moment';
 import StepOrders from '../../components/StepOrders';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import ProductOrder from './productOrder';
+import ProductOrder from './ProductOrder';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
 import {getInfoPaymentSelector} from '../../redux/selectors/paymentSelector';
 

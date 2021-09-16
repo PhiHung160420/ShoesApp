@@ -13,7 +13,7 @@ import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
 import {COLORS} from '../../constants/colors.constants';
 import {SIZES} from '../../constants/sizes.constants';
 import {getProfileSelector} from '../../redux/selectors/profileSelector';
-import ListOrder from './listOrder';
+import ListOrder from './ListOrder';
 import {getOrderHistorySelector} from '../../redux/selectors/orderSelector';
 import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
 import {getAccessTokenSelector} from '../../redux/selectors/authSelector';

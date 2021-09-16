@@ -10,8 +10,8 @@ import CategoryScreen from './Category/index';
 import ProducDetailScreen from './Product/index';
 import PaymentScreen from './Payment/index';
 import UpdateProfile from './Profile/UpdateProfile';
-import OrderHistoryScreen from './Order/orderHistory';
-import OrderDetailScreen from './Order/orderDetail';
+import OrderHistoryScreen from './Order/OrderHistory';
+import OrderDetailScreen from './Order/OrderDetail';
 import MapScreen from './Map/index';
 
 export {
