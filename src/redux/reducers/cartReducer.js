@@ -48,9 +48,9 @@ const CartReducer = (state = initialState, action) => {
         };
         state.carts.push(cart);
       } else {
-        state.carts.map((item, key) => {
-          if (item.id == product.id) {
-            state.carts[key].quantity++;
+        state.carts.map((item, index) => {
+          if (item.id === product.id) {
+            state.carts[index].quantity++;
             check = true;
           }
         });

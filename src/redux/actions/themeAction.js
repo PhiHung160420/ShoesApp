@@ -1,4 +1,4 @@
-import {darkTheme, lightTheme} from '../../constants/theme.constants';
+import { THEMES } from '../../constants';
 import {typeAction} from './actionType';
 
 const {TOGGLE_THEME_BEGIN, TOGGLE_THEME_SUCCESS, TOGGLE_THEME_FAILURE} =
@@ -28,10 +28,10 @@ export const toggleTheme = themeType => {
   return dispatch => {
     switch (themeType) {
       case 'dark':
-        dispatch(toggleThemeSuccess(darkTheme));
+        dispatch(toggleThemeSuccess(THEMES?.darkTheme));
         break;
       case 'light':
-        dispatch(toggleThemeSuccess(lightTheme));
+        dispatch(toggleThemeSuccess(THEMES?.lightTheme));
         break;
       default:
         dispatch(toggleThemeFailure({error: 'Invalid theme type'}));

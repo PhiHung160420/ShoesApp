@@ -20,14 +20,10 @@ import {
   Text,
 } from 'react-native';
 import Svg, {Path} from 'react-native-svg';
-import {COLORS} from '../constants/colors.constants';
-import {SIZES} from '../constants/sizes.constants';
-import {ICONS} from '../constants/icons.constants';
-import Feather from 'react-native-vector-icons/Feather';
-import {useDispatch, useSelector} from 'react-redux';
+import {COLORS, SIZES, ICONS} from '../constants';
+import {useSelector} from 'react-redux';
 import {getAppThemeSelector} from '../redux/selectors/themeSelector';
 import {getCartsSelector} from '../redux/selectors/cartSelector';
-import {handlerSetLoading} from '../redux/actions/loadingAction';
 
 const Tab = createBottomTabNavigator();
 

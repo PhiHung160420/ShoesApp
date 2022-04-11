@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {BACKEND_URL} from '../constants/url.constants';
+import { CONSTANST } from '../constants';
 
 export const getAllStoreAPI = () => {
   return axios({
     method: 'GET',
-    url: `${BACKEND_URL}/Product/getAllStore`,
+    url: `${CONSTANST?.backend_url}/Product/getAllStore`,
   });
 };

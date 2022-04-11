@@ -1,11 +1,11 @@
 import {typeAction} from '../actions/actionType';
-import {selectedTheme} from '../../constants/theme.constants';
+import { THEMES } from '../../constants';
 
 const {TOGGLE_THEME_BEGIN, TOGGLE_THEME_SUCCESS, TOGGLE_THEME_FAILURE} =
   typeAction.themeActions;
 
 const initialState = {
-  appTheme: selectedTheme,
+  appTheme: THEMES?.selectedTheme,
   error: null,
 };
 

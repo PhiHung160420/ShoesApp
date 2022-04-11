@@ -1,43 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { enableScreens } from 'react-native-screens';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction } from '../redux/actions/authAction';
+import { setCarts } from '../redux/actions/cartAction';
+import { actFetchOrderHistoryRequest } from '../redux/actions/orderAction';
 import {
-  SplashScreen,
-  SignInScreen,
-  SignUpScreen,
-  CategoryScreen,
-  ProducDetailScreen,
-  PaymentScreen,
-  UpdateProfile,
-  OrderHistoryScreen,
-  OrderDetailScreen,
-  MapScreen,
+  hanldeSetProductFavorite
+} from '../redux/actions/productAction';
+import { actFetchGetProfileRequest } from '../redux/actions/profileAction';
+import { getAccessTokenSelector } from '../redux/selectors/authSelector';
+import {
+  CategoryScreen, LoginScreen, MapScreen, OrderDetailScreen, OrderHistoryScreen, PaymentScreen, ProducDetailScreen, RegisterScreen, SplashScreen, UpdateProfileScreen
 } from '../screens/index';
-import RootTab from './rootTab';
-import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
-import {enableScreens} from 'react-native-screens';
-import {NavigationContainer} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getAccessTokenSelector} from '../redux/selectors/authSelector';
-import {getProductsFavoriteSelector} from '../redux/selectors/productSelector';
+import { getProductsFavoriteFromAPI } from '../services/productAPI';
 import {
   getAccessTokenFromStorage,
   getCartsFromStorage,
   getProductsFavoriteFromStorage,
-  setProductsFavoriteToStorage,
+  setProductsFavoriteToStorage
 } from '../utils/storage';
-import {createStackNavigator} from '@react-navigation/stack';
-import {handlerSignIn} from '../redux/actions/authAction';
-import {getProfile} from '../services/profileAPI';
-import {actFetchGetProfileRequest} from '../redux/actions/profileAction';
-import {getProductsFavoriteFromAPI} from '../services/productAPI';
-import {
-  actFetchGetAllProductRequest,
-  hanlderSetProductFavorite,
-} from '../redux/actions/productAction';
-import {addProductToCart, setCarts} from '../redux/actions/cartAction';
-import {actFetchOrderHistoryRequest} from '../redux/actions/orderAction';
-import {actFetchGetAllCategoryRequest} from '../redux/actions/categoryAction';
-import {getLoadingSelector} from '../redux/selectors/loadingSelector';
-import {handlerSetLoading} from '../redux/actions/loadingAction';
+import RootTab from './rootTab';
 
 enableScreens();
 
@@ -61,7 +45,7 @@ const RootNavigator = () => {
       const accessStorage = await getAccessTokenFromStorage();
 
       if (accessStorage) {
-        dispatch(handlerSignIn(accessStorage));
+        dispatch(loginAction(accessStorage));
       }
     };
 
@@ -70,7 +54,7 @@ const RootNavigator = () => {
       const productsFavorite = await getProductsFavoriteFromStorage();
 
       if (productsFavorite) {
-        dispatch(hanlderSetProductFavorite(productsFavorite));
+        dispatch(hanldeSetProductFavorite(productsFavorite));
       }
     };
 
@@ -112,7 +96,7 @@ const RootNavigator = () => {
       getProductsFavoriteFromAPI(accessToken)
         .then(res => {
           dispatch(
-            hanlderSetProductFavorite(res.data.content.productsFavorite),
+            hanldeSetProductFavorite(res.data.content.productsFavorite),
           );
           saveProductsFavoriteToStorage(
             JSON.stringify(res.data.content.productsFavorite),
@@ -138,7 +122,7 @@ const RootNavigator = () => {
               name="ProducDetailScreen"
             />
             <Stack.Screen component={PaymentScreen} name="PaymentScreen" />
-            <Stack.Screen component={UpdateProfile} name="UpdateProfile" />
+            <Stack.Screen component={UpdateProfileScreen} name="UpdateProfileScreen" />
             <Stack.Screen
               component={OrderHistoryScreen}
               name="OrderHistoryScreen"
@@ -152,8 +136,8 @@ const RootNavigator = () => {
         ) : (
           <>
             <Stack.Screen component={SplashScreen} name="SplashScreen" />
-            <Stack.Screen component={SignInScreen} name="SignInScreen" />
-            <Stack.Screen component={SignUpScreen} name="SignUpScreen" />
+            <Stack.Screen component={LoginScreen} name="LoginScreen" />
+            <Stack.Screen component={RegisterScreen} name="RegisterScreen" />
           </>
         )}
       </Stack.Navigator>

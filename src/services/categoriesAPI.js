@@ -1,16 +1,16 @@
 import axios from 'axios';
-import {BACKEND_URL} from '../constants/url.constants';
+import {CONSTANST} from '../constants';
 
 export const getAllCategoriesAPI = () => {
   return axios({
     method: 'GET',
-    url: `${BACKEND_URL}/Product/getAllCategory`,
+    url: `${CONSTANST?.backend_url}/Product/getAllCategory`,
   });
 };
 
 export const getProductByCategoryAPI = categoryId => {
   return axios({
     method: 'GET',
-    url: `${BACKEND_URL}/Product/getProductByCategory?categoryId=${categoryId}`,
+    url: `${CONSTANST?.backend_url}/Product/getProductByCategory?categoryId=${categoryId}`,
   });
 };

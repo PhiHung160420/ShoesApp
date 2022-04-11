@@ -1,11 +1,11 @@
 import axios from 'axios';
-import {BACKEND_URL} from '../constants/url.constants';
+import {CONSTANST} from '../constants';
 
 // api get profile info
 export const getProfileAPI = token => {
   return axios({
     method: 'POST',
-    url: `${BACKEND_URL}/Users/getProfile`,
+    url: `${CONSTANST.backend_url}/Users/getProfile`,
     headers: {Authorization: `Bearer ${token}`},
   });
 };
@@ -13,7 +13,7 @@ export const getProfileAPI = token => {
 export const updateProfileAPI = (data, token) => {
   return axios({
     method: 'POST',
-    url: `${BACKEND_URL}/Users/updateProfile`,
+    url: `${CONSTANST.backend_url}/Users/updateProfile`,
     headers: {Authorization: `Bearer ${token}`},
     data,
   });
@@ -22,7 +22,7 @@ export const updateProfileAPI = (data, token) => {
 export const changePasswordAPI = (data, token) => {
   return axios({
     method: 'POST',
-    url: `${BACKEND_URL}/Users/changePassword`,
+    url: `${CONSTANST.backend_url}/Users/changePassword`,
     headers: {Authorization: `Bearer ${token}`},
     data,
   });
@@ -31,7 +31,7 @@ export const changePasswordAPI = (data, token) => {
 export const uploadAvatarAPI = (formData, token) => {
   return axios({
     method: 'POST',
-    url: `${BACKEND_URL}/Users/uploadavatar`,
+    url: `${CONSTANST.backend_url}/Users/uploadavatar`,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',

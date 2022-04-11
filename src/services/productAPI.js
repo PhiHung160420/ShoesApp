@@ -1,5 +1,7 @@
 import axios from 'axios';
-import {BACKEND_URL} from '../constants/url.constants';
+import { CONSTANST } from '../constants';
+
+const BACKEND_URL = CONSTANST?.backend_url;
 
 export const getAllProduct = () => {
   return axios({
