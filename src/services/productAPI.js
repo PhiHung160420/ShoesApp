@@ -3,7 +3,7 @@ import { CONSTANST } from '../constants';
 
 const BACKEND_URL = CONSTANST?.backend_url;
 
-export const getAllProduct = () => {
+export const getAllProductAPI = () => {
   return axios({
     method: 'GET',
     url: `${BACKEND_URL}/Product`,

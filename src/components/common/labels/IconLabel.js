@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 import {SIZES} from '../../../constants';
 import { StyleSheet, Text, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 const IconLabel = ({icon, label, conatainerStyle, iconSize, labelStyle}) => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={[styles.container, conatainerStyle]}>

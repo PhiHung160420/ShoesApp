@@ -7,7 +7,7 @@ import {
 import { useSelector } from 'react-redux';
 import { HeaderBar, FavoriteCard } from '../../components/common';
 import { IMAGES, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 import COLORS from '../../constants/colors/index';
 
 const FavoriteComponent = (props) => {
@@ -16,7 +16,7 @@ const FavoriteComponent = (props) => {
     handlerRemoveProduct,
   } = props;
   
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.container}>

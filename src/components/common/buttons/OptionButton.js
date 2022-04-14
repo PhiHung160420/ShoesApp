@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useSelector } from 'react-redux';
 import { SIZES } from '../../../constants';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 
 const OptionButton = (props) => {
   const {
@@ -16,7 +16,7 @@ const OptionButton = (props) => {
     index
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <Animatable.View animation="fadeInLeft" duration={SIZES.duration + index * 150}>

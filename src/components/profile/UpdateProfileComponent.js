@@ -8,7 +8,7 @@ import Materia from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 import { CustomPopup, HeaderBar, InputBase, ModalUpload, SwitchButton, TextButton } from '../../components/common';
 import { COLORS, CONSTANST, ICONS, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const UpdateProfileComponent = (props) => {
   const {
@@ -34,7 +34,7 @@ const UpdateProfileComponent = (props) => {
 
   const navigation = useNavigation();
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const onPressButtonModal = () => {
     if (updateSuccess) {

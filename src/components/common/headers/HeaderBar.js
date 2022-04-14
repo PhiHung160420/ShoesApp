@@ -1,27 +1,28 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-  Image, SafeAreaView,
+  Image,
   StyleSheet, TouchableOpacity, View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { COLORS, ICONS, SIZES } from '../../../constants';
-import { toggleTheme } from '../../../redux/actions/themeAction';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { toggleThemeAction } from '../../../redux/actions/themeAction';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 
 const HeaderBar = ({children, nameIcon, customStyle}) => {
   const dispatch = useDispatch();
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const navigation = useNavigation();
 
   const toogleThemeHandler = () => {
     if (appTheme.name === 'dark') {
-      dispatch(toggleTheme('light'));
+      dispatch(toggleThemeAction('light'));
     } else {
-      dispatch(toggleTheme('dark'));
+      dispatch(toggleThemeAction('dark'));
     }
   };
 

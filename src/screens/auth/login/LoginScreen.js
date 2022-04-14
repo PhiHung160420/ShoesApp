@@ -3,9 +3,10 @@ import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import { LoginComponent } from '../../../components';
+import { navigate, navigateAndSetToTop } from '../../../navigations/service';
 import { loginAction } from '../../../redux/actions/authAction';
-import { useSignIn } from '../../../services/authAPI';
-import { SetAccessTokenToStorage } from '../../../utils/storage';
+import { loginAPI } from '../../../services/authAPI';
+import { saveAccessToken } from '../../../utils/storage';
 
 const signInValidateSchema = yup.object().shape({
   email: yup
@@ -27,14 +28,15 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const onPressLogin = values => {
-    useSignIn(values)
+    loginAPI(values)
       .then(res => {
-        SetAccessTokenToStorage(res.data.content.accessToken);
-        dispatch(loginAction(res.data.content.accessToken));
+        const accessToken = res?.data?.content?.accessToken;
+        saveAccessToken(accessToken);
+        navigate('AuthScreen');
       })
       .catch(err => {
-        setModalVisible(!isModalVisible);
-        setMessageLogin(`${err.response.data.message}`);
+        setModalVisible(true);
+        setMessageLogin(`${err?.response?.data?.message}`);
       });
   };
 

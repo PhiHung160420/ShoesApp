@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {PaymentComponent} from '../../components';
-import { getCartsSelector } from '../../redux/selectors/cartSelector';
-import { getProfileSelector } from '../../redux/selectors/profileSelector';
-import { getAccessTokenSelector } from '../../redux/selectors/authSelector';
+import { cartSelector } from '../../redux/selectors/cartSelector';
+import { profileSelector } from '../../redux/selectors/profileSelector';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
 import { CONSTANST } from '../../constants';
 import { submitOrderAPI } from '../../services/orderAPI';
-import {actFetchOrderHistoryRequest} from '../../redux/actions/orderAction';
-import { removeCartsInStorage } from '../../utils/storage';
-import {removeAllCarts} from '../../redux/actions/cartAction';
+import {fetchOrderHistoryAction} from '../../redux/actions/orderAction';
+import {removeAllCartsAction} from '../../redux/actions/cartAction';
 
 const PaymentScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const cartInfo = useSelector(getCartsSelector);
+  const cartInfo = useSelector(cartSelector);
 
-  const profile = useSelector(getProfileSelector);
+  const profile = useSelector(profileSelector);
 
-  const token = useSelector(getAccessTokenSelector);
+  const token = useSelector(accessTokenSelector);
 
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -52,7 +51,7 @@ const PaymentScreen = ({navigation}) => {
     if (data.length !== 0) {
       submitOrderAPI(data)
         .then(res => {
-          dispatch(actFetchOrderHistoryRequest(token));
+          dispatch(fetchOrderHistoryAction(token));
           setOrderSuccess(true);
           setModalVisible(!isModalVisible);
         })
@@ -79,8 +78,7 @@ const PaymentScreen = ({navigation}) => {
     navigation.navigate('HomeScreen');
     toggleModal();
     if (isOrderSuccess) {
-      await removeCartsInStorage();
-      dispatch(removeAllCarts([]));
+      dispatch(removeAllCartsAction([]));
     }
   };
 

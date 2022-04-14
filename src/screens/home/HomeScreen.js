@@ -1,71 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actFetchGetAllCategoryRequest } from '../../redux/actions/categoryAction';
-import { handlerSetLoading } from '../../redux/actions/loadingAction';
-import { actFetchGetAllProductRequest } from '../../redux/actions/productAction';
-import { getAllCategorySelector } from '../../redux/selectors/categorySelector';
-import { getLoadingSelector } from '../../redux/selectors/loadingSelector';
-import {
-  getAllProductsSelector,
-  getProductsFavoriteSelector
-} from '../../redux/selectors/productSelector';
-import { getSessionSelector } from '../../redux/selectors/profileSelector';
-import {HomeComponent} from '../../components';
+import { HomeComponent } from '../../components';
+import { navigateAndSetToTop } from '../../navigations/service';
 import { logoutAction } from '../../redux/actions/authAction';
-import { handlerSession } from '../../redux/actions/profileAction';
-import { removeAccessTokenInStorage } from '../../utils/storage';
-import { useNavigation } from '@react-navigation/native';
+import { fetchAllCategoryAction } from '../../redux/actions/categoryAction';
+import { loadingAction } from '../../redux/actions/loadingAction';
+import { fetchAllProductAction } from '../../redux/actions/productAction';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
+import { listCategorySelector } from '../../redux/selectors/categorySelector';
+import { loadingSelector } from '../../redux/selectors/loadingSelector';
+import {
+  listProductSelector,
+  productFavoriteSelector
+} from '../../redux/selectors/productSelector';
+import { clearDataStorage } from '../../utils/storage';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
 
-  const navigation  = useNavigation();
-  
-  const session = useSelector(getSessionSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
-  const isLoading = useSelector(getLoadingSelector);
+  const isLoading = useSelector(loadingSelector);
 
-  const productsFavorite = useSelector(getProductsFavoriteSelector);
+  const productsFavorite = useSelector(productFavoriteSelector);
 
-  const listCate = useSelector(getAllCategorySelector);
+  const listCate = useSelector(listCategorySelector);
 
-  const listProducts = useSelector(getAllProductsSelector);
+  const listProducts = useSelector(listProductSelector);
 
   const [showHidePopup, setShowHidePopup] = useState(false);
 
-  const handlerShowHidePopup = () => {
-    setShowHidePopup(!showHidePopup);
-  };
-
   useEffect(() => {
-    dispatch(actFetchGetAllCategoryRequest());
-    dispatch(actFetchGetAllProductRequest());
+    dispatch(fetchAllCategoryAction());
+    dispatch(fetchAllProductAction());
+
+    const loading = setTimeout(() => {
+      dispatch(loadingAction(false));
+    }, 4000);
+    
+    return () => clearTimeout(loading);
+
   }, []);
 
-  useEffect(() => {
-    const loading = setTimeout(() => {
-      dispatch(handlerSetLoading(false));
-    }, 4000);
-
-   /*  const handlerSession = setTimeout(() => {
-      if (session == false) {
-        handlerShowHidePopup();
-      }
-    }, 4500); */
-
-    return () => {
-      clearTimeout(loading);
-      //clearTimeout(handlerSession);
-    };
-  }, [session]);
-
   const handlerSessionExpired = async () => {
-    handlerShowHidePopup();
-    await removeAccessTokenInStorage();
+    setShowHidePopup(false);
+    await clearDataStorage();
     dispatch(logoutAction(null));
-    dispatch(handlerSession(true));
-    dispatch(handlerSetLoading(true));
-    navigation.navigate('LoginScreen');
+    navigateAndSetToTop('LoginScreen');
   };
 
   return (

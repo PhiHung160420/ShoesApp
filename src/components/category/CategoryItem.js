@@ -6,12 +6,12 @@ import {
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 import { COLORS, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const ITEM_SIZE = 150;
 
 const CategoryItem = ({item, index, scrollY, onPress}) => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const navigation = useNavigation();
 

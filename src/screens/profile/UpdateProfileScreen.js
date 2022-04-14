@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { UpdateProfileComponent } from '../../components';
-import { actFetchGetProfileRequest } from '../../redux/actions/profileAction';
-import { getAccessTokenSelector } from '../../redux/selectors/authSelector';
+import { fetchProfileAction } from '../../redux/actions/profileAction';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
 import { updateProfileAPI, uploadAvatarAPI } from '../../services/profileAPI';
 import { createFormData } from '../../utils/common';
 import { validateEmail, validatePassword, validatePhoneNumber, validateUsername } from '../../utils/validate';
@@ -13,7 +13,7 @@ const UpdateProfileScreen = ({route}) => {
 
   const dispatch = useDispatch();
 
-  const accessToken = useSelector(getAccessTokenSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
   const [data, setData] = useState({
     name: profile?.name || '',
@@ -60,7 +60,7 @@ const UpdateProfileScreen = ({route}) => {
     if(validate?.name?.isValid && validate?.email?.isValid &&validate?.phone?.isValid) {
       updateProfileAPI(data, accessToken)
         .then(res => {
-          dispatch(actFetchGetProfileRequest(accessToken));
+          dispatch(fetchProfileAction(accessToken));
           setUpdateSuccess(true);
           setModalVisible(!isModalVisible);
           setModalContent({

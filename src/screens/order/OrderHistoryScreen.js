@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { OrderHistoryComponent } from '../../components';
-import { actFetchOrderHistoryRequest } from '../../redux/actions/orderAction';
-import { getAccessTokenSelector } from '../../redux/selectors/authSelector';
-import { getOrderHistorySelector } from '../../redux/selectors/orderSelector';
+import { fetchOrderHistoryAction } from '../../redux/actions/orderAction';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
+import { orderHistorySelector } from '../../redux/selectors/orderSelector';
 import { deleteOrderAPI } from '../../services/orderAPI';
 
 const OrderHistoryScreen = () => {
-  const ordersHistory = useSelector(getOrderHistorySelector);
+  const ordersHistory = useSelector(orderHistorySelector);
 
-  const token = useSelector(getAccessTokenSelector);
+  const token = useSelector(accessTokenSelector);
 
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ const OrderHistoryScreen = () => {
     deleteOrderAPI(data, token)
       .then(res => {
         
-        dispatch(actFetchOrderHistoryRequest(token));
+        dispatch(fetchOrderHistoryAction(token));
       })
       .catch(err => console.log(err));
   };

@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductDetailComponent } from '../../components';
-import { addProductToCart } from '../../redux/actions/cartAction';
+import { addProductToCartAction } from '../../redux/actions/cartAction';
 import {
-  actFetchGetProductByIdRequest,
-  hanldeSetProductFavorite
+  fetchProductByIdAction, saveProductFavoriteAction
 } from '../../redux/actions/productAction';
-import { getAccessTokenSelector } from '../../redux/selectors/authSelector';
-import { getCartsSelector } from '../../redux/selectors/cartSelector';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
+import { cartSelector } from '../../redux/selectors/cartSelector';
 import {
-  getProductByIdSelector,
-  getProductsFavoriteSelector
+  productByIdSelector,
+  productFavoriteSelector
 } from '../../redux/selectors/productSelector';
 import {
   getProductsFavoriteFromAPI,
   likeProductAPI,
   unLikeProductAPI
 } from '../../services/productAPI';
-import { setProductsFavoriteToStorage } from '../../utils/storage';
+import { saveProductsFavorite, saveShoppingCarts } from '../../utils/storage';
 
 const ProducDetailScreen = ({route, navigation}) => {
   const {item} = route.params;
 
   const dispatch = useDispatch();
 
-  const accessToken = useSelector(getAccessTokenSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
-  const cartsInfo = useSelector(getCartsSelector);
+  const cartsInfo = useSelector(cartSelector);
 
-  const productsFavorite = useSelector(getProductsFavoriteSelector);
+  const productsFavorite = useSelector(productFavoriteSelector);
 
-  const product = useSelector(getProductByIdSelector);
+  const product = useSelector(productByIdSelector);
 
   const [productFavorite, setProductFavorite] = useState(false);
 
@@ -41,7 +40,7 @@ const ProducDetailScreen = ({route, navigation}) => {
   const [showHidePopup, setShowHidePopup] = useState(false);
 
   useEffect(() => {
-    dispatch(actFetchGetProductByIdRequest(item.id));
+    dispatch(fetchProductByIdAction(item.id));
 
     if (typeof productsFavorite == 'object') {
       productsFavorite.forEach(e => {
@@ -60,17 +59,12 @@ const ProducDetailScreen = ({route, navigation}) => {
     setSizeSelected(size);
   };
 
-  const saveProductsFavoriteToStorage = async data => {
-    return await setProductsFavoriteToStorage(data);
-  };
-
-  const saveProductToReduxAndStorage = token => {
-    getProductsFavoriteFromAPI(token)
+  const saveProductToReduxAndStorage = () => {
+    getProductsFavoriteFromAPI(accessToken)
       .then(res => {
-        const response = res.data.content.productsFavorite;
-        console.log('response: ', response);
-        dispatch(hanldeSetProductFavorite(response));
-        saveProductsFavoriteToStorage(JSON.stringify(response));
+        const products = res?.data?.content?.productsFavorite;
+        dispatch(saveProductFavoriteAction(products));
+        saveProductsFavorite(products);
       })
       .catch(err => console.log(err));
   };
@@ -80,46 +74,37 @@ const ProducDetailScreen = ({route, navigation}) => {
       setProductFavorite(false);
       unLikeProductAPI(item.id, accessToken)
         .then(res => {
-          saveProductToReduxAndStorage(accessToken);
+          saveProductToReduxAndStorage();
         })
         .catch(err => console.log(err));
     } else {
       setProductFavorite(true);
       likeProductAPI(item.id, accessToken)
         .then(res => {
-          saveProductToReduxAndStorage(accessToken);
+          saveProductToReduxAndStorage();
         })
         .catch(err => console.log(err));
     }
   };
 
-  const handlerShowHidePopup = () => {
-    setShowHidePopup(!showHidePopup);
-  };
-
   const handlerAddProductToCart = product => {
-    dispatch(addProductToCart(product));
+    dispatch(addProductToCartAction(product));
     setShowHidePopup(true);
   };
 
   const handlerCheckoutProduct = product => {
-    dispatch(addProductToCart(product));
+    dispatch(addProductToCartAction(product));
     navigation.navigate('PaymentScreen');
   };
 
   const handlerClickGoToCart = () => {
-    handlerShowHidePopup();
+    setShowHidePopup(false);
     navigation.navigate('CartScreen');
   };
 
   const handlerClickKeepShopping = () => {
-    const handlerSaveCartToStorage = async data => {
-      return await setCartsToStorage(data);
-    };
-
-    handlerSaveCartToStorage(JSON.stringify(cartsInfo));
-
-    handlerShowHidePopup();
+    saveShoppingCarts(cartsInfo)
+    setShowHidePopup(false);
   };
 
   return (
@@ -129,11 +114,11 @@ const ProducDetailScreen = ({route, navigation}) => {
       showHidePopup={showHidePopup}
       productFavorite={productFavorite}
       sizeSelected={sizeSelected}
+      handlerClickKeepShopping={handlerClickKeepShopping}
       handlerShowDescript={handlerShowDescript}
       handlerSelectedSize={handlerSelectedSize}
       handlerAddProductToCart={handlerAddProductToCart}
       handlerClickGoToCart={handlerClickGoToCart}
-      handlerClickKeepShopping={handlerClickKeepShopping}
       handlerLikeOrUnLikeProduct={handlerLikeOrUnLikeProduct}
       handlerCheckoutProduct={handlerCheckoutProduct}
     />

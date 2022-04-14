@@ -1,8 +1,7 @@
 import { THEMES } from '../../constants';
 import {typeAction} from './actionType';
 
-const {TOGGLE_THEME_BEGIN, TOGGLE_THEME_SUCCESS, TOGGLE_THEME_FAILURE} =
-  typeAction.themeActions;
+const {TOGGLE_THEME_BEGIN, TOGGLE_THEME_SUCCESS, TOGGLE_THEME_FAILURE} = typeAction.themeActions;
 
 export const toggleThemeBegin = () => {
   return {
@@ -24,7 +23,7 @@ export const toggleThemeFailure = error => {
   };
 };
 
-export const toggleTheme = themeType => {
+export const toggleThemeAction = themeType => {
   return dispatch => {
     switch (themeType) {
       case 'dark':

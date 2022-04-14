@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { COLORS, IMAGES, SIZES, ICONS } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 import { HeaderBar, OrderCard } from '../common';
 
 const OrderHistoryComponent = (props) => {
@@ -16,7 +16,7 @@ const OrderHistoryComponent = (props) => {
     setShowAlert
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.container}>
@@ -32,7 +32,8 @@ const OrderHistoryComponent = (props) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.orderHistoryContainer}
             renderItem={({item, index}) => (
-              <OrderCard 
+              <OrderCard
+                key={index} 
                 order={item}
                 index={index}
                 containerStyle={styles.listContainer}

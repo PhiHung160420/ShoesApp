@@ -10,7 +10,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { COLORS, SIZES } from '../../../constants';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 import CustomPopup from '../popups/CustomPopup';
 import ICONS from '../../../constants/icons/index';
 
@@ -19,6 +19,7 @@ const CartItemCard = (props) => {
     item,
     index,
     swiperIcon,
+    containerStyle,
     handlerDecrementQuantity,
     handlerIncrementQuantity,
     handlerRemoveProductFromCart,
@@ -28,7 +29,7 @@ const CartItemCard = (props) => {
 
   const swipeableRef = useRef(null);
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const navigation = useNavigation();
 
@@ -67,7 +68,7 @@ const CartItemCard = (props) => {
     <Swipeable ref={swipeableRef} renderLeftActions={rightSwiper}>
       <Animatable.View key={reload} animation="fadeInLeft" duration={SIZES.duration + index * 300}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('ProducDetailScreen', {item})}>
-          <View style={[styles.productItemContainer, {backgroundColor: appTheme.flatlistbackgroundItem, shadowColor: appTheme.shadowColor}]}>
+          <View style={[styles.productItemContainer, containerStyle, {backgroundColor: appTheme.flatlistbackgroundItem, shadowColor: appTheme.shadowColor}]}>
             <View style={styles.leftItemContainer}>
               <Text style={[styles.productName, {color: appTheme.textColor}]}>{item.name}</Text>
 

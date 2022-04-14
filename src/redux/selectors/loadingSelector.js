@@ -1,1 +1,1 @@
-export const getLoadingSelector = state => state.LoadingReducer.isLoading;
+export const loadingSelector = state => state.LoadingReducer.isLoading;

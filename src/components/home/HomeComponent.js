@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { memo } from 'react';
 import {
-  FlatList, StyleSheet, Text, View
+  FlatList, SafeAreaView, StyleSheet, Text, View
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CustomPopup, HeaderBar, Loading, ProductCard, SearchInput, TextButton } from '../../components/common';
 import { ICONS, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const HomeComponent = (props) => {
   const {
@@ -18,7 +18,7 @@ const HomeComponent = (props) => {
     handlerSessionExpired,
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
   
   const navigation = useNavigation();
 
@@ -49,6 +49,7 @@ const HomeComponent = (props) => {
           renderItem={({item, index}) => (
             <TextButton
               title={item?.category}
+              titleStyle={styles(appTheme).cateItemName}
               buttonContainerStyle={[
                 styles(appTheme).cateItemContainer,
                 {
@@ -65,7 +66,7 @@ const HomeComponent = (props) => {
   }
 
   return (
-    <View style={styles(appTheme).container}>
+    <SafeAreaView style={styles(appTheme).container}>
       {showHidePopup && (
         <CustomPopup
           isVisible={showHidePopup}
@@ -101,7 +102,7 @@ const HomeComponent = (props) => {
           />
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -132,7 +133,7 @@ const styles = appTheme => StyleSheet.create({
     },
     cateItemContainer: {
       height: 40,
-      paddingHorizontal: SIZES.size_10,
+      paddingHorizontal: SIZES.size_15,
       borderRadius: 10,
       marginLeft: 10,
       shadowOffset: {
@@ -146,7 +147,7 @@ const styles = appTheme => StyleSheet.create({
     },
     cateItemName: {
       color: appTheme.textColor,
-      fontWeight: 'bold',
+      fontWeight: '600',
       fontSize: 20,
       fontFamily: 'Roboto Mono',
     },

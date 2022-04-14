@@ -8,7 +8,7 @@ import Materia from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 import { CustomPopup, HeaderBar, ModalInput, OptionButton } from '../../components/common';
 import { COLORS, CONSTANST, ICONS, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const iconName = 'arrow-back-outline';
 
@@ -30,7 +30,7 @@ const ProfileComponent = (props) => {
     setShowModalSuccess
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.container}>

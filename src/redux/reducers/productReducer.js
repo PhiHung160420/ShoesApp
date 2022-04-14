@@ -1,6 +1,6 @@
 import {typeAction} from '../actions/actionType';
 
-const {GET_ALL_PRODUCT, GET_PRODUCT_BY_ID, SET_PRODUCTS_FAVORITE} =
+const {GET_ALL_PRODUCT, GET_PRODUCT_BY_ID, SAVE_PRODUCTS_FAVORITE} =
   typeAction.productActions;
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_PRODUCTS_FAVORITE:
+    case SAVE_PRODUCTS_FAVORITE:
       return {...state, productsFavorite: action.payload};
     case GET_ALL_PRODUCT:
       return {...state, listProducts: action.payload};

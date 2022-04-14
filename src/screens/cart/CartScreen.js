@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartComponent } from '../../components';
 import {
-  decrementQuantity,
-  incrementQuantity,
-  removeFromCart
+  decrementQuantityAction,
+  incrementQuantityAction,
+  removeFromCartAction
 } from '../../redux/actions/cartAction';
-import { getCartsSelector } from '../../redux/selectors/cartSelector';
-import { setCartsToStorage } from '../../utils/storage';
+import { cartSelector } from '../../redux/selectors/cartSelector';
+import { saveShoppingCarts, setCartsToStorage } from '../../utils/storage';
 
 const CartScreen = () => {
   const dispatch = useDispatch();
 
-  const cartInfo = useSelector(getCartsSelector);
+  const cartInfo = useSelector(cartSelector);
 
   const [totalCart, setTotalCart] = useState(0);
 
@@ -25,20 +25,17 @@ const CartScreen = () => {
     });
     setTotalCart(totalPrice);
 
-    const handlerSaveCartToStorage = async data => {
-      return await setCartsToStorage(data);
-    };
-
-    handlerSaveCartToStorage(JSON.stringify(cartInfo));
+    saveShoppingCarts(cartInfo);
+    
   }, [cartInfo]);
 
   const handlerIncrementQuantity = item => {
-    dispatch(incrementQuantity(item));
+    dispatch(incrementQuantityAction(item));
   };
 
   const handlerDecrementQuantity = (item, handleShowPopup) => {
     if (item.quantity > 1) {
-      dispatch(decrementQuantity(item));
+      dispatch(decrementQuantityAction(item));
     } else {
       handleShowPopup();
     }
@@ -46,8 +43,7 @@ const CartScreen = () => {
 
   const handlerRemoveProductFromCart = async item => {
     setShowPopup(false);
-    dispatch(removeFromCart(item));
-    await removeCartsInStorage();
+    dispatch(removeFromCartAction(item));
   };
 
   return (

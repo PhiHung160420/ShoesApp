@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, { useRef } from 'react';
 import {
   Animated, Image, StyleSheet, Text,
-  TouchableOpacity, View
+  TouchableOpacity, TouchableWithoutFeedback, View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -11,7 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { COLORS, IMAGES, SIZES } from '../../../constants';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 import { CustomPopup } from '../../common';
 
 const OrderCard = (props) => {
@@ -24,7 +24,7 @@ const OrderCard = (props) => {
     containerStyle
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const navigation = useNavigation();
 
@@ -54,41 +54,39 @@ const OrderCard = (props) => {
   return (
     <Swipeable ref={swipeableRef} renderLeftActions={RightSwiper}>
       <Animatable.View animation="fadeInLeft" delay={SIZES.duration + index * 100}>
-        <TouchableOpacity
-          style={[styles.itemContainer, containerStyle, {backgroundColor: appTheme.flatlistbackgroundItem}]}
-          onPress={() => navigation.navigate('OrderDetailScreen', {orderId: order.id})}
-        >
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderDetailScreen', {orderId: order.id})}>
+          <View style={[styles.itemContainer, containerStyle, {backgroundColor: appTheme.flatlistbackgroundItem}]}>
+            <CustomPopup
+              isVisible={showAlert}
+              title="Confirm"
+              content="Are you sure want to remove this order ?"
+              leftButton="No"
+              rightButton="Yes"
+              onPressLeftButton={() => setShowAlert(false)}
+              onPressRightButton={handlerRemoveOrderHistory}
+            />
 
-          <CustomPopup
-            isVisible={showAlert}
-            title="Confirm"
-            content="Are you sure want to remove this order ?"
-            leftButton="No"
-            rightButton="Yes"
-            onPressLeftButton={() => setShowAlert(false)}
-            onPressRightButton={handlerRemoveOrderHistory}
-          />
+            <Image source={IMAGES.order} style={styles.iconOrder}/>
 
-          <Image source={IMAGES.order} style={styles.iconOrder}/>
+            <View style={styles.infoOrder}>
+              <Text style={[styles.dateStyle, {color: appTheme.textColor}]}>
+                Date: {moment(order.date).format('DD/MM/YYYY')}
+              </Text>
 
-          <View style={styles.infoOrder}>
-            <Text style={[styles.dateStyle, {color: appTheme.textColor}]}>
-              Date: {moment(order.date).format('DD/MM/YYYY')}
-            </Text>
+              <Text style={[styles.orderIdStyle, {color: appTheme.textColor}]}>
+                ID: #{order.id}
+              </Text>
+            </View>
 
-            <Text style={[styles.orderIdStyle, {color: appTheme.textColor}]}>
-              ID: #{order.id}
-            </Text>
+            <View style={[styles.separate, {borderRightColor: appTheme.textColor}]} />
+
+            <Text style={[styles.totalItem, {color: appTheme.textColor}]}>{order.orderDetail.length} item</Text>
+            
+            <TouchableOpacity>
+              <AntDesign name="arrowright" size={SIZES.size_25} color={appTheme.textColor} />
+            </TouchableOpacity>
           </View>
-
-          <View style={[styles.separate, {borderRightColor: appTheme.textColor}]} />
-
-          <Text style={[styles.totalItem, {color: appTheme.textColor}]}>{order.orderDetail.length} item</Text>
-          
-          <TouchableOpacity>
-            <AntDesign name="arrowright" size={SIZES.size_25} color={appTheme.textColor} />
-          </TouchableOpacity>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       </Animatable.View>
     </Swipeable>
   );

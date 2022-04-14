@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategoryComponent } from '../../components';
-import { actFetchGetProductByCategoryRequest } from '../../redux/actions/categoryAction';
-import { getProductsByCategorySelector } from '../../redux/selectors/categorySelector';
+import { fetchProductByCategoryAction } from '../../redux/actions/categoryAction';
+import { listProductByCategorySelector } from '../../redux/selectors/categorySelector';
 
 const CategoryScreen = ({route, navigation}) => {
   const {id} = route.params;
 
   const dispatch = useDispatch();
 
-  const listProduct = useSelector(getProductsByCategorySelector);
+  const listProduct = useSelector(listProductByCategorySelector);
 
   useEffect(() => {
-    dispatch(actFetchGetProductByCategoryRequest(id));
+    dispatch(fetchProductByCategoryAction(id));
   }, []);
 
   const onPressProductDetail = (item) => {

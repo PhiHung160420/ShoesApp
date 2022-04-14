@@ -3,18 +3,18 @@ import {typeAction} from './actionType';
 
 const {GET_ORDER_HISTORY} = typeAction.orderActions;
 
-export const handlerGetOrderHistory = payload => {
+export const getOrderHistoryAction = payload => {
   return {
     type: GET_ORDER_HISTORY,
     payload,
   };
 };
 
-export const actFetchOrderHistoryRequest = token => {
+export const fetchOrderHistoryAction = token => {
   return dispatch => {
     return getProfileAPI(token).then(res => {
       const orderHistory = res.data.content.ordersHistory;
-      dispatch(handlerGetOrderHistory(orderHistory));
+      dispatch(getOrderHistoryAction(orderHistory));
     });
   };
 };

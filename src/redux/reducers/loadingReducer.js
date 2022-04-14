@@ -3,7 +3,7 @@ import {typeAction} from '../actions/actionType';
 const {LOADING} = typeAction.loadingActions;
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
 };
 
 const LoadingReducer = (state = initialState, action) => {

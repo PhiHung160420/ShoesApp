@@ -6,10 +6,10 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { HeaderBar, SearchInput } from '../../components/common';
 import { SIZES, COLORS } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const SearchComponent = () => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.container}>

@@ -7,7 +7,7 @@ import {
 import { useSelector } from 'react-redux';
 import { CustomPopup, HeaderBar, ModalInput, TextButton } from '../../components/common';
 import { COLORS, ICONS, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 import PaymentItems from './PaymentItems';
 import PaymentMethod from './PaymentMethod';
 
@@ -28,7 +28,7 @@ const PaymentComponent = (props) => {
     handlerClickContinueShopping,
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
   const [isChangeAddress, setIsChangeAddress] = useState(false);
   
   return (

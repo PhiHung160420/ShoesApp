@@ -10,7 +10,7 @@ import {
 import {COLORS, SIZES, CONSTANST} from '../../constants';
 import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const payments = CONSTANST?.payments;
 
@@ -44,7 +44,7 @@ const Method = ({item, methodSelected, handerSelectedMethod, appTheme}) => {
 };
 
 const PaymentMethod = ({methodSelected, handerSelectedMethod}) => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.paymentMethodContainer}>

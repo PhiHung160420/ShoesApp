@@ -2,11 +2,11 @@ import React from 'react'
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 import {SIZES, COLORS} from '../../../constants';
 
 const SearchInput = ({containerStyle, inputStyle, placeholder, buttonStyle}) => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={[styles.container, containerStyle]}>

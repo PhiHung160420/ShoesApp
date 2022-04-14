@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { OrderDetailComponent } from '../../components';
-import { getOrderHistorySelector } from '../../redux/selectors/orderSelector';
-import { getProfileSelector } from '../../redux/selectors/profileSelector';
+import { orderHistorySelector } from '../../redux/selectors/orderSelector';
+import { profileSelector } from '../../redux/selectors/profileSelector';
 
 
 const OrderDetailScreen = ({route}) => {
   const {orderId} = route.params;
 
-  const profile = useSelector(getProfileSelector);
+  const profile = useSelector(profileSelector);
 
-  const ordersHistory = useSelector(getOrderHistorySelector);
+  const ordersHistory = useSelector(orderHistorySelector);
 
   let result = ordersHistory.find(element => element.id == orderId);
 

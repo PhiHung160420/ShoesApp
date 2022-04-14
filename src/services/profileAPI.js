@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {CONSTANST} from '../constants';
 
-// api get profile info
 export const getProfileAPI = token => {
   return axios({
     method: 'POST',

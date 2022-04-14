@@ -1,2 +1,2 @@
-export const getOrderHistorySelector = state =>
+export const orderHistorySelector = state =>
   state.OrderReducer.ordersHistory;

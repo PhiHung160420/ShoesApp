@@ -1,45 +1,54 @@
-import {getAllProduct, getProductByIdAPI} from '../../services/productAPI';
+import {getAllProductAPI, getProductByIdAPI, getProductsFavoriteFromAPI} from '../../services/productAPI';
 import {typeAction} from './actionType';
 
-const {GET_ALL_PRODUCT, GET_PRODUCT_BY_ID, SET_PRODUCTS_FAVORITE} =
-  typeAction.productActions;
+const {GET_ALL_PRODUCT, GET_PRODUCT_BY_ID, SAVE_PRODUCTS_FAVORITE, REMOVE_ALL_PRDUCTS_FAVORITE} = typeAction.productActions;
 
-export const handleGetAllProduct = payload => {
+export const getAllProductAction = payload => {
   return {
     type: GET_ALL_PRODUCT,
     payload,
   };
 };
 
-export const handleGetProductById = payload => {
+export const getProductByIdAction = payload => {
   return {
     type: GET_PRODUCT_BY_ID,
     payload,
   };
 };
 
-export const hanldeSetProductFavorite = payload => {
+export const saveProductFavoriteAction = payload => {
   return {
-    type: SET_PRODUCTS_FAVORITE,
+    type: SAVE_PRODUCTS_FAVORITE,
     payload,
   };
 };
 
-export const actFetchGetAllProductRequest = () => {
+export const fetchAllProductAction = () => {
   return dispatch => {
-    getAllProduct()
+    getAllProductAPI()
       .then(res => {
-        dispatch(handleGetAllProduct(res.data.content));
+        dispatch(getAllProductAction(res.data.content));
       })
       .catch(err => console.log(err));
   };
 };
 
-export const actFetchGetProductByIdRequest = productId => {
+export const fetchProductByIdAction = productId => {
   return dispatch => {
     getProductByIdAPI(productId)
       .then(res => {
-        dispatch(handleGetProductById(res.data.content));
+        dispatch(getProductByIdAction(res.data.content));
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+export const fetchProductsFavoriteAction = token => {
+  return dispatch => {
+    getProductsFavoriteFromAPI(token)
+      .then(res => {
+        dispatch(saveProductFavoriteAction(res?.data?.content?.productsFavorite));
       })
       .catch(err => console.log(err));
   };

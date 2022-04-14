@@ -1,5 +1,5 @@
-export const getAllCategorySelector = state =>
+export const listCategorySelector = state =>
   state.CategoryReducer.listCategory;
 
-export const getProductsByCategorySelector = state =>
-  state.CategoryReducer.listProductByCate;
+export const listProductByCategorySelector = state =>
+  state.CategoryReducer.listProductByCategory;

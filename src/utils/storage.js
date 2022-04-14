@@ -1,80 +1,65 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setToken } from 'apis/api-request';
 
-/* access token */
-export const SetAccessTokenToStorage = async value => {
-  try {
-    await AsyncStorage.setItem('accessToken', value);
-  } catch (error) {
-    console.log(error);
-  }
+const ACCESS_TOKEN = 'ACCESS_TOKEN';
+const SHOPPING_CARTS = 'SHOPPING_CARTS';
+const PRODUCTS_FAVORITE = 'PRODUCTS_FAVORITE';
+
+export const saveDataStorage = async (key, value) => {
+	try {
+		await AsyncStorage.setItem(key, value);
+		return true;
+	} catch (error) {
+		return false;
+	}
 };
 
-export const getAccessTokenFromStorage = async () => {
-  try {
-    const accessToken = await AsyncStorage.getItem('accessToken');
-    return accessToken;
-  } catch (error) {
-    console.log(error);
-  }
+export const getDataStorage = async (key) => {
+	try {
+		const value = await AsyncStorage.getItem(key);
+		if (value !== null) {
+			return JSON.parse(value);
+		}
+		return false;
+	} catch (error) {
+		return false;
+	}
 };
 
-export const removeAccessTokenInStorage = async () => {
-  try {
-    await AsyncStorage.removeItem('accessToken');
-  } catch (error) {
-    console.log(error);
-  }
-};
-/* access token */
-
-/* products favorite */
-export const setProductsFavoriteToStorage = async values => {
-  try {
-    await AsyncStorage.setItem('productsFavorite', values);
-  } catch (err) {
-    console.log(err);
-  }
+export const clearDataStorage = async () => {
+	try {
+		await AsyncStorage.removeItem(`@${ACCESS_TOKEN}:key`);
+		await AsyncStorage.removeItem(`@${SHOPPING_CARTS}:key`);
+		await AsyncStorage.removeItem(`@${PRODUCTS_FAVORITE}:key`);
+		return true;
+	} catch (error) {
+		return false;
+	}
 };
 
-export const getProductsFavoriteFromStorage = async () => {
-  try {
-    return await AsyncStorage.getItem('productsFavorite');
-  } catch (error) {
-    console.log(error);
-  }
+export const saveAccessToken = async value => {
+  saveDataStorage(`@${ACCESS_TOKEN}:key`, JSON.stringify(value));
 };
 
-export const removeProductsFavoriteInStorage = async () => {
-  try {
-    await AsyncStorage.removeItem('productsFavorite');
-  } catch (error) {
-    console.log(error);
-  }
-};
-/* products favorite */
-
-/* shopping cart */
-export const setCartsToStorage = async values => {
-  try {
-    await AsyncStorage.setItem('carts', values);
-  } catch (error) {
-    console.log(error);
-  }
+export const getAccessToken = async () => {
+  const result = await getDataStorage(`@${ACCESS_TOKEN}:key`);
+	return result;
 };
 
-export const getCartsFromStorage = async () => {
-  try {
-    return await AsyncStorage.getItem('carts');
-  } catch (error) {
-    console.log(error);
-  }
+export const saveShoppingCarts = async value => {
+  saveDataStorage(`@${SHOPPING_CARTS}:key`, JSON.stringify(value));
 };
 
-export const removeCartsInStorage = async () => {
-  try {
-    await AsyncStorage.removeItem('carts');
-  } catch (error) {
-    console.log(error);
-  }
+export const getShoppingCarts = async () => {
+  const result = await getDataStorage(`@${SHOPPING_CARTS}:key`);
+	return result;
 };
-/* shopping cart */
+
+export const saveProductsFavorite = async value => {
+  saveDataStorage(`@${PRODUCTS_FAVORITE}:key`, JSON.stringify(value));
+};
+
+export const getProductsFavorite = async () => {
+  const result = await getDataStorage(`@${PRODUCTS_FAVORITE}:key`);
+	return result;
+};

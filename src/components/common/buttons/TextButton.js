@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 
 const TextButton = (props) => {
   const {
@@ -11,7 +11,7 @@ const TextButton = (props) => {
     onPress
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <TouchableOpacity style={[styles(appTheme).container, buttonContainerStyle]} onPress={onPress}>
@@ -28,7 +28,6 @@ const styles = appTheme => StyleSheet.create({
   },
   title: {
     color: appTheme?.textColor,
-    fontWeight: 'bold',
     fontSize: 20,
     fontFamily: 'Roboto Mono',
   }

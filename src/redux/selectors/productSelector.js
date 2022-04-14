@@ -1,7 +1,7 @@
-export const getProductsFavoriteSelector = state =>
+export const productFavoriteSelector = state =>
   state.ProductReducer.productsFavorite;
 
-export const getAllProductsSelector = state =>
+export const listProductSelector = state =>
   state.ProductReducer.listProducts;
 
-export const getProductByIdSelector = state => state.ProductReducer.productById;
+export const productByIdSelector = state => state.ProductReducer.productById;

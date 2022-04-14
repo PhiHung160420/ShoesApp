@@ -10,12 +10,12 @@ import {
 import {useSelector} from 'react-redux';
 import {COLORS} from '../../constants';
 import {SIZES} from '../../constants';
-import {getAppThemeSelector} from '../../redux/selectors/themeSelector';
+import {appThemeSelector} from '../../redux/selectors/themeSelector';
 import {useNavigation} from '@react-navigation/native';
 import { TextButton } from '../common';
 
 const ProductItem = ({item}) => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={[styles.productContainer, {backgroundColor: appTheme.viewBackground}]}>
@@ -39,7 +39,7 @@ const ProductItem = ({item}) => {
 const ProductList = ({items}) => {
   const data = items.carts;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const navigation = useNavigation();
 

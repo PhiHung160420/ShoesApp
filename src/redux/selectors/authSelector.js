@@ -1,1 +1,1 @@
-export const getAccessTokenSelector = state => state.AuthReducer.accessToken;
+export const accessTokenSelector = state => state.AuthReducer.accessToken;

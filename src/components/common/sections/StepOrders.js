@@ -4,7 +4,7 @@ import StepIndicator from 'react-native-step-indicator';
 import {COLORS} from '../../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 
 const labels = ['Ordered', 'Confirmed', 'Deliverling', 'Completed'];
 const icons = ['basket-sharp', 'md-thumbs-up', 'ios-location', 'checkbox'];
@@ -34,7 +34,7 @@ const customStyles = {
 };
 
 const StepOrders = () => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
   
   const renderLabel = ({position, stepstatus, label, currentPosition}) => (
     <View style={{justifyContent: 'center', alignItems: 'center'}}>

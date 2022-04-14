@@ -10,14 +10,14 @@ const {
   REMOVE_ALL_CART,
 } = typeAction.cartActions;
 
-export const setCarts = payload => {
+export const saveCartAction = payload => {
   return {
     type: SET_CART,
     payload,
   };
 };
 
-export const removeAllCarts = payload => {
+export const removeAllCartsAction = payload => {
   return {
     type: REMOVE_ALL_CART,
     payload,
@@ -31,28 +31,28 @@ export const getNumberCart = payload => {
   };
 };
 
-export const addProductToCart = payload => {
+export const addProductToCartAction = payload => {
   return {
     type: ADD_TO_CART,
     payload,
   };
 };
 
-export const incrementQuantity = payload => {
+export const incrementQuantityAction = payload => {
   return {
     type: INCREMENT_QUANTITY,
     payload,
   };
 };
 
-export const decrementQuantity = payload => {
+export const decrementQuantityAction = payload => {
   return {
     type: DECREMENT_QUANTITY,
     payload,
   };
 };
 
-export const removeFromCart = payload => {
+export const removeFromCartAction = payload => {
   return {
     type: REMOVE_FROM_CART,
     payload,

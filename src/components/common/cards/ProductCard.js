@@ -7,36 +7,31 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { COLORS, SIZES } from '../../../constants';
-import { hanldeSetProductFavorite } from '../../../redux/actions/productAction';
-import { getAccessTokenSelector } from '../../../redux/selectors/authSelector';
+import { saveProductFavoriteAction } from '../../../redux/actions/productAction';
+import { accessTokenSelector } from '../../../redux/selectors/authSelector';
+import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 import {
   getProductsFavoriteFromAPI,
   likeProductAPI,
   unLikeProductAPI
 } from '../../../services/productAPI';
-import { setProductsFavoriteToStorage } from '../../../utils/storage';
-import { getAppThemeSelector } from '../../../redux/selectors/themeSelector';
+import { saveProductsFavorite } from '../../../utils/storage';
 
 const ProductCard = ({product, isLiked}) => {
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
   
   const navigation = useNavigation();
 
-  const accessToken = useSelector(getAccessTokenSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
   const dispatch = useDispatch();
 
-  const saveProductsFavoriteToStorage = async data => {
-    return await setProductsFavoriteToStorage(data);
-  };
-
-  const saveFavoriteToReduxAndStorage = token => {
-    getProductsFavoriteFromAPI(token)
+  const saveFavoriteToReduxAndStorage = () => {
+    getProductsFavoriteFromAPI(accessToken)
       .then(res => {
-        dispatch(hanldeSetProductFavorite(res.data.content.productsFavorite));
-        saveProductsFavoriteToStorage(
-          JSON.stringify(res.data.content.productsFavorite),
-        );
+        const products = res?.data?.content?.productsFavorite;
+        dispatch(saveProductFavoriteAction(products));
+        saveProductsFavorite(products);
       })
       .catch(err => console.log(err));
   };
@@ -44,11 +39,11 @@ const ProductCard = ({product, isLiked}) => {
   const handlerClickLikeProduct = () => {
     if (isLiked) {
       unLikeProductAPI(product.id, accessToken)
-        .then(res => saveFavoriteToReduxAndStorage(accessToken))
+        .then(res => saveFavoriteToReduxAndStorage())
         .catch(err => console.log(err));
     } else {
       likeProductAPI(product.id, accessToken)
-        .then(res => saveFavoriteToReduxAndStorage(accessToken))
+        .then(res => saveFavoriteToReduxAndStorage())
         .catch(err => console.log(err));
     }
   };

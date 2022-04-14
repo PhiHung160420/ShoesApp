@@ -1,42 +1,36 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FavoriteComponent } from '../../components';
-import { hanldeSetProductFavorite } from '../../redux/actions/productAction';
-import { getAccessTokenSelector } from '../../redux/selectors/authSelector';
-import { getProductsFavoriteSelector } from '../../redux/selectors/productSelector';
+import { saveProductFavoriteAction } from '../../redux/actions/productAction';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
+import { productFavoriteSelector } from '../../redux/selectors/productSelector';
 import {
   getProductsFavoriteFromAPI,
   unLikeProductAPI
 } from '../../services/productAPI';
-import { setProductsFavoriteToStorage } from '../../utils/storage';
+import { saveProductsFavorite } from '../../utils/storage';
 
 const FavoriteScreen = () => {;
   const dispatch = useDispatch();
 
-  const accessToken = useSelector(getAccessTokenSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
-  const productsFavorite = useSelector(getProductsFavoriteSelector);
+  const productsFavorite = useSelector(productFavoriteSelector);
 
-  const saveProductsFavoriteToStorage = async data => {
-    return await setProductsFavoriteToStorage(data);
-  };
-
-  const saveFavoriteToReduxAndStorage = token => {
-    getProductsFavoriteFromAPI(token)
+  const saveFavoriteToReduxAndStorage = () => {
+    getProductsFavoriteFromAPI(accessToken)
       .then(res => {
-        const response = res?.data?.content?.productsFavorite;
-        dispatch(hanldeSetProductFavorite(response));
-        saveProductsFavoriteToStorage(JSON.stringify(response));
+        const products = res?.data?.content?.productsFavorite;
+        dispatch(saveProductFavoriteAction(products));
+        saveProductsFavorite(products);
       })
       .catch(err => console.log(err));
   };
 
   const handlerRemoveProduct = productId => {
     unLikeProductAPI(productId, accessToken)
-      .then(res => {
-        saveFavoriteToReduxAndStorage(accessToken);
-      })
-      .catch(err => console.log(err));
+      .then(res => saveFavoriteToReduxAndStorage())
+      .catch(error => console.log(error))
   };
 
   return (

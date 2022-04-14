@@ -7,13 +7,13 @@ import * as Animatable from 'react-native-animatable';
 import { useSelector } from 'react-redux';
 import { HeaderBar } from '../common';
 import { SIZES, ICONS } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 import CategoryItem from './CategoryItem';
 
 const CategoryComponent = ({listProduct, id, onPressProductDetail}) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.container}>

@@ -13,6 +13,7 @@ import UpdateProfileScreen from './profile/UpdateProfileScreen';
 import OrderHistoryScreen from './order/OrderHistoryScreen';
 import OrderDetailScreen from './order/OrderDetailScreen';
 import MapScreen from './map/MapScreen';
+import AuthScreen from './auth';
 
 export {
   LoginScreen,
@@ -30,4 +31,5 @@ export {
   OrderHistoryScreen,
   OrderDetailScreen,
   MapScreen,
+  AuthScreen
 };

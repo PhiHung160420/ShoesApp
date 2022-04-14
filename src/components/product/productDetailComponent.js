@@ -8,7 +8,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { CustomPopup, HeaderBar, IconButton, TextButton } from '../../components/common';
 import { COLORS, ICONS, IMAGES, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { navigate } from '../../navigations/service';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const ProductDetailComponent = (props) => {
   const {
@@ -17,15 +18,15 @@ const ProductDetailComponent = (props) => {
     showHidePopup,
     productFavorite,
     sizeSelected,
+    handlerClickKeepShopping,
     handlerShowDescript,
     handlerSelectedSize,
     handlerAddProductToCart,
     handlerClickGoToCart,
-    handlerClickKeepShopping,
     handlerLikeOrUnLikeProduct,
     handlerCheckoutProduct
   } = props;
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={[styles.container, {opacity: showHidePopup ? 0.5 : 1}]}>

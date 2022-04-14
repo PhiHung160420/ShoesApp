@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { RegisterComponent } from '../../../components';
+import { navigateAndSetToTop } from '../../../navigations/service';
+import { registerAPI } from '../../../services/authAPI';
 import { phoneRegExp } from '../../../utils/validate';
-import { useSignUp } from '../../../services/authAPI';
 
 const registerSchema = Yup.object().shape({
   name: Yup.string()
@@ -35,7 +36,7 @@ const RegisterScreen = ({navigation}) => {
   const onPressRegister = values => {
     const data = {...values, gender};
     if (data) {
-      useSignUp(data)
+      registerAPI(data)
         .then(res => {
           setIsRegisterSuccess(true);
           setModalVisible(!isModalVisible);
@@ -44,7 +45,7 @@ const RegisterScreen = ({navigation}) => {
         .catch(err => {
           setIsRegisterSuccess(false);
           setModalVisible(!isModalVisible);
-          setMessageRegister(`${err.response.data.message}`);
+          setMessageRegister(`${err?.response?.data?.message}`);
         });
     }
   };
@@ -52,7 +53,7 @@ const RegisterScreen = ({navigation}) => {
   const handlerClickModal = () => {
     if (isRegisterSuccess) {
       setModalVisible(!isModalVisible);
-      navigation.push('LoginScreen');
+      navigateAndSetToTop('LoginScreen');
     } else {
       setModalVisible(!isModalVisible);
     }

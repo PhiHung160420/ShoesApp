@@ -7,7 +7,7 @@ import {
 import { useSelector } from 'react-redux';
 import { HeaderBar, TextButton } from '../../components/common';
 import { COLORS, IMAGES, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 import ICONS from '../../constants/icons/index';
 import {CartItemCard} from '../common';
 
@@ -22,7 +22,7 @@ const CartComponent = (props) => {
     setShowPopup,
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   const navigation = useNavigation();
   return (
@@ -36,28 +36,29 @@ const CartComponent = (props) => {
 
       <View style={[styles.contentContainer, {backgroundColor: appTheme.backgroundColor}]}>
         {cartInfo?.carts?.length !== 0 ? 
-          <View style={{flex: 1}}>
-            <FlatList
-              data={cartInfo?.carts}
-              keyExtractor={item => item.id}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.cartListContainer}
-              ItemSeparatorComponent={() => <View style={{height: 10}} />}
-              snapToInterval={140}
-              renderItem={({item, index}) => (
-                <CartItemCard
-                  item={item}
-                  index={index}
-                  swiperIcon={ICONS.bin}
-                  handlerDecrementQuantity={handlerDecrementQuantity}
-                  handlerIncrementQuantity={handlerIncrementQuantity}
-                  handlerRemoveProductFromCart={handlerRemoveProductFromCart}
-                  setShowPopup={setShowPopup}
-                  showPopup={showPopup}
-                />
-              )}
-            />
-
+          <>
+            <View style={{flex: 1}}>
+              <FlatList
+                data={cartInfo?.carts}
+                keyExtractor={item => item.id}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.cartListContainer}
+                ItemSeparatorComponent={() => <View style={{height: 10}} />}
+                snapToInterval={140}
+                renderItem={({item, index}) => (
+                  <CartItemCard
+                    item={item}
+                    index={index}
+                    swiperIcon={ICONS.bin}
+                    handlerDecrementQuantity={handlerDecrementQuantity}
+                    handlerIncrementQuantity={handlerIncrementQuantity}
+                    handlerRemoveProductFromCart={handlerRemoveProductFromCart}
+                    setShowPopup={setShowPopup}
+                    showPopup={showPopup}
+                  />
+                )}
+              />
+            </View>
             <View style={[styles.cartSubContent, {backgroundColor: appTheme.cartBackgroudColor}]}>
               <View style={styles.cartTotal}>
                 <Text style={[styles.totalItem, {color: appTheme.textColor}]}>{cartInfo.numberCart} item</Text>
@@ -71,7 +72,8 @@ const CartComponent = (props) => {
                 onPress={() => navigation.navigate('PaymentScreen')}
               />
             </View>
-          </View> :
+          </>
+          :
           <View style={styles.cartEmptyContainer}>
             <Image source={IMAGES.empty_cart} style={styles.cartImage}/>
 
@@ -129,15 +131,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: SIZES.radius * 2,
     borderTopLeftRadius: SIZES.radius * 2,
     marginTop: SIZES.size_10,
-    position: 'absolute',
-    bottom: SIZES.size_50,
-    left: 0,
-    right: 0,
+    marginBottom: SIZES.size_50,
   },
   cartListContainer: {
     paddingTop: SIZES.radius,
     paddingBottom: SIZES.size_40,
-    paddingHorizontal: SIZES.base
+    paddingHorizontal: SIZES.base,
   },
   cartTotal: {
     flexDirection: 'row',

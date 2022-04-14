@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CONSTANST } from '../constants';
 
-export const useSignIn = data => {
+export const loginAPI = data => {
   return axios({
     method: 'POST',
     url: `${CONSTANST?.backend_url}/Users/signin`,
@@ -9,7 +9,7 @@ export const useSignIn = data => {
   });
 };
 
-export const useSignUp = data => {
+export const registerAPI = data => {
   return axios({
     method: 'POST',
     url: `${CONSTANST?.backend_url}/Users/signup`,

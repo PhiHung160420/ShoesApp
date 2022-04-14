@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileSelector } from '../../redux/selectors/profileSelector';
+import { profileSelector } from '../../redux/selectors/profileSelector';
 import {ProfileComponent} from '../../components';
-import { removeAccessTokenInStorage, removeCartsInStorage } from '../../utils/storage';
-import { handlerSetLoading } from '../../redux/actions/loadingAction';
-import {removeAllCarts} from '../../redux/actions/cartAction';
+import { clearDataStorage } from '../../utils/storage';
+import { loadingAction } from '../../redux/actions/loadingAction';
+import {removeAllCartsAction} from '../../redux/actions/cartAction';
 import {logoutAction} from '../../redux/actions/authAction';
-import { getAccessTokenSelector } from '../../redux/selectors/authSelector';
+import { accessTokenSelector } from '../../redux/selectors/authSelector';
 import { changePasswordAPI } from '../../services/profileAPI';
+import { navigateAndSetToTop } from '../../navigations/service';
+import { saveProductFavoriteAction } from '../../redux/actions/productAction';
 
 const ProfileScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const profile = useSelector(getProfileSelector);
+  const profile = useSelector(profileSelector);
 
-  const accessToken = useSelector(getAccessTokenSelector);
+  const accessToken = useSelector(accessTokenSelector);
 
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -100,11 +102,11 @@ const ProfileScreen = ({navigation}) => {
   }, [isChangePasswordSuccess]);
 
   const handlerLogOut = async () => {
-    await removeCartsInStorage();
-    await removeAccessTokenInStorage();
-    dispatch(removeAllCarts([]));
+    await clearDataStorage();
+    dispatch(removeAllCartsAction([]));
+    dispatch(saveProductFavoriteAction([]));
     dispatch(logoutAction(null));
-    dispatch(handlerSetLoading(true));
+    navigateAndSetToTop('SplashScreen');
   };
 
   const onPressOption = async (item) => {

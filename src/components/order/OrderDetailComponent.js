@@ -10,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { HeaderBar, IconLabel, StepOrders } from '../../components/common';
 import { COLORS, ICONS, IMAGES, SIZES } from '../../constants';
-import { getAppThemeSelector } from '../../redux/selectors/themeSelector';
+import { appThemeSelector } from '../../redux/selectors/themeSelector';
 
 const OrderDetailComponent = (props) => {
   const {
@@ -19,7 +19,7 @@ const OrderDetailComponent = (props) => {
     productsOrdered,
   } = props;
 
-  const appTheme = useSelector(getAppThemeSelector);
+  const appTheme = useSelector(appThemeSelector);
 
   return (
     <View style={styles.container}>
@@ -100,8 +100,8 @@ const OrderDetailComponent = (props) => {
             labelStyle={styles.iconLabelStyle}
           />
 
-          {productsOrdered.map(item => (
-            <View style={styles.itemsInfoContainer}>
+          {productsOrdered.map((item, index) => (
+            <View key={index} style={styles.itemsInfoContainer}>
               <Image source={{uri: item.image}} style={styles.imageItem}/>
               <View style={styles.itemInfo}>
                 <Text style={[styles.itemName, {color: appTheme.textColor}]}>{item.name}</Text>
