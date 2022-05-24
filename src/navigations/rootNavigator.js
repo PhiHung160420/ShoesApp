@@ -12,7 +12,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 const Stack = createSharedElementStackNavigator();
 
 const RootNavigator = () => {
-
   return (
     <SafeAreaProvider>
       <NavigationContainer ref={navigationRef}>

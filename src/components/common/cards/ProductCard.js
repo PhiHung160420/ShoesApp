@@ -7,15 +7,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { COLORS, SIZES } from '../../../constants';
-import { saveProductFavoriteAction } from '../../../redux/actions/productAction';
+import { fetchProductsFavoriteAction, saveProductFavoriteAction } from '../../../redux/actions/productAction';
 import { accessTokenSelector } from '../../../redux/selectors/authSelector';
 import { appThemeSelector } from '../../../redux/selectors/themeSelector';
 import {
-  getProductsFavoriteFromAPI,
   likeProductAPI,
   unLikeProductAPI
 } from '../../../services/productAPI';
-import { saveProductsFavorite } from '../../../utils/storage';
 
 const ProductCard = ({product, isLiked}) => {
   const appTheme = useSelector(appThemeSelector);
@@ -26,24 +24,14 @@ const ProductCard = ({product, isLiked}) => {
 
   const dispatch = useDispatch();
 
-  const saveFavoriteToReduxAndStorage = () => {
-    getProductsFavoriteFromAPI(accessToken)
-      .then(res => {
-        const products = res?.data?.content?.productsFavorite;
-        dispatch(saveProductFavoriteAction(products));
-        saveProductsFavorite(products);
-      })
-      .catch(err => console.log(err));
-  };
-
   const handlerClickLikeProduct = () => {
     if (isLiked) {
       unLikeProductAPI(product.id, accessToken)
-        .then(res => saveFavoriteToReduxAndStorage())
+        .then(res => dispatch(fetchProductsFavoriteAction(accessToken)))
         .catch(err => console.log(err));
     } else {
       likeProductAPI(product.id, accessToken)
-        .then(res => saveFavoriteToReduxAndStorage())
+        .then(res => dispatch(fetchProductsFavoriteAction(accessToken)))
         .catch(err => console.log(err));
     }
   };

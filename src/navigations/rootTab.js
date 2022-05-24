@@ -45,9 +45,8 @@ const CustomTabbarBottom = (props) => {
     appTheme,
     numberCart,
   } = props;
-
-  if (isFloat) {
     return (
+      isFloat ? 
       <View style={styles.cartButtonContainer}>
         <Svg xmlns="http://www.w3.org/2000/svg" width={SIZES.size_90} height={SIZES.size_60} viewBox="0 0 90 61">
           <Path
@@ -62,17 +61,12 @@ const CustomTabbarBottom = (props) => {
           </View>
           {children}
         </TouchableOpacity>
-      </View>
-    )
-  } else {
-    return (
+      </View> : 
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.tabbarButtonContainer, containerStyle, {backgroundColor: appTheme.tabbarBackgroundColor}]}>
           {children}
         </View>
-      </TouchableWithoutFeedback>
-    )
-  }
+      </TouchableWithoutFeedback>) 
 };
 
 const tabbarOptions = {

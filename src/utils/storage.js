@@ -54,12 +54,3 @@ export const getShoppingCarts = async () => {
   const result = await getDataStorage(`@${SHOPPING_CARTS}:key`);
 	return result;
 };
-
-export const saveProductsFavorite = async value => {
-  saveDataStorage(`@${PRODUCTS_FAVORITE}:key`, JSON.stringify(value));
-};
-
-export const getProductsFavorite = async () => {
-  const result = await getDataStorage(`@${PRODUCTS_FAVORITE}:key`);
-	return result;
-};

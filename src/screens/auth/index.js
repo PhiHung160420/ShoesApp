@@ -8,7 +8,7 @@ import { loadingAction } from '../../redux/actions/loadingAction';
 import { fetchOrderHistoryAction } from '../../redux/actions/orderAction';
 import { fetchProductsFavoriteAction, saveProductFavoriteAction } from '../../redux/actions/productAction';
 import { fetchProfileAction } from '../../redux/actions/profileAction';
-import { getAccessToken, getProductsFavorite, getShoppingCarts } from '../../utils/storage';
+import { getAccessToken, getShoppingCarts } from '../../utils/storage';
 
 const AuthScreen = () => {
   const dispatch = useDispatch();
@@ -19,17 +19,12 @@ const AuthScreen = () => {
   }, []);
 
   const loadData = async (accessToken) => {
-    const shoppingCarts = await getShoppingCarts();
-    const productsFavorite = await getProductsFavorite();
     dispatch(fetchProfileAction(accessToken));
     dispatch(fetchOrderHistoryAction(accessToken));
+    dispatch(fetchProductsFavoriteAction(accessToken));
+    const shoppingCarts = await getShoppingCarts();
     if (shoppingCarts) {
       dispatch(saveCartAction(shoppingCarts));
-    }
-    if(productsFavorite) {
-      dispatch(saveProductFavoriteAction(productsFavorite));
-    } else {
-      dispatch(fetchProductsFavoriteAction(accessToken));
     }
   };
 

@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { COLORS, IMAGES, SIZES, ICONS } from '../../constants';
+import { navigateAndSetToTop } from '../../navigations/service';
 import { appThemeSelector } from '../../redux/selectors/themeSelector';
 import { HeaderBar, OrderCard } from '../common';
 
@@ -51,7 +52,7 @@ const OrderHistoryComponent = (props) => {
 
             <Text style={[styles.emptyOrderText, {color: appTheme.textColor}]}>No order history yet!</Text>
             
-            <TouchableOpacity style={styles.shoppingButton} onPress={() => navigation.push('HomeScreen')}>
+            <TouchableOpacity style={styles.shoppingButton} onPress={() => navigateAndSetToTop('HomeScreen')}>
               <Text style={styles.shoppingButtonText}>Shopping Now</Text>
             </TouchableOpacity>
           </View>}

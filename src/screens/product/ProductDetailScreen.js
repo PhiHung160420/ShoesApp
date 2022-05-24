@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProductDetailComponent } from '../../components';
 import { addProductToCartAction } from '../../redux/actions/cartAction';
 import {
-  fetchProductByIdAction, saveProductFavoriteAction
+  fetchProductByIdAction, fetchProductsFavoriteAction, saveProductFavoriteAction
 } from '../../redux/actions/productAction';
 import { accessTokenSelector } from '../../redux/selectors/authSelector';
 import { cartSelector } from '../../redux/selectors/cartSelector';
@@ -12,11 +12,10 @@ import {
   productFavoriteSelector
 } from '../../redux/selectors/productSelector';
 import {
-  getProductsFavoriteFromAPI,
   likeProductAPI,
   unLikeProductAPI
 } from '../../services/productAPI';
-import { saveProductsFavorite, saveShoppingCarts } from '../../utils/storage';
+import { saveShoppingCarts } from '../../utils/storage';
 
 const ProducDetailScreen = ({route, navigation}) => {
   const {item} = route.params;
@@ -59,30 +58,16 @@ const ProducDetailScreen = ({route, navigation}) => {
     setSizeSelected(size);
   };
 
-  const saveProductToReduxAndStorage = () => {
-    getProductsFavoriteFromAPI(accessToken)
-      .then(res => {
-        const products = res?.data?.content?.productsFavorite;
-        dispatch(saveProductFavoriteAction(products));
-        saveProductsFavorite(products);
-      })
-      .catch(err => console.log(err));
-  };
-
   const handlerLikeOrUnLikeProduct = () => {
     if (productFavorite) {
       setProductFavorite(false);
       unLikeProductAPI(item.id, accessToken)
-        .then(res => {
-          saveProductToReduxAndStorage();
-        })
+        .then(res => dispatch(fetchProductsFavoriteAction(accessToken)))
         .catch(err => console.log(err));
     } else {
       setProductFavorite(true);
       likeProductAPI(item.id, accessToken)
-        .then(res => {
-          saveProductToReduxAndStorage();
-        })
+        .then(res => dispatch(fetchProductsFavoriteAction(accessToken)))
         .catch(err => console.log(err));
     }
   };
@@ -103,7 +88,7 @@ const ProducDetailScreen = ({route, navigation}) => {
   };
 
   const handlerClickKeepShopping = () => {
-    saveShoppingCarts(cartsInfo)
+    saveShoppingCarts(cartsInfo);
     setShowHidePopup(false);
   };
 
