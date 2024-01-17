@@ -38,7 +38,7 @@ const CategoryItem = ({item, index, scrollY, onPress}) => {
         {
           backgroundColor: appTheme.flatlistbackgroundItem,
           shadowColor: appTheme.shadowColor,
-          transform: [{scale}],
+          transform: [{ scale }],
           opacity,
         },
       ]}>

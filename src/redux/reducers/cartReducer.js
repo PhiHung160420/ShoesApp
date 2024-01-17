@@ -38,7 +38,7 @@ const CartReducer = (state = initialState, action) => {
       var check = false;
 
       if (state.numberCart == 0) {
-        let cart = {
+        let item = {
           id: product.id,
           name: product.name,
           image: product.image,
@@ -46,7 +46,7 @@ const CartReducer = (state = initialState, action) => {
           size: product.size,
           quantity: 1,
         };
-        state.carts.push(cart);
+        state.carts.push(item);
       } else {
         state.carts.map((item, index) => {
           if (item.id === product.id) {

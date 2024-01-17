@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import {
-  Animated, StyleSheet, Text,
-  View
+  Animated, StyleSheet, Text, View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useSelector } from 'react-redux';
@@ -30,8 +29,10 @@ const CategoryComponent = ({listProduct, id, onPressProductDetail}) => {
         <Animated.FlatList
           data={listProduct}
           onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: scrollY}}}],
-            {useNativeDriver: true},
+            [{
+              nativeEvent: { contentOffset: { y: scrollY } }
+            }],
+            { useNativeDriver: true },
           )}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}

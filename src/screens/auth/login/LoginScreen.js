@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
-import { useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import {useDispatch} from 'react-redux';
 import * as yup from 'yup';
-import { LoginComponent } from '../../../components';
-import { navigate, navigateAndSetToTop } from '../../../navigations/service';
-import { loginAction } from '../../../redux/actions/authAction';
-import { loginAPI } from '../../../services/authAPI';
-import { saveAccessToken } from '../../../utils/storage';
+import {LoginComponent} from '../../../components';
+import {navigate, navigateAndSetToTop} from '../../../navigations/service';
+import {loginAction} from '../../../redux/actions/authAction';
+import {loginAPI} from '../../../services/authAPI';
+import {saveAccessToken} from '../../../utils/storage';
 
 const signInValidateSchema = yup.object().shape({
   email: yup
@@ -30,12 +30,14 @@ const LoginScreen = () => {
   const onPressLogin = values => {
     loginAPI(values)
       .then(res => {
+        console.log(res);
         const accessToken = res?.data?.content?.accessToken;
         saveAccessToken(accessToken);
         navigate('AuthScreen');
       })
       .catch(err => {
         setModalVisible(true);
+        console.log(res);
         setMessageLogin(`${err?.response?.data?.message}`);
       });
   };

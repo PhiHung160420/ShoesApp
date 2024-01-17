@@ -66,7 +66,7 @@ const CustomTabbarBottom = (props) => {
         <View style={[styles.tabbarButtonContainer, containerStyle, {backgroundColor: appTheme.tabbarBackgroundColor}]}>
           {children}
         </View>
-      </TouchableWithoutFeedback>) 
+      </TouchableWithoutFeedback>)
 };
 
 const tabbarOptions = {
